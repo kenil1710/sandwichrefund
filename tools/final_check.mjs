@@ -54,7 +54,8 @@ const raw = async (path) => { try { return await (await fetch(`https://raw.githu
 // 4
 {
   const BROWSER_ONLY = /(etherscan\.io|eigenphi\.io|libmev\.com|blocksec\.com)/;
-  const docs = ["README.md", ...readdirSync(root + "docs").filter((f) => f.endsWith(".md")).map((f) => "docs/" + f)];
+  // FINAL_CHECK.md itself quotes the links this check reports, so it is not scanned
+  const docs = ["README.md", ...readdirSync(root + "docs").filter((f) => f.endsWith(".md") && f !== "FINAL_CHECK.md").map((f) => "docs/" + f)];
   const urls = new Set();
   const RPCS = new Set([...Object.values(CHAINS).flatMap((c) => c.rpcs), ...Object.values(SCAN_RPCS).flat()]);
   for (const f of docs) for (const m of rd(f).matchAll(/https?:\/\/[^\s)<>"'`|\]*]+/g)) { const u = m[0].replace(/[.,;:]+$/, ""); if (!RPCS.has(u) && !u.includes("api.libmev.com") && !u.includes("data.zeromev.org")) urls.add(u); }
