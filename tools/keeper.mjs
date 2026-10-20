@@ -6,7 +6,7 @@
  * (canonical and demo, whose cases the demo script files itself) closes every
  * pool past its claim deadline. Logic: tools/lib/keeper_core.mjs.
  *
- *   node tools/keeper.mjs --state=<dir> [--push] [--max=25] [--wait=300] [--settle=900] [--pages=400]
+ *   node tools/keeper.mjs --state=<dir> [--push] [--contracts=SandwichRefund,SandwichRefundDemo] [--max=25] [--wait=300] [--settle=900] [--pages=400]
  *
  * --wait: per filing, how long to wait for ACCEPTED before the next one (Studio
  * holds one transaction slot per contract); --settle: at the end, how long to
@@ -34,7 +34,8 @@ const dir = argOf("state", root + "state").replace(/\/$/, "");
 const push = process.argv.includes("--push");
 mkdirSync(dir, { recursive: true });
 const dep = JSON.parse(readFileSync(root + "deployments.json", "utf8")).contracts;
-const names = ["SandwichRefund", "SandwichRefundDemo"].filter((n) => dep[n]);
+const only = argOf("contracts", "");
+const names = ["SandwichRefund", "SandwichRefundDemo"].filter((n) => dep[n] && (!only || only.split(",").includes(n)));
 const watchAll = JSON.parse(readFileSync(root + "data/cases.json", "utf8")).cases.map((c) => ({ chain: c.chain, hash: c.hash }));
 
 const chainDef = CHAINS.studiodev;
@@ -106,7 +107,10 @@ function regFor(address) {
   };
 }
 
-const status = { keeper: account.address, started_at: new Date().toISOString(), contracts: {} };
+let prevContracts = {};
+try { prevContracts = JSON.parse(readFileSync(`${dir}/status.json`, "utf8")).contracts ?? {}; } catch { /* first run */ }
+// a run limited to some contracts keeps the others' last status
+const status = { keeper: account.address, started_at: new Date().toISOString(), contracts: { ...prevContracts } };
 for (const name of names) {
   const address = dep[name].address;
   const file = `${dir}/keeper-state-${name}.json`;

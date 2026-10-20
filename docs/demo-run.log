@@ -1,15 +1,2 @@
 
 == refused_create create_pool with a bad claim period is refused and credited
-file:///Users/kenilvakariya/dev/sandwichrefund/test/demo_run.mjs:94
-  const w = await sp.write("create_pool", ["bad", '["ethereum"]', routersExcept(""), '["V2"]', JSON.stringify(canon.ranges), rates(100), String(GEN / 20), String(GEN / 10), 5, "{}"], { value: GEN / 100 });
-                                                                                                                                                    ^
-
-TypeError: Cannot mix BigInt and other types, use explicit conversions
-    at file:///Users/kenilvakariya/dev/sandwichrefund/test/demo_run.mjs:94:149
-    at step (file:///Users/kenilvakariya/dev/sandwichrefund/test/demo_run.mjs:33:19)
-    at file:///Users/kenilvakariya/dev/sandwichrefund/test/demo_run.mjs:93:7
-    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
-    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
-    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)
-
-Node.js v22.22.2
