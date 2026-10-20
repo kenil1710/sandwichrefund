@@ -1,0 +1,885 @@
+{
+ "generated_at": "2026-10-20T09:40:58.896Z",
+ "rpcs": [
+  "https://rpc.mevblocker.io",
+  "https://eth-mainnet.public.blastapi.io"
+ ],
+ "explorers": {
+  "eigenphi_page": {
+   "url": "https://eigenphi.io/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "status": 301,
+   "location": "https://eigenphi.substack.com/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "readable": false
+  },
+  "libmev_page": {
+   "url": "https://libmev.com/transactions/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "status": 200,
+   "location": "",
+   "readable": false
+  },
+  "libmev_api": {
+   "url": "https://api.libmev.com/v1/bundles?filterByTxHash=0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "status": 522,
+   "body": "<!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi"
+  },
+  "phalcon_page": {
+   "url": "https://app.blocksec.com/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "status": 302,
+   "location": "https://app.blocksec.com/phalcon/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "readable": false
+  },
+  "zeromev_api": {
+   "url": "https://data.zeromev.org/v1/mevBlock?block_number=26230931&count=1",
+   "status": 530,
+   "body": "<!doctype html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endi"
+  }
+ },
+ "sandwiched": [
+  {
+   "hash": "0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "block": 26230931,
+   "attacker_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "attacker_contract": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "label": "jaredfromsubway: MEV Bot 2",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "2489466123976705",
+   "transfer_net": "2489466123976705",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "DOPE": "280681239786706512",
+    "WETH": "2489466123976705",
+    "USDT": "2705696"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+    "libmev": "https://libmev.com/transactions/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd"
+   }
+  },
+  {
+   "hash": "0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9",
+   "block": 26230935,
+   "attacker_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "attacker_contract": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "label": "",
+   "profit_token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+   "symbol": "USDT",
+   "rule_profit": "100007",
+   "transfer_net": "100007",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "USDT": "100007"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9",
+    "libmev": "https://libmev.com/transactions/0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9"
+   }
+  },
+  {
+   "hash": "0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b",
+   "block": 26230948,
+   "attacker_eoa": "0xdee2f2b830cbc867cdc18c1df5da8728f2a50d4e",
+   "attacker_contract": "0xe7b4543823b988503d5cbf86aaefb0e78d16958c",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "2039142154727747",
+   "transfer_net": "2039142154727747",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "2039142154727747"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b",
+    "libmev": "https://libmev.com/transactions/0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b"
+   }
+  },
+  {
+   "hash": "0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8",
+   "block": 26230951,
+   "attacker_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "attacker_contract": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "340999398227968",
+   "transfer_net": "340999398227968",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "340999398227968"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8",
+    "libmev": "https://libmev.com/transactions/0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8"
+   }
+  },
+  {
+   "hash": "0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb",
+   "block": 26231042,
+   "attacker_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "attacker_contract": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "660858027900928",
+   "transfer_net": "660858027900928",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "660858027900928",
+    "HARAMBEAI": "281474976710656"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb",
+    "libmev": "https://libmev.com/transactions/0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb"
+   }
+  },
+  {
+   "hash": "0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03",
+   "block": 26231053,
+   "attacker_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "attacker_contract": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "label": "jaredfromsubway: MEV Bot 2",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "2773110059171840",
+   "transfer_net": "2773110059171840",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "USDC": "4406",
+    "WETH": "2773110059171840"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03",
+    "libmev": "https://libmev.com/transactions/0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03"
+   }
+  },
+  {
+   "hash": "0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a",
+   "block": 26231177,
+   "attacker_eoa": "0x00000000dfe9a4e57631ce11d7854871756b0111",
+   "attacker_contract": "0x0000000061b878403d27b500af1e900056707555",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "82806969466880",
+   "transfer_net": "82806969466880",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "82806969466880",
+    "ELON2.0": "11436981325699922002"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a",
+    "libmev": "https://libmev.com/transactions/0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a"
+   }
+  },
+  {
+   "hash": "0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb",
+   "block": 26231287,
+   "attacker_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "attacker_contract": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "label": "jaredfromsubway: MEV Bot 2",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "38461415358464",
+   "transfer_net": "38462889119527",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "USDT": "6935593",
+    "VERV": "2199023255552",
+    "WETH": "38462889119527",
+    "BabyDoge": "4294967296"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb",
+    "libmev": "https://libmev.com/transactions/0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb"
+   }
+  },
+  {
+   "hash": "0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b",
+   "block": 26231312,
+   "attacker_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "attacker_contract": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "label": "jaredfromsubway: MEV Bot 2",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "786176583663616",
+   "transfer_net": "1130088354047880",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "1130088354047880",
+    "GROKLET": "16777216",
+    "USDC": "18"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b",
+    "libmev": "https://libmev.com/transactions/0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b"
+   }
+  },
+  {
+   "hash": "0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155",
+   "block": 26231372,
+   "attacker_eoa": "0x3ee92cd00993a4488ae153ab41ac7947cbcbc1de",
+   "attacker_contract": "0x410144dec85bb1929057829d54fb3b8d3f0ea4a3",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "90639567775716097",
+   "transfer_net": "90639567775716097",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "USDC": "366166",
+    "WETH": "90639567775716097"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155",
+    "libmev": "https://libmev.com/transactions/0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155"
+   }
+  },
+  {
+   "hash": "0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b",
+   "block": 26231394,
+   "attacker_eoa": "0xae2fc483527b8ef99eb5d9b44875f005ba1fae13",
+   "attacker_contract": "0x1f2f10d1c40777ae1da742455c65828ff36df387",
+   "label": "jaredfromsubway: MEV Bot 2",
+   "profit_token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+   "symbol": "USDT",
+   "rule_profit": "191385",
+   "transfer_net": "191385",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "REACT": "844424930131968",
+    "USDT": "191385"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b",
+    "libmev": "https://libmev.com/transactions/0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b"
+   }
+  },
+  {
+   "hash": "0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730",
+   "block": 26231409,
+   "attacker_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "attacker_contract": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "55472774184960",
+   "transfer_net": "55472774184960",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "55472774184960"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730",
+    "libmev": "https://libmev.com/transactions/0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730"
+   }
+  },
+  {
+   "hash": "0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68",
+   "block": 26231504,
+   "attacker_eoa": "0x4811d9cc00a36776285da24600000000066a7b33",
+   "attacker_contract": "0x72adb61214676c6cf6d390f0e85e96294634793e",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "403417688178688",
+   "transfer_net": "403417688178688",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "403417688178688"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68",
+    "libmev": "https://libmev.com/transactions/0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68"
+   }
+  },
+  {
+   "hash": "0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6",
+   "block": 26231635,
+   "attacker_eoa": "0x27c2a1733f14e1247c5feb1c37cd52ae7d0d2bf2",
+   "attacker_contract": "0x140022b7000081000001094700609300d2187dab",
+   "label": "MEV Bot 0x140...dab",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "1867249916837888",
+   "transfer_net": "1867249916837888",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "1867249916837888"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6",
+    "libmev": "https://libmev.com/transactions/0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6"
+   }
+  },
+  {
+   "hash": "0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc",
+   "block": 26231641,
+   "attacker_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "attacker_contract": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "123010145058816",
+   "transfer_net": "123010145058816",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "123010145058816",
+    "ELON2.0": "122970423213925561364644"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc",
+    "libmev": "https://libmev.com/transactions/0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc"
+   }
+  },
+  {
+   "hash": "0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
+   "block": 26231792,
+   "attacker_eoa": "0x11111215b72e894c60f24e91ac2c8ccb1d373911",
+   "attacker_contract": "0x672061b75f770331b0c7c2a566a9ac0a9ba331d2",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "62197753446400",
+   "transfer_net": "62197753446400",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "62197753446400"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
+    "libmev": "https://libmev.com/transactions/0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6"
+   }
+  },
+  {
+   "hash": "0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67",
+   "block": 26232278,
+   "attacker_eoa": "0xc623b0b546bf3031ba88a583a46d5180df8d67c2",
+   "attacker_contract": "0xc623b0b546bf3031ba88a583a46d5180df8d67c2",
+   "label": "",
+   "profit_token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+   "symbol": "USDC",
+   "rule_profit": "46841593",
+   "transfer_net": "0",
+   "agree": true,
+   "converted": true,
+   "flows": {
+    "WETH": "118674656685891404"
+   },
+   "note": "the back-run converted the profit into WETH in the same transaction; no token lost",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67",
+    "libmev": "https://libmev.com/transactions/0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67"
+   }
+  },
+  {
+   "hash": "0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8",
+   "block": 26232323,
+   "attacker_eoa": "0xc68d3ba67e2755c9a2f46a0b51a1694ef53c0ea0",
+   "attacker_contract": "0xbdb939c9cd180e400027a64a3ea6660f80817fa6",
+   "label": "",
+   "profit_token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+   "symbol": "WETH",
+   "rule_profit": "290936789663744",
+   "transfer_net": "290936789663744",
+   "agree": true,
+   "converted": false,
+   "flows": {
+    "WETH": "290936789663744",
+    "GROKLET": "16777216"
+   },
+   "note": "the attacker's own token flow shows at least the rule's profit",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8",
+    "libmev": "https://libmev.com/transactions/0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8",
+    "phalcon": "https://app.blocksec.com/explorer/tx/eth/0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8"
+   }
+  }
+ ],
+ "clean": [
+  {
+   "hash": "0x483ef860a9706ee14ed22f8d05249f1899b5783f4b1d203e9df68fa636322829",
+   "block": 26232291,
+   "index": 32,
+   "pool": "0xc8219b876753a85025156b22176c2edea17aac53",
+   "prev": {
+    "hash": "0xe0111fe862c51ddef2d1487900193d00d81099009ef5d89dc2509bfdd7d8ac43",
+    "from": "0xba8bbf3d5f01a7cfee4d25249d16be20f2eb8e76",
+    "to": "0xd0aafdc6ef44eb8a734382bc40f9588446c7300f",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x3b2026f6f09cd3447455aadbdce9d3f027efd482d000ee341d9f4d0af8eb0448",
+    "from": "0x83174dad117b045f0af8da7e26210ab4e51c1a9a",
+    "to": "0x4c9edd5852cd905f086c759e8383e09bff1e68b3",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x483ef860a9706ee14ed22f8d05249f1899b5783f4b1d203e9df68fa636322829",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x483ef860a9706ee14ed22f8d05249f1899b5783f4b1d203e9df68fa636322829",
+    "libmev": "https://libmev.com/transactions/0x483ef860a9706ee14ed22f8d05249f1899b5783f4b1d203e9df68fa636322829"
+   }
+  },
+  {
+   "hash": "0x502301f20edc1045403d6980255d6c9f238547fe852c6d4079a622be69cc2de6",
+   "block": 26231097,
+   "index": 113,
+   "pool": "0x89a67c6dee35db9815da2fb9191f0998a8b37c39",
+   "prev": {
+    "hash": "0x56770b7ba631036a9c801c04c6092ffd0667572579865ba831172266fcb78bab",
+    "from": "0x6872b6630a3afcd3117191a8403c2002e13df7de",
+    "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x3706b4d38f6310317c5c97d28f1db8823220b4795d87229a85becc572049fe83",
+    "from": "0xbee4b69f6821ee7196182788392ff188bac99011",
+    "to": "0xbee3211ab312a8d065c4fef0247448e17a8da000",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 2,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x502301f20edc1045403d6980255d6c9f238547fe852c6d4079a622be69cc2de6",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x502301f20edc1045403d6980255d6c9f238547fe852c6d4079a622be69cc2de6",
+    "libmev": "https://libmev.com/transactions/0x502301f20edc1045403d6980255d6c9f238547fe852c6d4079a622be69cc2de6"
+   }
+  },
+  {
+   "hash": "0x559fb4b9afabe2927d8f2f3fdb7fe74ce106534eb4208c6604220301670ee49b",
+   "block": 26231291,
+   "index": 16,
+   "pool": "0x41a561b972039a9ccb975a4c17b84c9f95099e15",
+   "prev": {
+    "hash": "0x325b94ff1200fce0bc1a4c84958c5ae65ee8b683c4323f1c59f694ac83842178",
+    "from": "0x670e862b82cbca8a9ecf5cbe28ddd85f93c7e2d0",
+    "to": "0x0f2d719407fdbeff09d87557abb7232601fd9f29",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xe8bbf07739305e0c778409cb464a39b4af8ae00fa109451e3e42cba80014292b",
+    "from": "0x639ebd317364962ce8f785d3d523118841c2b81f",
+    "to": "",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x559fb4b9afabe2927d8f2f3fdb7fe74ce106534eb4208c6604220301670ee49b",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x559fb4b9afabe2927d8f2f3fdb7fe74ce106534eb4208c6604220301670ee49b",
+    "libmev": "https://libmev.com/transactions/0x559fb4b9afabe2927d8f2f3fdb7fe74ce106534eb4208c6604220301670ee49b"
+   }
+  },
+  {
+   "hash": "0x6fb527ea1207e82944bce82257f3ee4cca0e798f43ebfe9314ec29a21cd4be38",
+   "block": 26231388,
+   "index": 104,
+   "pool": "0x8d5288b22eaef3084df16159d5491de6140e95ea",
+   "prev": {
+    "hash": "0xec5c3c1c1e7615a1de8072b589306cfec387d4d2f5741b512fc28de302fd09b3",
+    "from": "0x774d1a67da5b284dd9e793f4d94ebca0e39d75ca",
+    "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xe03bc9021bf68f96474e64e76c7f43a37528b3606a7117a2665d443a5cde6b93",
+    "from": "0xf7cba7e17ca964b1191d39a1cb2eccd2519d4e70",
+    "to": "0xdfa8ead9129d2053f307e9370570a33118619ea0",
+    "on_pool": true
+   },
+   "swaps_on_pool_in_block": 2,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x6fb527ea1207e82944bce82257f3ee4cca0e798f43ebfe9314ec29a21cd4be38",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x6fb527ea1207e82944bce82257f3ee4cca0e798f43ebfe9314ec29a21cd4be38",
+    "libmev": "https://libmev.com/transactions/0x6fb527ea1207e82944bce82257f3ee4cca0e798f43ebfe9314ec29a21cd4be38"
+   }
+  },
+  {
+   "hash": "0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428",
+   "block": 26231485,
+   "index": 51,
+   "pool": "0xd0a4c8a1a14530c7c9efdad0ba37e8cf4204d230",
+   "prev": {
+    "hash": "0xb06a4feaecf95202f1fc8a3f3eac922bddabf21d0c88407dd40c17985e6bad73",
+    "from": "0x885fe4e73bf23e4ff187387bf7589648822c58b5",
+    "to": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xc200cb40a4c8d08e6b28107e28f0a8eea29e0ece3994b3fe5771e088e2a48bff",
+    "from": "0x655f967fd2303ccc19aebd217d4b5afe520b380b",
+    "to": "0xd3a2cf7f7559511981c7aa1c544f2842eb001f17",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428",
+    "libmev": "https://libmev.com/transactions/0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428"
+   }
+  },
+  {
+   "hash": "0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220",
+   "block": 26231582,
+   "index": 30,
+   "pool": "0x4d68b530920d26c3b01c99fecc19e21011b72bbd",
+   "prev": {
+    "hash": "0xd5833109f64dc1767afd0e8760f157d547e427f37b6eaad18a878bf258839c0f",
+    "from": "0xf30ba13e4b04ce5dc4d254ae5fa95477800f0eb0",
+    "to": "0x4e11c96d1a072f57737251b8d827b6347d9fa415",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xc7b50f260b02f04a97d35fc486dc31c3cb88466bc506397a4c6d581239863734",
+    "from": "0x6c4f0959d050c4f673230287220168d3e2f283be",
+    "to": "0x0000000000000068f116a894984e2db1123eb395",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 2,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220",
+    "libmev": "https://libmev.com/transactions/0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220"
+   }
+  },
+  {
+   "hash": "0x9777343eda33951ba29e340340fa1c78af3b9d2b2ec151d18d4256ebbaeee500",
+   "block": 26231679,
+   "index": 40,
+   "pool": "0x441f9e2c89a343cefb390a8954b3b562f8f91eca",
+   "prev": {
+    "hash": "0x7c0dccfae92aa9d8dd9226021eb425679699e15cbd4df66ee01fdfb5736519b0",
+    "from": "0xf9b6a1eb0190bf76274b0876957ee9f4f508af41",
+    "to": "0xea7f2d6e29772a610212e6731fa5d2265c3a8437",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x13f6dea7e0de12ae6d2a75ae8a82f942e3e7caf6996709e12c42743da6725c0d",
+    "from": "0x12980d662531a25bdac9ab64f0099afba09499de",
+    "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x9777343eda33951ba29e340340fa1c78af3b9d2b2ec151d18d4256ebbaeee500",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x9777343eda33951ba29e340340fa1c78af3b9d2b2ec151d18d4256ebbaeee500",
+    "libmev": "https://libmev.com/transactions/0x9777343eda33951ba29e340340fa1c78af3b9d2b2ec151d18d4256ebbaeee500"
+   }
+  },
+  {
+   "hash": "0xa20e8944a9b20865229dbd4f38954c206d53f3bfc2e5f6f4bfcf2f035b9fc028",
+   "block": 26231776,
+   "index": 24,
+   "pool": "0x189967a947c0133de1eac4f931ddc901b0262790",
+   "prev": {
+    "hash": "0xf585ad873ee60bd847a3155719701b132dc3fab1a720171da528289ab19b5fbf",
+    "from": "0xd47a1bdc6872ad2fd16e50149baa9924c653e624",
+    "to": "0xf367146fec4dd159b5626db33dde615481e8efa4",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xa9adb982776e831907c498d0e90b12b7f002e6e7d844794d1b5cda750b85b6f9",
+    "from": "0xa0b452331dfe43aff9abf5df9314b90e38467f82",
+    "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xa20e8944a9b20865229dbd4f38954c206d53f3bfc2e5f6f4bfcf2f035b9fc028",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xa20e8944a9b20865229dbd4f38954c206d53f3bfc2e5f6f4bfcf2f035b9fc028",
+    "libmev": "https://libmev.com/transactions/0xa20e8944a9b20865229dbd4f38954c206d53f3bfc2e5f6f4bfcf2f035b9fc028"
+   }
+  },
+  {
+   "hash": "0xca6534f176f3169e04894c31a341e9361f8db184cc8524bb3b3fe700b204454d",
+   "block": 26231970,
+   "index": 187,
+   "pool": "0x7fd91c569f66ba7eda9b72454e879c206c44c0e1",
+   "prev": {
+    "hash": "0x4e68f0ffe3daf1a1d3f56d2fd652c37dff14a411616c33d44f23b59da93acd56",
+    "from": "0xe91bcae4a2d7b951304695f93cf1b9a1837cfe43",
+    "to": "0x7ec8a30a34b86927dc77b302603d1d53e640bef7",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x43d9008c4a243083e153514033394ed84b8d23d8e1780a56288bbe11115f0ea8",
+    "from": "0xbece56f59869a2a68155cf0c074b289eb4f712ca",
+    "to": "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xca6534f176f3169e04894c31a341e9361f8db184cc8524bb3b3fe700b204454d",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xca6534f176f3169e04894c31a341e9361f8db184cc8524bb3b3fe700b204454d",
+    "libmev": "https://libmev.com/transactions/0xca6534f176f3169e04894c31a341e9361f8db184cc8524bb3b3fe700b204454d"
+   }
+  },
+  {
+   "hash": "0xc14d4216192d298dbcb3ac4d734bb0ff98027840ff198f754089cc6879770388",
+   "block": 26232358,
+   "index": 97,
+   "pool": "0x41a561b972039a9ccb975a4c17b84c9f95099e15",
+   "prev": {
+    "hash": "0xbaa3cdf8a464d3e239667cab2648289ec6194c9d68b9443bc8ea911b1ede576e",
+    "from": "0x8c9bccbc30479e772216639d5a75685bed2c80c7",
+    "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x0fc0583736497caf8dbbe77ad4224358090211b29991b6877f8a66d8d671816b",
+    "from": "0xbf1b98c867148591e706d3a831de308ec9fbd42c",
+    "to": "0x278d858f05b94576c1e6f73285886876ff6ef8d2",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xc14d4216192d298dbcb3ac4d734bb0ff98027840ff198f754089cc6879770388",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xc14d4216192d298dbcb3ac4d734bb0ff98027840ff198f754089cc6879770388",
+    "libmev": "https://libmev.com/transactions/0xc14d4216192d298dbcb3ac4d734bb0ff98027840ff198f754089cc6879770388"
+   }
+  },
+  {
+   "hash": "0x512fca0e46bddcfae5be6657d98e10353d04ffd6fda33143362af48aff15b045",
+   "block": 26230950,
+   "index": 8,
+   "pool": "0xc7bbec68d12a0d1830360f8ec58fa599ba1b0e9b",
+   "prev": {
+    "hash": "0x3b7601e28da8cac5a36276b32300efe5652d951f562d0a9b5eb5087515277d9d",
+    "from": "0x0afa3a877055f93c87381a7407db9c3d8c1bff47",
+    "to": "0xc2fdb796f8392e22da431920b0fc24e2c7b5e18b",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xd76f79eb6fc86c202edfee1cb2e7766e6a9ea450f71472707eab4eeedf853774",
+    "from": "0x9696f59e4d72e237be84ffd425dcad154bf96976",
+    "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x512fca0e46bddcfae5be6657d98e10353d04ffd6fda33143362af48aff15b045",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x512fca0e46bddcfae5be6657d98e10353d04ffd6fda33143362af48aff15b045",
+    "libmev": "https://libmev.com/transactions/0x512fca0e46bddcfae5be6657d98e10353d04ffd6fda33143362af48aff15b045"
+   }
+  },
+  {
+   "hash": "0xbde955216b8580038ae7e741600289f28e124b6ce9a670b6d836dba1dd247942",
+   "block": 26231081,
+   "index": 45,
+   "pool": "0x60594a405d53811d3bc4766596efd80fd545a270",
+   "prev": {
+    "hash": "0x64ca2d0c25dc828890bac2e663cae282eef456c97b5fa87086d831f47326e753",
+    "from": "0x6c667493b5da8655b6848190efe190e8228bf32b",
+    "to": "0x0439e60f02a8900a951603950d8d4527f400c3f1",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xdf7764a611bd343e8a43cf5d1396d766b6f5fa4e4736a343dcf42f73a7e481f0",
+    "from": "0x68eee05db9c44b408ffa6f50ff48938e9287ef1b",
+    "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xbde955216b8580038ae7e741600289f28e124b6ce9a670b6d836dba1dd247942",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xbde955216b8580038ae7e741600289f28e124b6ce9a670b6d836dba1dd247942",
+    "libmev": "https://libmev.com/transactions/0xbde955216b8580038ae7e741600289f28e124b6ce9a670b6d836dba1dd247942"
+   }
+  },
+  {
+   "hash": "0xd2de15ef29ea95b1e2063569caabb1ddd2d6c961df5f7a84a1ca142bc16c71df",
+   "block": 26231212,
+   "index": 76,
+   "pool": "0x09bed968ba37580d54e2fd853a49ce3d7fe2ec7a",
+   "prev": {
+    "hash": "0xbfb45da5ea95ec636a7a8192bd2fff4ec3fca3af5d01728f8b71d74c0c3df321",
+    "from": "0x58d14960e0a2be353edde61ad719196a2b816522",
+    "to": "0x2e5110cf18678ec99818bfaa849b8c881744b776",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x022bae35849a8d22b221dc0deace3e88201709981a40f6c7cc4edf245ab45237",
+    "from": "0x5e2a3daaf86cede3392f77616cede2de0d3bd3a0",
+    "to": "0xbdb3ba9ffe392549e1f8658dd2630c141fdf47b6",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0xd2de15ef29ea95b1e2063569caabb1ddd2d6c961df5f7a84a1ca142bc16c71df",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0xd2de15ef29ea95b1e2063569caabb1ddd2d6c961df5f7a84a1ca142bc16c71df",
+    "libmev": "https://libmev.com/transactions/0xd2de15ef29ea95b1e2063569caabb1ddd2d6c961df5f7a84a1ca142bc16c71df"
+   }
+  },
+  {
+   "hash": "0x8ee1f1c1dba091e577b57a81940bb7be0eab8f22fde6afa60a084e48eb645edf",
+   "block": 26231474,
+   "index": 100,
+   "pool": "0xe4d813ba826181a63261f9778f654602d26ed783",
+   "prev": {
+    "hash": "0x0b282a6a40e47ac45be4bebfaa5681c2fabc0257b10b001e9e558af00b374029",
+    "from": "0x98ab8cf3a98d5cffdf3d9a2cfa48660095566913",
+    "to": "0x23617e59a5925b2a4bf75d73ff6711cd0b29de85",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0xaab4fcd76344201475751d6c67b31aebf0ab32e18cc831389fead4b24affc683",
+    "from": "0xe20446cccbfd5f9038e747f1dea8016ecbd94ae5",
+    "to": "0x442be06bb5d13711a22ccd3fa382b72a874c5135",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x8ee1f1c1dba091e577b57a81940bb7be0eab8f22fde6afa60a084e48eb645edf",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x8ee1f1c1dba091e577b57a81940bb7be0eab8f22fde6afa60a084e48eb645edf",
+    "libmev": "https://libmev.com/transactions/0x8ee1f1c1dba091e577b57a81940bb7be0eab8f22fde6afa60a084e48eb645edf"
+   }
+  },
+  {
+   "hash": "0x8e582ac6df73be6e6677cdd5be01747700ea3910d104800e40a7add4b721cf27",
+   "block": 26231605,
+   "index": 72,
+   "pool": "0xd227d3d4602f4037839fff79dc5fd80e9cc45b4e",
+   "prev": {
+    "hash": "0xef6798e20d5855d0135a4772c6f01d003831cbdc81ea61ab0f5d13548ca25798",
+    "from": "0x70baecd68c8cc3098d753382fa7a07a042df9045",
+    "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x835fda71d47578daef4f4eb506800137ce9f5409e44cd668f5e89331e50bf37a",
+    "from": "0x396ce3368d91c05992def6c93469dc5466fdd18e",
+    "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "on_pool": false
+   },
+   "swaps_on_pool_in_block": 1,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x8e582ac6df73be6e6677cdd5be01747700ea3910d104800e40a7add4b721cf27",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x8e582ac6df73be6e6677cdd5be01747700ea3910d104800e40a7add4b721cf27",
+    "libmev": "https://libmev.com/transactions/0x8e582ac6df73be6e6677cdd5be01747700ea3910d104800e40a7add4b721cf27"
+   }
+  },
+  {
+   "hash": "0x7c41c2a897d3f49dc4faa924b8706eb2ea9f91ab71998fb5b3bb1ac205c8c75a",
+   "block": 26231736,
+   "index": 131,
+   "pool": "0x91c52d4a86b02886864831d7bc1011c4d97094f4",
+   "prev": {
+    "hash": "0x7191f4e27386ef48e2ec2466f7d322dd4ae8d1d07dcdcc3ce0f3e63d07b46373",
+    "from": "0x935d2e470284fb536227a76a723f96a94efae6a9",
+    "to": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "on_pool": false
+   },
+   "next": {
+    "hash": "0x64ee303c444bf597e5eaa2ce5d33e00f8aad1b3834a663f7cdb964f5fd526b23",
+    "from": "0x928d208debb9fd8d9ac66d155cd559ab878c738e",
+    "to": "0xe592427a0aece92de3edee1f18e0157c05861564",
+    "on_pool": true
+   },
+   "swaps_on_pool_in_block": 6,
+   "agree": true,
+   "note": "no shared actor swapping the pool on both sides of the victim",
+   "links": {
+    "etherscan": "https://etherscan.io/tx/0x7c41c2a897d3f49dc4faa924b8706eb2ea9f91ab71998fb5b3bb1ac205c8c75a",
+    "eigenphi": "https://eigenphi.io/mev/eigentx/0x7c41c2a897d3f49dc4faa924b8706eb2ea9f91ab71998fb5b3bb1ac205c8c75a",
+    "libmev": "https://libmev.com/transactions/0x7c41c2a897d3f49dc4faa924b8706eb2ea9f91ab71998fb5b3bb1ac205c8c75a"
+   }
+  }
+ ]
+}
