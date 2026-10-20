@@ -5,9 +5,9 @@
   "1": {
    "chains": {
     "ethereum": {
-     "cursor": 26232243,
+     "cursor": 26232253,
      "failed": [],
-     "pages_ok": 133,
+     "pages_ok": 134,
      "done": false,
      "head": 26232795
     }
@@ -576,6 +576,19 @@
    "attempts": 0,
    "first_seen_at": 1792488326,
    "tx": null
+  },
+  "file:1:ethereum:0xbfd7df109b3926534e3b9e7b3211491b5a42ee97ba83edf905bdacc76aeee5da": {
+   "key": "file:1:ethereum:0xbfd7df109b3926534e3b9e7b3211491b5a42ee97ba83edf905bdacc76aeee5da",
+   "kind": "FILE",
+   "pool_id": 1,
+   "chain": "ethereum",
+   "hash": "0xbfd7df109b3926534e3b9e7b3211491b5a42ee97ba83edf905bdacc76aeee5da",
+   "victim": "0x0e14a3e9af1afdfc60554e3e2a40c8284d647093",
+   "why": "scan",
+   "status": "QUEUED",
+   "attempts": 0,
+   "first_seen_at": 1792488328,
+   "tx": null
   }
  },
  "runs": [],
@@ -585,5 +598,5 @@
  "contract": "SandwichRefund",
  "address": "0x774B1200fB05f19b057390CF1DdA1Ea2AD109917",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-20T09:25:26.885Z"
+ "saved_at": "2026-10-20T09:25:28.080Z"
 }
