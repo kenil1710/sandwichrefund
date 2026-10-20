@@ -1,19 +1,19 @@
 {
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "started_at": "2026-10-20T10:22:36.165Z",
+ "started_at": "2026-10-20T10:32:50.937Z",
  "contracts": {
   "SandwichRefund": {
    "address": "0x774B1200fB05f19b057390CF1DdA1Ea2AD109917",
    "last_run": {
-    "started_at": 1792491756,
-    "finished_at": 1792491821,
+    "started_at": 1792492370,
+    "finished_at": 1792492372,
     "resumed": 0,
     "pools": 1,
     "pages": 0,
     "pages_failed": 0,
     "candidates": 0,
-    "submitted": 1,
-    "done": 1,
+    "submitted": 0,
+    "done": 0,
     "already": 0,
     "pending": 0,
     "failed": 0,
@@ -45,7 +45,7 @@
        "head": 26232795
       }
      },
-     "status": "OPEN",
+     "status": "CLOSED",
      "claim_deadline": 1792491707,
      "name": "SandwichRefund canonical pool: Ethereum, 11 routers, blocks 26230913-26232413"
     }
@@ -848,10 +848,10 @@
   "SandwichRefundDemo": {
    "address": "0x7f75A7166500404FB7A7590Cd9c495Eb6EEed932",
    "last_run": {
-    "started_at": 1792490295,
-    "finished_at": 1792490298,
+    "started_at": 1792492373,
+    "finished_at": 1792492375,
     "resumed": 0,
-    "pools": 0,
+    "pools": 3,
     "pages": 0,
     "pages_failed": 0,
     "candidates": 0,
@@ -872,14 +872,33 @@
     "failed": 0,
     "by_result": {}
    },
-   "pools": {},
+   "pools": {
+    "1": {
+     "chains": {},
+     "status": "CLOSED",
+     "claim_deadline": 1792492254,
+     "name": "Demo A: caps, empty pool, every verdict"
+    },
+    "2": {
+     "chains": {},
+     "status": "CLOSED",
+     "claim_deadline": 1792491789,
+     "name": "Demo B: blocks 26231000-26231420, V2 only"
+    },
+    "3": {
+     "chains": {},
+     "status": "CLOSED",
+     "claim_deadline": 1792492176,
+     "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
+    }
+   },
    "unprocessed": [],
    "actions": []
   }
  },
- "finished_at": "2026-10-20T10:23:43.336Z",
- "trigger": "manual",
- "run_url": "",
+ "finished_at": "2026-10-20T10:32:56.387Z",
+ "trigger": "workflow_dispatch",
+ "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39408671183",
  "history": [
   {
    "started_at": "2026-10-20T09:22:41.025Z",
@@ -910,6 +929,26 @@
     "SandwichRefund": {
      "submitted": 1,
      "done": 1,
+     "pages": 0,
+     "pages_failed": 0
+    },
+    "SandwichRefundDemo": {
+     "submitted": 0,
+     "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    }
+   }
+  },
+  {
+   "started_at": "2026-10-20T10:32:50.937Z",
+   "finished_at": "2026-10-20T10:32:56.387Z",
+   "trigger": "workflow_dispatch",
+   "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39408671183",
+   "runs": {
+    "SandwichRefund": {
+     "submitted": 0,
+     "done": 0,
      "pages": 0,
      "pages_failed": 0
     },
