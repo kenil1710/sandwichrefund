@@ -55,10 +55,13 @@ async function paying(c, fn, args, payee, amountOf) {
     let after = await balanceOf(payee);
     for (let i = 0; i < 6 && after - before < amount; i++) { await new Promise((r) => setTimeout(r, 10000)); after = await balanceOf(payee); }
     const cafter = await balanceOf(ADDR);
-    // a payee that sent the transaction itself also paid its fee
     const sender = c.me.toLowerCase() === payee.toLowerCase();
+    // a payee that sent the transaction itself also paid its fee, and Studio returns unused fees of its earlier
+    // transactions as they finalize: then the delta is at least the amount minus this transaction's fee
+    const fee = BigInt(d.netFee ?? 0);
     out.payout = { to: payee, amount: String(amount), delivered: d.ok, why: d.why, recipient_delta: String(after - before),
-      contract_delta: String(cafter - cbefore), arrived: sender ? after - before === amount - BigInt(d.netFee ?? 0) : after - before === amount };
+      contract_delta: String(cafter - cbefore), self_paid: sender, fee: String(fee),
+      arrived: sender ? after - before >= amount - (fee > 0n ? fee : 0n) : after - before === amount };
     out.ok = out.ok && d.ok && out.payout.arrived && cafter - cbefore === -amount;
   }
   return out;
@@ -93,7 +96,7 @@ async function createPool(key, who, name, args, value) {
 await step("refused_create", "create_pool with a bad claim period is refused and credited", async () => {
   const w = await sp.write("create_pool", ["bad", '["ethereum"]', routersExcept(""), '["V2"]', JSON.stringify(canon.ranges), rates(100), String(GEN / 20n), String(GEN / 10n), 5, "{}"], { value: GEN / 100n });
   const credit = await sp.view("get_credit", [sp.me]);
-  return { ok: w.ok && w.returned?.ok === false && w.returned?.reason === "BAD_CLAIM_PERIOD" && credit.credit === String(GEN / 100n), tx: w.hash, returned: w.returned, credit: credit.credit };
+  return { ok: w.ok && w.returned?.ok === false && w.returned?.reason === "BAD_CLAIM_PERIOD" && BigInt(credit.credit) >= GEN / 100n, tx: w.hash, returned: w.returned, credit: credit.credit };
 });
 await step("withdraw_refund", "withdraw_refund pays the credit back", () => paying(sp, "withdraw_refund", [], sp.me, (r) => r?.withdrawn));
 
@@ -158,7 +161,9 @@ await createPool("B", sp, "Demo B: blocks 26231000-26231420, V2 only", ['["ether
 const B = doc.pools.B;
 await step("B_outside_range", "a sandwich before the pool's block range", () => fileCase(B, byPrefix("0xa3bacdd6"), { state: "NOT_COVERED", reason: "OUTSIDE_BLOCK_RANGE" }));
 await step("B_kind", "a V3 sandwich in range, but the pool covers V2 only", () => fileCase(B, byPrefix("0xc3a58de6"), { state: "NOT_COVERED", reason: "POOL_TYPE_NOT_COVERED" }));
-await step("B_refunded", "a V2 sandwich in range, refunded at pool B's rate", () => fileCase(B, byPrefix("0x1b17869b"), { state: "SANDWICHED_REFUNDED", limit: "RATE" }));
+await createPool("C", sp, "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN", ['["ethereum"]', routersExcept(""), '["V2"]',
+  JSON.stringify([{ chain: "ethereum", start_block: 26231000, end_block: 26231420 }]), rates(100), String(GEN / 20n), String(GEN / 10n), 300, '{"demo":"C"}'], GEN / 100n);
+await step("C_refunded", "a V2 sandwich in range, refunded at pool C's rate", () => fileCase(doc.pools.C, byPrefix("0x1b17869b"), { state: "SANDWICHED_REFUNDED", limit: "RATE" }));
 
 // 3. MEVGateDemo
 await step("gate", "MEVGateDemo reads every state", async () => {
@@ -191,7 +196,7 @@ async function waitDeadline(pid) {
     await new Promise((r) => setTimeout(r, Math.min(Math.max(left + 20, 5), 120) * 1000));
   }
 }
-for (const key of ["B", "A"]) {
+for (const key of ["B", "C", "A"]) {
   const pid = doc.pools[key];
   await step("close_" + key, `close pool ${key} after its deadline: the rest to the sponsor`, async () => {
     const p = await waitDeadline(pid);

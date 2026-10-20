@@ -1,0 +1,755 @@
+{
+ "contract": "0x7f75A7166500404FB7A7590Cd9c495Eb6EEed932",
+ "gate": "0xb74aB6983c50595396CDD48C407F52Da254811f5",
+ "steps": [
+  {
+   "id": "refused_create",
+   "what": "create_pool with a bad claim period is refused and credited",
+   "ok": true,
+   "tx": "0x15453306a6458ce630eff64838bfb9b35bb1039f3c03317b98f976376c445763",
+   "returned": {
+    "credited": "10000000000000000",
+    "ok": false,
+    "reason": "BAD_CLAIM_PERIOD"
+   },
+   "credit": "10000000000000000",
+   "at": "2026-10-20T10:03:54.404Z"
+  },
+  {
+   "id": "withdraw_refund",
+   "what": "withdraw_refund pays the credit back",
+   "ok": true,
+   "tx": "0xdfe10a3ed46bc12489dde24a7c863ca016b661070cc022bd9f58d885041e3485",
+   "status": "FINALIZED",
+   "returned": {
+    "ok": true,
+    "withdrawn": "10000000000000000"
+   },
+   "payout": {
+    "to": "0x21B843a75FD0f672527E538c6fC9a372A7CD07AF",
+    "amount": "10000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "110284934250018235",
+    "contract_delta": "-10000000000000000",
+    "self_paid": true,
+    "fee": "126306000000823",
+    "arrived": true
+   },
+   "at": "2026-10-20T10:04:48.190Z"
+  },
+  {
+   "id": "create_A",
+   "what": "create pool Demo A: caps, empty pool, every verdict",
+   "ok": true,
+   "tx": "0xa6e7325fb2ef1a070395e8219aceeadbf0aac4d36eb1eef4f859376fef0fe768",
+   "pool_id": 1,
+   "claim_deadline": 1792492194,
+   "funded": "330000000000000000",
+   "at": "2026-10-20T10:05:39.212Z"
+  },
+  {
+   "id": "A_max_per_swap",
+   "what": "a sandwich due 0.0786 GEN, capped at max per swap 0.05",
+   "ok": true,
+   "tx": "0xf376ddaff872c0a0192fe610066fa5ad7e58455d274c99c7a0cac2c6e850abd0",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 1,
+    "limit": "MAX_PER_SWAP",
+    "loss": "786176583663616",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "50000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "payout": {
+    "to": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9",
+    "amount": "50000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "50000000000000000",
+    "contract_delta": "-50000000000000000",
+    "self_paid": false,
+    "fee": "134137750000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_SWAP",
+    "loss": "786176583663616",
+    "refund_due": "78617658366361600",
+    "refund_paid": "50000000000000000",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_SWAP"
+   },
+   "at": "2026-10-20T10:06:27.135Z"
+  },
+  {
+   "id": "A_rate",
+   "what": "the same victim's second sandwich, paid at the rate (0.0341)",
+   "ok": true,
+   "tx": "0x2f6a2beb00ba1a495fc596950166dd91b348f9435445a4aabbcf51a32e1f81be",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 2,
+    "limit": "RATE",
+    "loss": "340999398227968",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "34099939822796800",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "payout": {
+    "to": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9",
+    "amount": "34099939822796800",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "34099939822796800",
+    "contract_delta": "-34099939822796800",
+    "self_paid": false,
+    "fee": "136544000000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "RATE",
+    "loss": "340999398227968",
+    "refund_due": "34099939822796800",
+    "refund_paid": "34099939822796800",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "RATE"
+   },
+   "at": "2026-10-20T10:07:14.751Z"
+  },
+  {
+   "id": "A_max_per_victim",
+   "what": "the same victim's third sandwich: only what is left of its 0.1 cap",
+   "ok": true,
+   "tx": "0x52bd40fc3ffcc4cd1b6f3ec35ab4d24a31b44b8204c2a4f8659f1c432b8650dd",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 3,
+    "limit": "MAX_PER_VICTIM",
+    "loss": "290936789663744",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "15900060177203200",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "payout": {
+    "to": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9",
+    "amount": "15900060177203200",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "15900060177203200",
+    "contract_delta": "-15900060177203200",
+    "self_paid": false,
+    "fee": "134156750000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_VICTIM",
+    "loss": "290936789663744",
+    "refund_due": "29093678966374400",
+    "refund_paid": "15900060177203200",
+    "victim": "0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_VICTIM"
+   },
+   "at": "2026-10-20T10:08:01.785Z"
+  },
+  {
+   "id": "A_cap_big",
+   "what": "a 0.09 WETH sandwich (due 9 GEN), capped at 0.05",
+   "ok": true,
+   "tx": "0xca3acaabb29a82963b7a4b9c2a23f82035071ca1dcfccbf1e375d7bb59cfc415",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 4,
+    "limit": "MAX_PER_SWAP",
+    "loss": "90639567775716097",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "50000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0x095ea694fb28d0d0804c666cf6c9558f76b43eda"
+   },
+   "payout": {
+    "to": "0x095ea694fb28d0d0804c666cf6c9558f76b43eda",
+    "amount": "50000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "50000000000000000",
+    "contract_delta": "-50000000000000000",
+    "self_paid": false,
+    "fee": "141163500000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_SWAP",
+    "loss": "90639567775716097",
+    "refund_due": "9063956777571609700",
+    "refund_paid": "50000000000000000",
+    "victim": "0x095ea694fb28d0d0804c666cf6c9558f76b43eda"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_SWAP"
+   },
+   "at": "2026-10-20T10:08:51.327Z"
+  },
+  {
+   "id": "A_cap_2",
+   "what": "another capped refund",
+   "ok": true,
+   "tx": "0x6a139295484cd3d470382ea2b9050f4795f7eb82d1353bb2aab0e5e656929327",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 5,
+    "limit": "MAX_PER_SWAP",
+    "loss": "1867249916837888",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "50000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0x88abfb8dfb2e63c0b534f834b9984d50a6d58fc3"
+   },
+   "payout": {
+    "to": "0x88abfb8dfb2e63c0b534f834b9984d50a6d58fc3",
+    "amount": "50000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "50000000000000000",
+    "contract_delta": "-50000000000000000",
+    "self_paid": false,
+    "fee": "134306000000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_SWAP",
+    "loss": "1867249916837888",
+    "refund_due": "186724991683788800",
+    "refund_paid": "50000000000000000",
+    "victim": "0x88abfb8dfb2e63c0b534f834b9984d50a6d58fc3"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_SWAP"
+   },
+   "at": "2026-10-20T10:09:39.884Z"
+  },
+  {
+   "id": "A_cap_3",
+   "what": "another capped refund",
+   "ok": true,
+   "tx": "0x51ae3b12847be3a32874daa807007094d924e0f9e2932ebe5116471162a06092",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 6,
+    "limit": "MAX_PER_SWAP",
+    "loss": "2773110059171840",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "50000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0xd18f3965812f35b4ee988316cea599b612f94037"
+   },
+   "payout": {
+    "to": "0xd18f3965812f35b4ee988316cea599b612f94037",
+    "amount": "50000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "50000000000000000",
+    "contract_delta": "-50000000000000000",
+    "self_paid": false,
+    "fee": "136860500000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_SWAP",
+    "loss": "2773110059171840",
+    "refund_due": "277311005917184000",
+    "refund_paid": "50000000000000000",
+    "victim": "0xd18f3965812f35b4ee988316cea599b612f94037"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_SWAP"
+   },
+   "at": "2026-10-20T10:10:27.525Z"
+  },
+  {
+   "id": "A_cap_4",
+   "what": "another capped refund",
+   "ok": true,
+   "tx": "0x086192bad02214c34ee14ade49b6bcd4c26953d4ea78ca0e668d9d4b2003317d",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 7,
+    "limit": "MAX_PER_SWAP",
+    "loss": "2489466123976705",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "50000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28"
+   },
+   "payout": {
+    "to": "0x1ca5e77a3464488d959d8298f593914d5fe30f28",
+    "amount": "50000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "50000000000000000",
+    "contract_delta": "-50000000000000000",
+    "self_paid": false,
+    "fee": "134299000000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "MAX_PER_SWAP",
+    "loss": "2489466123976705",
+    "refund_due": "248946612397670500",
+    "refund_paid": "50000000000000000",
+    "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "MAX_PER_SWAP"
+   },
+   "at": "2026-10-20T10:11:18.315Z"
+  },
+  {
+   "id": "A_pool_balance",
+   "what": "the pool's last GEN: a partial refund",
+   "ok": true,
+   "tx": "0x8d28a75203c0a32c46af2f1377ce1c6003349fd3fc3a689d00c39bb8552a39d2",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 8,
+    "limit": "POOL_BALANCE",
+    "loss": "2039142154727747",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "30000000000000000",
+    "state": "SANDWICHED_REFUNDED",
+    "victim": "0x5caa2b55aa4ac56d4798ed70eaf35b9b58c32cf2"
+   },
+   "payout": {
+    "to": "0x5caa2b55aa4ac56d4798ed70eaf35b9b58c32cf2",
+    "amount": "30000000000000000",
+    "delivered": true,
+    "why": "",
+    "recipient_delta": "30000000000000000",
+    "contract_delta": "-30000000000000000",
+    "self_paid": false,
+    "fee": "143840250000823",
+    "arrived": true
+   },
+   "case": {
+    "state": "SANDWICHED_REFUNDED",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "POOL_BALANCE",
+    "loss": "2039142154727747",
+    "refund_due": "203914215472774700",
+    "refund_paid": "30000000000000000",
+    "victim": "0x5caa2b55aa4ac56d4798ed70eaf35b9b58c32cf2"
+   },
+   "expect": {
+    "state": "SANDWICHED_REFUNDED",
+    "limit": "POOL_BALANCE"
+   },
+   "at": "2026-10-20T10:12:07.164Z"
+  },
+  {
+   "id": "A_unpaid",
+   "what": "pool empty: SANDWICHED_UNPAID",
+   "ok": true,
+   "tx": "0xdcd3995292e33f48e0fcd5b8dc3a06f340a21ca89832722d4d544bbed5fd6da0",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 9,
+    "limit": "POOL_BALANCE",
+    "loss": "660858027900928",
+    "ok": true,
+    "reason": "SAME_POOL_SANDWICH",
+    "refund": "0",
+    "state": "SANDWICHED_UNPAID",
+    "victim": "0xf529ede09e7c0114d6ab2a9f0d8ce572aa9d39d3"
+   },
+   "case": {
+    "state": "SANDWICHED_UNPAID",
+    "reason": "SAME_POOL_SANDWICH",
+    "limit": "POOL_BALANCE",
+    "loss": "660858027900928",
+    "refund_due": "66085802790092800",
+    "refund_paid": "0",
+    "victim": "0xf529ede09e7c0114d6ab2a9f0d8ce572aa9d39d3"
+   },
+   "expect": {
+    "state": "SANDWICHED_UNPAID",
+    "limit": "POOL_BALANCE"
+   },
+   "at": "2026-10-20T10:12:54.997Z"
+  },
+  {
+   "id": "A_unpriced",
+   "what": "a sandwich with USDT profit, unpriced in this pool",
+   "ok": true,
+   "tx": "0xe5830ca49104e046a5f2d1ece12e6193a954cbcd7be4b4d0de7a80d68c55ce0d",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 10,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "PROFIT_TOKEN_NOT_PRICED",
+    "refund": "0",
+    "state": "UNCLEAR",
+    "victim": "0x51f400b9770ad2bddb7cf74664f5cd1daf6a1410"
+   },
+   "case": {
+    "state": "UNCLEAR",
+    "reason": "PROFIT_TOKEN_NOT_PRICED",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0x51f400b9770ad2bddb7cf74664f5cd1daf6a1410"
+   },
+   "expect": {
+    "state": "UNCLEAR",
+    "reason": "PROFIT_TOKEN_NOT_PRICED"
+   },
+   "at": "2026-10-20T10:13:52.273Z"
+  },
+  {
+   "id": "A_not_covered",
+   "what": "a sandwich through Uniswap V2 Router02, not covered by this pool",
+   "ok": true,
+   "tx": "0x8002494161c9de2443db7b631e40ed0a6bcd99d6ad03a08d093abfda9051e5fa",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 11,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "ROUTER_NOT_COVERED",
+    "refund": "0",
+    "state": "NOT_COVERED",
+    "victim": "0xb8f937b7bcfe9da01ad616544f149324a9a40a5f"
+   },
+   "case": {
+    "state": "NOT_COVERED",
+    "reason": "ROUTER_NOT_COVERED",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0xb8f937b7bcfe9da01ad616544f149324a9a40a5f"
+   },
+   "expect": {
+    "state": "NOT_COVERED",
+    "reason": "ROUTER_NOT_COVERED"
+   },
+   "at": "2026-10-20T10:14:47.650Z"
+  },
+  {
+   "id": "A_clean",
+   "what": "a clean swap",
+   "ok": true,
+   "tx": "0xea06c915d300634e54a4950b7fc94405e286a6e7818c313b0a0391be55f86ed8",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 12,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "NO_PATTERN",
+    "refund": "0",
+    "state": "CLEAN",
+    "victim": "0xe29771d17e879beae9be4b7127f3d5c7bbd50a36"
+   },
+   "case": {
+    "state": "CLEAN",
+    "reason": "NO_PATTERN",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0xe29771d17e879beae9be4b7127f3d5c7bbd50a36"
+   },
+   "expect": {
+    "state": "CLEAN",
+    "reason": "NO_PATTERN"
+   },
+   "at": "2026-10-20T10:15:40.485Z"
+  },
+  {
+   "id": "A_unclear",
+   "what": "a sandwiched multi-hop swap",
+   "ok": true,
+   "tx": "0xeb0deb3e2844a147fc51b937823b9e8c6bbbbaeb2660304ab121732651f28599",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 13,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "MULTI_HOP_VICTIM",
+    "refund": "0",
+    "state": "UNCLEAR",
+    "victim": "0xe1e3699917dcf44ef84f24e0855e3bc90b40d7ad"
+   },
+   "case": {
+    "state": "UNCLEAR",
+    "reason": "MULTI_HOP_VICTIM",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0xe1e3699917dcf44ef84f24e0855e3bc90b40d7ad"
+   },
+   "expect": {
+    "state": "UNCLEAR",
+    "reason": "MULTI_HOP_VICTIM"
+   },
+   "at": "2026-10-20T10:16:29.777Z"
+  },
+  {
+   "id": "A_bundle",
+   "what": "one victim of a bundle with several",
+   "ok": true,
+   "tx": "0x84808cecad1260d6cc4a496a24a9bb9f4bb41b2e7e3c8d53950de228a6ebc8f4",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 14,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "MULTIPLE_VICTIMS",
+    "refund": "0",
+    "state": "UNCLEAR",
+    "victim": "0xfef6ec073b713b586b54f4c4264a228ac0be67dc"
+   },
+   "case": {
+    "state": "UNCLEAR",
+    "reason": "MULTIPLE_VICTIMS",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0xfef6ec073b713b586b54f4c4264a228ac0be67dc"
+   },
+   "expect": {
+    "state": "UNCLEAR",
+    "reason": "MULTIPLE_VICTIMS"
+   },
+   "at": "2026-10-20T10:17:18.712Z"
+  },
+  {
+   "id": "A_unverifiable",
+   "what": "a hash Ethereum does not know",
+   "ok": true,
+   "tx": "0x6ae4c753feccc9122e4c9693f2fec404df133bdbcbd985173c78ca1b22ba7686",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 15,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "TX_NOT_FOUND",
+    "refund": "0",
+    "state": "UNVERIFIABLE",
+    "victim": ""
+   },
+   "case": {
+    "state": "UNVERIFIABLE",
+    "reason": "TX_NOT_FOUND",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": ""
+   },
+   "expect": {
+    "state": "UNVERIFIABLE",
+    "reason": "TX_NOT_FOUND"
+   },
+   "at": "2026-10-20T10:18:18.309Z"
+  },
+  {
+   "id": "A_refile_unverifiable",
+   "what": "UNVERIFIABLE can be filed again",
+   "ok": true,
+   "tx": "0xe0c4d0e00269f01761df9e0dfae1a85bcd4f1196c1da0bbf5b49aed7ac9e5e29",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 15,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "TX_NOT_FOUND",
+    "refund": "0",
+    "state": "UNVERIFIABLE",
+    "victim": ""
+   },
+   "case": {
+    "state": "UNVERIFIABLE",
+    "reason": "TX_NOT_FOUND",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": ""
+   },
+   "expect": {
+    "state": "UNVERIFIABLE",
+    "reason": "TX_NOT_FOUND"
+   },
+   "attempts": 2,
+   "at": "2026-10-20T10:19:12.580Z"
+  },
+  {
+   "id": "A_duplicate",
+   "what": "a decided case filed again is refused",
+   "ok": true,
+   "tx": "0x06072a6c5442c17b634c974a4033a15b60775b99e8bda94fc5100ad43c42e8c4",
+   "status": "ACCEPTED",
+   "reason": "REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED",
+   "at": "2026-10-20T10:19:24.026Z"
+  },
+  {
+   "id": "A_top_up",
+   "what": "anyone tops the pool up (a stranger, 0.02 GEN)",
+   "ok": true,
+   "tx": "0x0da7bb3149d0cf9d1707e24df34b9ac062b8d63a91f77a85843bb328e58f4961",
+   "balance": "20000000000000000",
+   "at": "2026-10-20T10:20:13.594Z"
+  },
+  {
+   "id": "A_extend_stranger",
+   "what": "a stranger cannot extend",
+   "ok": true,
+   "tx": "0x2b84dc8838e67f2d155748533f672887e18126f2ab4a5dd56f518023634b0a32",
+   "reason": "REFUSED: ONLY_THE_SPONSOR",
+   "at": "2026-10-20T10:20:28.773Z"
+  },
+  {
+   "id": "A_extend",
+   "what": "the sponsor extends by 60 s",
+   "ok": true,
+   "tx": "0xbb610d3fe4925557ae3f8d0a7f9680bf00a7382f4a78c8414b1de4920a1f2fdd",
+   "from": 1792492194,
+   "to": 1792492254,
+   "at": "2026-10-20T10:20:44.541Z"
+  },
+  {
+   "id": "A_close_early",
+   "what": "closing before the claim deadline is refused",
+   "ok": true,
+   "tx": "0xd3dce14f8a6d5d4597ebeac142b578d821a6293d403d8a83c01f3c55fb8ff920",
+   "reason": "REFUSED: CLAIM_PERIOD_OPEN_UNTIL_1792492254",
+   "at": "2026-10-20T10:20:56.303Z"
+  },
+  {
+   "id": "create_B",
+   "what": "create pool Demo B: blocks 26231000-26231420, V2 only",
+   "ok": true,
+   "tx": "0xc515a0ae01131c548f1d78b1c36039670fa70c865bccca37d75edc8a96475dc5",
+   "pool_id": 2,
+   "claim_deadline": 1792491789,
+   "funded": "10000000000000000",
+   "at": "2026-10-20T10:21:57.034Z"
+  },
+  {
+   "id": "B_outside_range",
+   "what": "a sandwich before the pool's block range",
+   "ok": true,
+   "tx": "0x4e60cfc837f1cb017bfce2c4c59c205618ed5bd80d6ecdc33095adca72dfbdb8",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 16,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "OUTSIDE_BLOCK_RANGE",
+    "refund": "0",
+    "state": "NOT_COVERED",
+    "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28"
+   },
+   "case": {
+    "state": "NOT_COVERED",
+    "reason": "OUTSIDE_BLOCK_RANGE",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28"
+   },
+   "expect": {
+    "state": "NOT_COVERED",
+    "reason": "OUTSIDE_BLOCK_RANGE"
+   },
+   "at": "2026-10-20T10:22:51.351Z"
+  },
+  {
+   "id": "B_kind",
+   "what": "a V3 sandwich in range, but the pool covers V2 only",
+   "ok": true,
+   "tx": "0xc247fcb7cd0de82f2988d25167921ccf7549d1ae6292ecc3aa4849ec099fa9a4",
+   "status": "FINALIZED",
+   "returned": {
+    "case_id": 17,
+    "limit": "",
+    "loss": "0",
+    "ok": true,
+    "reason": "POOL_TYPE_NOT_COVERED",
+    "refund": "0",
+    "state": "NOT_COVERED",
+    "victim": "0xd18f3965812f35b4ee988316cea599b612f94037"
+   },
+   "case": {
+    "state": "NOT_COVERED",
+    "reason": "POOL_TYPE_NOT_COVERED",
+    "limit": "",
+    "loss": "0",
+    "refund_due": "0",
+    "refund_paid": "0",
+    "victim": "0xd18f3965812f35b4ee988316cea599b612f94037"
+   },
+   "expect": {
+    "state": "NOT_COVERED",
+    "reason": "POOL_TYPE_NOT_COVERED"
+   },
+   "at": "2026-10-20T10:23:49.705Z"
+  }
+ ],
+ "pools": {
+  "A": 1,
+  "B": 2
+ }
+}

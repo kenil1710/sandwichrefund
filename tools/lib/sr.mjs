@@ -2,7 +2,7 @@
 // contract, settle-aware writes (test/harness.mjs) and payouts funded the way
 // Studio delivers them (tools/lib/payout.mjs).
 import { readFileSync, existsSync } from "node:fs";
-import { connect, gen } from "../../test/harness.mjs";
+import { connect, gen, returnedJson } from "../../test/harness.mjs";
 import { payoutFees, payoutDelivered, manualAllocation } from "./payout.mjs";
 
 const root = new URL("../../", import.meta.url);
@@ -52,7 +52,7 @@ export function client({ role, address }) {
       catch (e) { return { ok: false, status: "NOT_SENT", hash: null, reason: "fee estimate failed: " + String(e?.details ?? e?.shortMessage ?? e?.message ?? e).slice(0, 160) }; }
     }
     const out = await c.send(fn, args, value, fees ? { fees } : {});
-    return { ok: out.ok, status: out.status, hash: out.hash, reason: out.revertReason ?? "", returned: out.returned, seconds: out.seconds, tx: out.tx };
+    return { ok: out.ok, status: out.status, hash: out.hash, reason: out.revertReason ?? "", returned: (out.ok ? returnedJson(out) : null) ?? out.returned, seconds: out.seconds, tx: out.tx };
   }
   return { me, view, write, read: c.read, wallet: c.wallet };
 }

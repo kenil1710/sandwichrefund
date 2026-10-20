@@ -1173,5 +1173,24 @@
   "every_refund_arrived": true,
   "all_match_feasibility": true,
   "sponsor_balance": "498474948039760231304"
+ },
+ "close": {
+  "at": "2026-10-20T10:24:11.888Z",
+  "status": "CLOSED",
+  "closed_at": 1792491764,
+  "closed_by": "0x0e981fa803eaed7dce801a8a3e6e9f82c36e354d",
+  "close_tx": "0x95d5fdfdeee31784b4f9419f8b12cf2daa6a0af8a595995f51e55ca6d1ddf90c",
+  "close_status": "FINALIZED",
+  "keeper_status": "DONE",
+  "returned": "1278652808668020227",
+  "refunded": "221347191331979773",
+  "funded": "1500000000000000000",
+  "delivered": true,
+  "why": "",
+  "sponsor_delta": "1278652808668020227",
+  "arrived": true,
+  "adds_up": true,
+  "after_deadline_s": 57,
+  "contract_balance": "0"
  }
 }
