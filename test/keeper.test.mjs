@@ -392,3 +392,56 @@ test("checkpoint after every page", async () => {
   await runKeeper({ scan: ch.api(), reg: rg.api(), store });
   assert.equal(store.saves.filter((s) => s.startsWith("scan 1 ethereum")).length, 100 / PAGE_BLOCKS);
 });
+
+test("attack: two keepers with separate state file one case once", async () => {
+  const ch = new FakeChain(), rg = new FakeReg();
+  rg.pool();
+  const v = ch.sandwich(120, "0x" + "e".repeat(40));
+  const s1 = memStore(), s2 = memStore();
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store: s1 });
+  rg.tick();
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store: s2 });
+  rg.tick();
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store: s1 });
+  assert.equal(rg.submits.filter((x) => x.hash === v).length, 1);
+  assert.equal(s2.get().actions[fileKey(1, "ethereum", v)].status, "DONE");
+  assert.equal(s1.get().actions[fileKey(1, "ethereum", v)].status, "DONE");
+});
+
+test("attack: a lying endpoint cannot inject a candidate", async () => {
+  const ch = new FakeChain(), rg = new FakeReg(), store = memStore();
+  rg.pool();
+  const api = ch.api();
+  const fake = hx(424242);
+  const scan = { ...api, endpoints: () => EP.slice(0, 2), async getLogs(u, c, f, t) { const l = await api.getLogs(u, c, f, t);
+    return u === EP[0] && f === 150 ? [...l, v2log(150, 0, hx(1), POOLA, 10n, -100n, BOT), v2log(150, 1, fake, POOLA, 5n, -40n, ROUTER), v2log(150, 2, hx(2), POOLA, -11n, 100n, BOT)] : l; } };
+  ch.txs[fake] = { hash: fake, from: "0x" + "6".repeat(40), to: ROUTER, blockNumber: "0x96" };
+  const { state } = await runKeeper({ scan, reg: rg.api(), store });
+  assert.equal(rg.submits.length, 0);
+  assert.ok(state.pools[1].chains.ethereum.failed.includes(150));
+});
+
+test("settle phase: this run's filings are polled to FINALIZED within the budget", async () => {
+  const ch = new FakeChain(), rg = new FakeReg(), store = memStore();
+  rg.pool();
+  const v = ch.sandwich(120, "0x" + "e".repeat(40));
+  rg.finalizeOnTick = false;
+  const api = rg.api();
+  let sleeps = 0;
+  const reg = { ...api, async sleep() { sleeps++; if (sleeps === 2) { rg.finalizeOnTick = true; rg.tick(); } } };
+  const { state } = await runKeeper({ scan: ch.api(), reg, store, settleMs: 60_000 });
+  assert.equal(state.actions[fileKey(1, "ethereum", v)].status, "DONE");
+  assert.equal(state.unprocessed.length, 0);
+});
+
+test("demo contract: no scan, but due pools are closed", async () => {
+  const ch = new FakeChain(), rg = new FakeReg(), store = memStore();
+  rg.pool({ claim_deadline: 1_800_000_000 + 10 });
+  ch.sandwich(120, "0x" + "e".repeat(40));
+  rg.t += 20;
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store, scanPools: false }); rg.tick();
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store, scanPools: false });
+  assert.equal(rg.submits.filter((s) => !s.close).length, 0);
+  assert.equal(rg.pools[0].status, "CLOSED");
+  assert.equal(ch.calls, 0);
+});

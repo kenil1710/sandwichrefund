@@ -1,0 +1,37 @@
+name: keeper
+on:
+  schedule:
+    # Hourly. GitHub starts scheduled runs late (hours, at times) and drops a run
+    # that has not started by the schedule's next fire, so the hourly entry alone
+    # can starve; the 6-hourly entry outlives that delay. The keeper is idempotent
+    # and runs one at a time.
+    - cron: "17 * * * *"
+    - cron: "41 */6 * * *"
+  workflow_dispatch: {}
+concurrency:
+  group: keeper
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  keep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix test
+      - name: Check out the keeper-state branch (durable checkpoints)
+        run: |
+          git fetch origin keeper-state:keeper-state
+          git worktree add state keeper-state
+          git -C state config user.name sandwichrefund-keeper
+          git -C state config user.email keeper@users.noreply.github.com
+      - run: node tools/keeper.mjs --state=state --push --max=30 --wait=240 --settle=900
+        env:
+          SANDWICH_KEEPER_KEY: ${{ secrets.SANDWICH_KEEPER_KEY }}
+      - name: Push the final checkpoint
+        if: always()
+        run: git -C state push -q origin HEAD:keeper-state || true

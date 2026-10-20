@@ -17,6 +17,7 @@
 //      around it) whose transaction went to a covered router - its `to` read
 //      from two endpoints - becomes a FILE action. So does every watchlist
 //      hash (data/cases.json) inside the range.
+//   5. SETTLE: poll this run's transactions until FINALIZED, within settleMs.
 //   4. ACT, oldest first, up to maxActions: re-read the pool's decision on the
 //      case (already decided -> DONE, no transaction), else file it and
 //      checkpoint the hash at once. Pools past their claim deadline get a
@@ -83,7 +84,7 @@ const logKey = (l) => `${String(l.transactionHash).toLowerCase()}:${Number(l.log
  * store: { load() -> state, save(state, why) }
  * watch: [{chain, hash}]   hashes to file whatever the scan finds
  */
-export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, maxActions = 25, maxPages = 400, waitMs = 0 }) {
+export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, maxActions = 25, maxPages = 400, waitMs = 0, settleMs = 0, scanPools = true }) {
   const state = (await store.load()) ?? emptyState();
   const now0 = reg.now();
   const run = { started_at: now0, finished_at: null, resumed: 0, pools: 0, pages: 0, pages_failed: 0, candidates: 0,
@@ -190,7 +191,7 @@ export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, 
     ps.status = p.status;
     ps.claim_deadline = p.claim_deadline;
     ps.name = p.name;
-    const open = p.status === "OPEN" && reg.now() <= p.claim_deadline;
+    const open = scanPools && p.status === "OPEN" && reg.now() <= p.claim_deadline;
     if (open) {
       for (const r of p.ranges) {
         const cs = (ps.chains[r.chain] ??= { cursor: r.start_block, failed: [], pages_ok: 0, done: false, head: 0 });
@@ -284,6 +285,24 @@ export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, 
       else { a.status = tx?.statusName === "ACCEPTED" ? "ACCEPTED" : "SUBMITTED"; run.pending++; note(a.key, `waiting for ${a.tx} (${tx?.statusName ?? "not visible"})`); }
       await save("waited " + a.key);
     } else { run.pending++; note(a.key, `submitted ${a.tx}; checked next run`); }
+  }
+
+  // 5. settle: poll what this run left in flight until it is final, within the budget
+  const t0 = Date.now();
+  while (settleMs > 0 && reg.sleep) {
+    const open = Object.values(state.actions).filter((a) => ["SUBMITTED", "ACCEPTED", "FINAL_UNVERIFIED"].includes(a.status) && a.tx);
+    if (!open.length || Date.now() - t0 > settleMs) break;
+    await reg.sleep(15_000);
+    for (const a of open) {
+      let tx = null;
+      try { tx = await reg.getTx(a.tx); } catch { continue; }
+      if (tx && (tx.statusName === "FINALIZED" || TERMINAL_BAD.includes(tx.statusName))) {
+        unprocessed.delete(a.key);
+        run.pending = Math.max(0, run.pending - 1);
+        await conclude(a, tx);
+        await save("settled " + a.key);
+      }
+    }
   }
 
   for (const a of Object.values(state.actions)) if (a.status === "FAILED") note(a.key, "FAILED: " + (a.last_error ?? ""));
