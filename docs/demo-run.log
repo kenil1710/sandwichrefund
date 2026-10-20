@@ -126,3 +126,30 @@ skip B_outside_range
 skip B_kind
 
 == create_C create pool Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN
+  -> ok {"id":"create_C","ok":true,"tx":"0x8a48f3694483e5e0c682702f657fed1f8f9bdc58573fbb014fb03748816ea79c","pool_id":3,"claim_deadline":1792492176,"funded":"10000000000000000","at":"2026-10-20T10:25:24.500Z"}
+
+== C_refunded a V2 sandwich in range, refunded at pool C's rate
+  -> ok {"id":"C_refunded","ok":true,"tx":"0x62f2b0b84eef2f47d4042d4db6e261b7d91dba0c03e2144cdd033edf9d935f39","status":"FINALIZED","returned":{"case_id":18,"limit":"RATE","loss":"55472774184960","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"5547277418496000","state":"SANDWICHED_REFUNDED","victim":"0x8ec8a1de471e3a8a8c95c6671f3f69a82492dd97"},"payout":{"to":"0x8ec8a1de471e3a8a8c95c6671f3f69a82492dd97"
+
+== gate MEVGateDemo reads every state
+  -> ok {"id":"gate","ok":true,"states":{"refunded":{"state":"SANDWICHED_REFUNDED","clean":false,"refunded":true,"why":"read from the registry"},"unpaid":{"state":"SANDWICHED_UNPAID","clean":false,"refunded":false,"why":"read from the registry"},"clean":{"state":"CLEAN","clean":true,"refunded":false,"why":"read from the registry"},"unclear":{"state":"UNCLEAR","clean":false,"refunded":false,"why":"read fro
+
+== gate_attest attest_case stores a reading on chain
+  -> ok {"id":"gate_attest","ok":true,"tx":"0x8828f1166e4c4614304ae95d7d23e4233e7d41cc6cc40f3f9baab3c37f68343a","attestation_id":1,"at":"2026-10-20T10:26:43.653Z"}
+
+== close_B close pool B after its deadline: the rest to the sponsor
+  -> ok {"id":"close_B","ok":true,"tx":"0x510886d49d51927a3c65241e6642d8b5fa41c12b853116fae7a58c369621617c","status":"FINALIZED","returned":{"ok":true,"pool_id":2,"returned":"10000000000000000","to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af"},"payout":{"to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af","amount":"10000000000000000","delivered":true,"why":"","recipient_delta":"10000000000000000","contract_
+
+== close_C close pool C after its deadline: the rest to the sponsor
+  waiting 145s for pool 3's claim deadline
+  waiting 23s for pool 3's claim deadline
+  -> ok {"id":"close_C","ok":true,"tx":"0x3f7d89419fe8c3b6a3d82e065f3fa002064ab3971c7332ca68bf6fb21ab0d8ac","status":"FINALIZED","returned":{"ok":true,"pool_id":3,"returned":"4452722581504000","to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af"},"payout":{"to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af","amount":"4452722581504000","delivered":true,"why":"","recipient_delta":"4452722581504000","contract_del
+
+== close_A close pool A after its deadline: the rest to the sponsor
+  waiting 24s for pool 1's claim deadline
+  -> ok {"id":"close_A","ok":true,"tx":"0x1ae361264bfafd93f42cbdd446c8adcabccff43ce8ec77f53bbcae8b3fdeca88","status":"FINALIZED","returned":{"ok":true,"pool_id":1,"returned":"20000000000000000","to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af"},"payout":{"to":"0x21b843a75fd0f672527e538c6fc9a372a7cd07af","amount":"20000000000000000","delivered":true,"why":"","recipient_delta":"20000000000000000","contract_
+
+== final_balance the demo contract holds nothing: eth_getBalance 0
+  -> ok {"id":"final_balance","ok":true,"balance":"0","stats":{"attackers":6,"balance":"0","cases":18,"counts":{"closes":3,"create_refused":3,"credit_withdrawals":2,"extensions":1,"filings":19,"pools":3,"refunds":9,"state:CLEAN":1,"state:NOT_COVERED":3,"state:SANDWICHED_REFUNDED":9,"state:SANDWICHED_UNPAID":1,"state:UNCLEAR":3,"state:UNVERIFIABLE":1,"sweeps":0,"top_up_refused":0,"top_ups":1,"unpaid":1},"c
+
+demo run complete: 35 steps
