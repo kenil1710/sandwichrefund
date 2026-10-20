@@ -1,0 +1,16 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env*
+!.env.example
+test/.accounts.json
+.accounts.json
+test/.state*.json
+.next/
+.vercel/
+*.tsbuildinfo
+frontend/.next/
+frontend/node_modules/
+scratch/
