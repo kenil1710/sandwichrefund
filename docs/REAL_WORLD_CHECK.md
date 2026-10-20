@@ -8,10 +8,10 @@ Every SANDWICHED and CLEAN verdict of the 65 real cases (docs/FEASIBILITY.md), c
 - **CLEAN: 16/16 confirmed**: the transactions right before and after each victim never share an actor that swaps the victim's pool on both sides.
 - **Disagreements: 0.**
 - Public MEV explorers, fetched when this was generated (every case's links are in the tables):
-  - eigenphi_page: `https://eigenphi.io/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff14388` answered HTTP 301 (redirect to https://eigenphi.substack.com/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd).
+  - eigenphi_page: `https://eigenphi.io/mev/eigentx/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff14388` answered HTTP 301 (redirect to eigenphi.substack.com).
   - libmev_page: `https://libmev.com/transactions/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff14388` answered HTTP 200.
-  - libmev_api: `https://api.libmev.com/v1/bundles?filterByTxHash=0xa3bacdd6fe4a1bfac7278ceb5854d` answered HTTP 522: `<!DOCTYPE html> <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="`.
-  - phalcon_page: `https://app.blocksec.com/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8` answered HTTP 302 (redirect to https://app.blocksec.com/phalcon/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd).
+  - libmev_api: `https://api.libmev.com/v1/bundles?filterByTxHash=0xa3bacdd6fe4a1bfac7278ceb5854d` answered HTTP 0 (The operation was aborted due to timeout).
+  - phalcon_page: `https://app.blocksec.com/explorer/tx/eth/0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8` answered HTTP 302 (redirect to app.blocksec.com).
   - zeromev_api: `https://data.zeromev.org/v1/mevBlock?block_number=26230931&count=1` answered HTTP 530: `<!doctype html> <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="`.
   EigenPhi's explorer now redirects to its newsletter, libMEV's page is a script-only app whose data API did not answer, Phalcon needs a login and ZeroMEV's API host is down, so none could be read automatically. Each case's links are recorded for a reader with a browser; the independent re-derivation above stands in for them.
 - Public labels: the attacker contracts include Etherscan's `jaredfromsubway: MEV Bot 2` and `MEV Bot 0x140...dab`; jaredfromsubway.eth resolves to the EOA 0xae2fc483...fae13 (data/labels.json).
