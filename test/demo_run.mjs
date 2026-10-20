@@ -18,8 +18,9 @@ const feas = JSON.parse(readFileSync(new URL("../docs/feasibility.json", import.
 const byPrefix = (p) => { const c = feas.cases.find((x) => x.hash.startsWith(p)); if (!c) throw new Error("no case " + p); return c; };
 const doc = existsSync(OUT) ? JSON.parse(readFileSync(OUT)) : { contract: ADDR, gate: GATE, steps: [], pools: {} };
 const save = () => writeFileSync(OUT, JSON.stringify(doc, null, 1) + "\n");
-const sp = client({ role: "sponsor", address: ADDR });
-const sp2 = client({ role: "sponsor2", address: ADDR });
+// the demo's sponsor is sponsor2, so the canonical sponsor's balance moves only by the canonical pool
+const sp = client({ role: "sponsor2", address: ADDR });
+const sp2 = client({ role: "stranger", address: ADDR });
 const fl = client({ role: "filer", address: ADDR });
 const st = client({ role: "stranger", address: ADDR });
 const gate = client({ role: "filer", address: GATE });
@@ -129,7 +130,7 @@ await step("A_duplicate", "a decided case filed again is refused", async () => {
   const w = await st.write("file_case", [A, "ethereum", byPrefix("0x3ecd364f").hash], { payee: byPrefix("0x3ecd364f").victim, simulate: false });
   return { ok: !w.ok && /ALREADY_DECIDED_SANDWICHED_REFUNDED/.test(w.reason ?? ""), tx: w.hash, status: w.status, reason: w.reason };
 });
-await step("A_top_up", "anyone tops the pool up (sponsor2, 0.02 GEN)", async () => {
+await step("A_top_up", "anyone tops the pool up (a stranger, 0.02 GEN)", async () => {
   const w = await sp2.write("top_up", [A], { value: GEN / 50 });
   const tx = w.hash ? await finalized(sp2.read, w.hash) : null;
   const p = await sp2.view("get_pool", [A, 0]);
