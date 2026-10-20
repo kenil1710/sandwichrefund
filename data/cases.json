@@ -1,0 +1,463 @@
+{
+ "chain": "ethereum",
+ "start_block": 26230913,
+ "end_block": 26232413,
+ "note": "Every candidate victim the pattern scan found through a covered router in the range, plus router swaps sampled across the range",
+ "cases": [
+  {
+   "chain": "ethereum",
+   "hash": "0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xa3810601e2edf4d5e308855b0589a2c0ddeb715e537b02baff6308cbedd6bfc9",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x3cb99a7686dba08d7ddee67c7180efdfb5a6dad3ec18c34c34efa841166b391b",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x7d38614e8cb3ce4198a50d454eb1b63d32572175da1d43f2d558b6ac89ca22c8",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xf86263376c658c527099fae60e9ca8c9c4f02537bf2952e837d7ac7cb91dc2cb",
+   "expect": "UNCLEAR",
+   "reason": "MULTIPLE_VICTIMS",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x38d78dcad507a1f8a0ff9a3fb84ba6379060db165be8ed6e0f102e675599eefe",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xb497f700e55869a5a14bb0c3ebe040e6694564cffca5add4577cff60081974fb",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xc3a58de67eb2070209163a3b738296baa022500adf210b6d628c730dba600f03",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xcdfca5d71d35a038d1ed6150e5783f537e76efd3bf5b8e3614f4440f52dc7700",
+   "expect": "UNCLEAR",
+   "reason": "MULTIPLE_VICTIMS",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x571806e9fe12a41a7a0f5a8b1341aa62838431dd3b3f7e92180e1775f99389ca",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x3dff543bf2e5978b06b1380e574285f5e5c5c276627e056c02dc1b976105b9fa",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xc0ca16945e83f4d307eaa0ee087fd71be489f2b12d251ab633f307dcfba94e8a",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x6230d743af310553643ac11f2d3fbd4dd2d109ad16b437d860e4078f735c02cb",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x93bfeec15685f1ce2e6f4a41ceead444e34f792578524caa7e9bc6088d4202bf",
+   "expect": "UNCLEAR",
+   "reason": "COMPLEX_PATTERN",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xa7fb2f97f887b8d91a31c82fe4cd03a7e0cb63e167c646ddb5a312b2d22dd3eb",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x3ecd364f8c88608b472ec070de996e1ce283bb2a0d5929056a089ae217e5aa4b",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xcf1bf7b6944a6caa2acdb63091764e0ae2ad2b2aa01fd790b0fe865b2288446d",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x1aac8878490dd5fe742d247da187205b3aaa6dfe6b9b84428d5d4146e478a471",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x2b846c6ba5e794bfd1161d0d942133f61dda7cdb32790edaf3ff4fb5977a1f1c",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xe7dc847dc0580c1503c5a12fd52bddd9f6331e9118bd0f3a340cafaa6d8673c0",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x29960a405f116411259893230b7a6ea25ea2ebf6914426407b508817aa137155",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xe8ff6ea8bf9892bfad5f29700c76a0ee6fe8f68de32e33c32d015bff81215a65",
+   "expect": "UNCLEAR",
+   "reason": "PROFIT_TOKEN_NOT_PRICED",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x4275a6029b2799a1cfdb5b0db2c2b3ec0f65fa1956a3e90b5598eb7781aa147b",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x1b17869b65b2a22c4f89f55a745ed7d7b4f394a6a09987df6333215d79ecb730",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xaf8978c91ceccc492dbd4af296ddad8b4979a8163498a452cafad7ed76ba4e68",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xe340e0bf4b8f434008da905e924dd14c715c3439319fbffff07234b4deeb78dd",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x35c0ceb585ae65a6c8d7e58f27f80da80ab1a78bd820b3dcb69c29df174ffd03",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x643387b00a05420f8b5298dd1158db69cfc369b97a70db4a99ff752e4845a5d6",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x4645c5aa73c00217d06649a5c4ebf93223aa00bb9dafe502274247726c00d2cc",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xf593ce370b710098dc782663b21301c9c821e89571ad1f55d5a985a2a0dfde7c",
+   "expect": "UNCLEAR",
+   "reason": "PROFIT_TOKEN_NOT_PRICED",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x37f8ae5eb59db537c122b38fb65883d2424b23175839fdc0961543ffcddfcdc9",
+   "expect": "UNCLEAR",
+   "reason": "PROFIT_TOKEN_NOT_PRICED",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xca10c5a7b8aba911eda48461a9251108e75252a9895ca59c100e29b7eb0a56d8",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xc844609cb45b8162738e552dcb1030d93c71e2a64d1a9bbf5eeba7980d2c3c57",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x0ec203a0b026f50134130d77e0b510f3a86ed426a7cfa2d54e30baa45695a468",
+   "expect": "UNCLEAR",
+   "reason": "TOO_MANY_HOPS",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xd10d2fa2abe7c1d1e7e9c2e3585547eeae0a1b49aa00b57c9b8fe1f8fff9a19b",
+   "expect": "UNCLEAR",
+   "reason": "NO_ATTACKER_PROFIT",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xacff1b3f017daa38d50e830e0e160c08aca676dfedd60846137debf710e24a99",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xd7dc3078fddc6886f280245e2aec6282b76de9a4b0868ab3f16ae9c8d6a979a2",
+   "expect": "UNCLEAR",
+   "reason": "NO_ATTACKER_PROFIT",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x37bcf9a4d5a594856ed0144eec605d010c59e472665b61cc1c050f47e7867496",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x4e54cf604c0b4762491ef9d0f27e6cb02c8da75bac941012e442a8c69b6fe61a",
+   "expect": "UNCLEAR",
+   "reason": "NO_ATTACKER_PROFIT",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x93e620393439465c7f631f74cde36181044bb4d67b3e8c8bb854053d1d2d5cc0",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xa79653f72687efcebe5914fa38596911b4e0f76350e781ba837a66ffe4e0e982",
+   "expect": "UNCLEAR",
+   "reason": "NO_ATTACKER_PROFIT",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x0d3d76d9d6252b8fe26cd8038c83709a17c53e63b929840ce3736b76c5992367",
+   "expect": "UNCLEAR",
+   "reason": "COMPLEX_PATTERN",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xbfd7df109b3926534e3b9e7b3211491b5a42ee97ba83edf905bdacc76aeee5da",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xb572fae6a3eb5fe6b87f244d2c7d1a5628feaab3bc774766950ab8933e46aa67",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x44020ee3dda9470132cb13e0b83249e9e86b8a1af8a660afb0c3357d93118a8b",
+   "expect": "UNCLEAR",
+   "reason": "COMPLEX_PATTERN",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x483ef860a9706ee14ed22f8d05249f1899b5783f4b1d203e9df68fa636322829",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x78b3b26394ee95c41dffc4f16ee8d2b7b95af704aaabae1a6d260167002254a8",
+   "expect": "SANDWICHED",
+   "reason": "SAME_POOL_SANDWICH",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x7d45939ae926ef823221675dae5422fb724455efd77baea639820719fe76d2be",
+   "expect": "UNCLEAR",
+   "reason": "PROFIT_TOKEN_NOT_PRICED",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x411e4fb5894690e1a57c6d0135d55a2328a929784159de23e6e125cd6d5f5d93",
+   "expect": "UNCLEAR",
+   "reason": "MULTI_HOP_VICTIM",
+   "source": "pattern-scan"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x502301f20edc1045403d6980255d6c9f238547fe852c6d4079a622be69cc2de6",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x559fb4b9afabe2927d8f2f3fdb7fe74ce106534eb4208c6604220301670ee49b",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x6fb527ea1207e82944bce82257f3ee4cca0e798f43ebfe9314ec29a21cd4be38",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x9777343eda33951ba29e340340fa1c78af3b9d2b2ec151d18d4256ebbaeee500",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xa20e8944a9b20865229dbd4f38954c206d53f3bfc2e5f6f4bfcf2f035b9fc028",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xca6534f176f3169e04894c31a341e9361f8db184cc8524bb3b3fe700b204454d",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xc14d4216192d298dbcb3ac4d734bb0ff98027840ff198f754089cc6879770388",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x512fca0e46bddcfae5be6657d98e10353d04ffd6fda33143362af48aff15b045",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xbde955216b8580038ae7e741600289f28e124b6ce9a670b6d836dba1dd247942",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0xd2de15ef29ea95b1e2063569caabb1ddd2d6c961df5f7a84a1ca142bc16c71df",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x8ee1f1c1dba091e577b57a81940bb7be0eab8f22fde6afa60a084e48eb645edf",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x8e582ac6df73be6e6677cdd5be01747700ea3910d104800e40a7add4b721cf27",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  },
+  {
+   "chain": "ethereum",
+   "hash": "0x7c41c2a897d3f49dc4faa924b8706eb2ea9f91ab71998fb5b3bb1ac205c8c75a",
+   "expect": "CLEAN",
+   "reason": "NO_PATTERN",
+   "source": "router-sample"
+  }
+ ]
+}

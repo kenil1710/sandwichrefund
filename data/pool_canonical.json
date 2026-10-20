@@ -1,0 +1,29 @@
+{
+  "name": "SandwichRefund canonical pool: Ethereum, 11 routers, blocks 26230913-26232413",
+  "chains": ["ethereum"],
+  "routers": [
+    {"chain": "ethereum", "address": "0x66a9893cc07d91d95644aedd05d03f95e1dba8af", "name": "Uniswap Universal Router v2"},
+    {"chain": "ethereum", "address": "0x23617e59a5925b2a4bf75d73ff6711cd0b29de85", "name": "Uniswap Universal Router v2.1.2"},
+    {"chain": "ethereum", "address": "0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad", "name": "Uniswap Universal Router"},
+    {"chain": "ethereum", "address": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d", "name": "Uniswap V2 Router02"},
+    {"chain": "ethereum", "address": "0x68b3465833fb72a70ecdf485e0e4c7bd8665fc45", "name": "Uniswap SwapRouter02"},
+    {"chain": "ethereum", "address": "0xe592427a0aece92de3edee1f18e0157c05861564", "name": "Uniswap V3 SwapRouter"},
+    {"chain": "ethereum", "address": "0x111111125421ca6dc452d289314280a0f8842a65", "name": "1inch Aggregation Router v6"},
+    {"chain": "ethereum", "address": "0x0000000000001ff3684f28c67538d4d072c22734", "name": "0x Allowance Holder"},
+    {"chain": "ethereum", "address": "0x6131b5fae19ea4f9d964eac0408e4408b66337b5", "name": "KyberSwap Meta Aggregation Router v2"},
+    {"chain": "ethereum", "address": "0x8feab81d36e7576107d5de0758c1b839be31b4f6", "name": "OKX DEX Router"},
+    {"chain": "ethereum", "address": "0x1231deb6f5749ef6ce6943a275a1d3e7486f4eae", "name": "LI.FI Diamond"}
+  ],
+  "kinds": ["V2", "V3"],
+  "ranges": [{"chain": "ethereum", "start_block": 26230913, "end_block": 26232413}],
+  "rates": [
+    {"chain": "ethereum", "token": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", "num": "10", "den": "1", "symbol": "WETH", "decimals": 18},
+    {"chain": "ethereum", "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", "num": "10000000000000", "den": "2400", "symbol": "USDC", "decimals": 6},
+    {"chain": "ethereum", "token": "0xdac17f958d2ee523a2206206994597c13d831ec7", "num": "10000000000000", "den": "2400", "symbol": "USDT", "decimals": 6}
+  ],
+  "max_per_swap": "50000000000000000",
+  "max_per_victim": "100000000000000000",
+  "claim_period_s": 3600,
+  "value": "1500000000000000000",
+  "meta": {"sponsor": "SandwichRefund seed sponsor", "rate_note": "10 GEN per 1 WETH of attacker profit; USDC and USDT at 2400 per WETH"}
+}

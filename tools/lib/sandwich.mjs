@@ -176,9 +176,9 @@ export async function readBoth(chain, hash, opts = {}) {
     if (a.reason && a.reason === b.reason) return { reason: a.reason, detail: "" };
     return { reason: "RPC_DISAGREE", detail: "one RPC has the transaction, the other does not" };
   }
-  const strip = (f) => ({ ...f, finalized: 0 });
+  const strip = (f) => { const { finalized, ...rest } = f; return rest; };
   if (canon(strip(a)) !== canon(strip(b))) return { reason: "RPC_DISAGREE", detail: "the two RPCs answer differently" };
-  return { facts: { ...a, finalized: Math.min(a.finalized, b.finalized) } };
+  return { facts: { ...strip(a), final: a.tx.block + 1 <= Math.min(a.finalized, b.finalized) } };
 }
 
 // ---------------------------------------------------------------------------
@@ -210,7 +210,7 @@ export function judge(terms, r) {
   if (r.reason) return { verdict: "UNVERIFIABLE", reason: r.reason };
   const f = r.facts, t = f.tx;
   const out = (verdict, reason, extra = {}) => ({ verdict, reason, block: t.block, index: t.index, victim: t.from, router: t.to, ...extra });
-  if (t.block + 1 > f.finalized) return out("UNVERIFIABLE", "NOT_FINALIZED");
+  if (f.final !== true) return out("UNVERIFIABLE", "NOT_FINALIZED");
   if (t.status !== 1) return out("NOT_COVERED", "TX_FAILED");
   if (!terms.routers.includes(t.to)) return out("NOT_COVERED", "ROUTER_NOT_COVERED");
   if (t.block < terms.start_block || t.block > terms.end_block) return out("NOT_COVERED", "OUTSIDE_BLOCK_RANGE");
