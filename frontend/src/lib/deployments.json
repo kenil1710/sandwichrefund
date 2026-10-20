@@ -1,0 +1,56 @@
+{
+  "commit": "f5e60cc6b48e9222909d0524d26f0e2385943c8c",
+  "network": "studiodev",
+  "chain_id": 61997,
+  "explorer": "https://explorer-studio-dev.genlayer.com/",
+  "registry": "0x774B1200fB05f19b057390CF1DdA1Ea2AD109917",
+  "registryDemo": "0x7f75A7166500404FB7A7590Cd9c495Eb6EEed932",
+  "gate": "0x2A0446ced7A4F7dA8542f6Db05a466E32B8A274d",
+  "gateDemo": "0xb74aB6983c50595396CDD48C407F52Da254811f5",
+  "contracts": {
+    "SandwichRefund": {
+      "address": "0x774B1200fB05f19b057390CF1DdA1Ea2AD109917",
+      "file": "build/SandwichRefund.py",
+      "sha256": "76af101fbd3303f584e9930cc6299e0ebca3a0520bdcba465bb929b992c4a266",
+      "bytes": 70990,
+      "commit": "f5e60cc6b48e9222909d0524d26f0e2385943c8c",
+      "deploy_tx": "0xba71099180ccf09578fa3d0e44b778135b94c241ba98dc820688d4643d57d2b9",
+      "constructor_args": [
+        "CANONICAL"
+      ]
+    },
+    "SandwichRefundDemo": {
+      "address": "0x7f75A7166500404FB7A7590Cd9c495Eb6EEed932",
+      "file": "build/SandwichRefund.py",
+      "sha256": "76af101fbd3303f584e9930cc6299e0ebca3a0520bdcba465bb929b992c4a266",
+      "bytes": 70990,
+      "commit": "f5e60cc6b48e9222909d0524d26f0e2385943c8c",
+      "deploy_tx": "0x344f75a76683c4e2d3a232feddb1df26f05ad9a0475b51b723bb1efe8eec11e4",
+      "constructor_args": [
+        "DEMO"
+      ]
+    },
+    "MEVGate": {
+      "address": "0x2A0446ced7A4F7dA8542f6Db05a466E32B8A274d",
+      "file": "build/MEVGate.py",
+      "sha256": "baee89de511d70c85c73b8fc0bb9789a9994cf2f85b109c64aeadf051ec6ce82",
+      "bytes": 28069,
+      "commit": "f5e60cc6b48e9222909d0524d26f0e2385943c8c",
+      "deploy_tx": "0x772845d28a6edb8e721dbd99ca4693388215c7a138a0fd16922bec16d3a35232",
+      "constructor_args": [
+        "0x774B1200fB05f19b057390CF1DdA1Ea2AD109917"
+      ]
+    },
+    "MEVGateDemo": {
+      "address": "0xb74aB6983c50595396CDD48C407F52Da254811f5",
+      "file": "build/MEVGate.py",
+      "sha256": "baee89de511d70c85c73b8fc0bb9789a9994cf2f85b109c64aeadf051ec6ce82",
+      "bytes": 28069,
+      "commit": "f5e60cc6b48e9222909d0524d26f0e2385943c8c",
+      "deploy_tx": "0x72b22073db09d8b0ad397e7ed59366e33e80e33dde72e76357f194ab0f01ced5",
+      "constructor_args": [
+        "0x7f75A7166500404FB7A7590Cd9c495Eb6EEed932"
+      ]
+    }
+  }
+}
