@@ -24,8 +24,13 @@ const refunded = c.SANDWICHED_REFUNDED ?? 0;
 const gen = (w) => (Number(BigInt(w)) / 1e18).toFixed(3);
 const payouts = demo.steps.filter((s) => s.payout).length;
 
+const ur = {};
+for (const x of feas.cases.filter((x) => x.verdict === "UNCLEAR")) ur[x.reason] = (ur[x.reason] ?? 0) + 1;
+const uname = { MULTI_HOP_VICTIM: "multi-hop victims", PROFIT_TOKEN_NOT_PRICED: "unpriced profit tokens", NO_ATTACKER_PROFIT: "no net attacker profit",
+  COMPLEX_PATTERN: "several front/back-runs", MULTIPLE_VICTIMS: "bundles with several victims", TOO_MANY_HOPS: "over 4 hops" };
+const unclearText = Object.entries(ur).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${v} ${uname[k] ?? k}`).join(", ");
 const one = "SandwichRefund: a sponsor funds a pool; GenLayer validators read Ethereum swaps from two RPCs, code detects same-block sandwiches and refunds the victim's loss in GEN.";
-const desc = `Wallets and DEX front-ends route users into sandwich attacks and cannot prove or repay the loss. SandwichRefund lets a sponsor lock GEN in a pool with frozen terms: covered routers, Uniswap V2/V3 pools, block range, refund rate per profit token, caps, claim period. Anyone files a victim tx; every validator reads its receipt and the pool's Swap logs from two Ethereum RPCs and code decides: one actor's front-run and back-run on the victim's pool in the same block with positive profit is SANDWICHED and the attacker's net profit is refunded to tx.from at once. Partial patterns are UNCLEAR, never paid. Seeded with ${feas.cases.length} real swaps of 2026-10-20: ${n("SANDWICHED")} sandwiched (jaredfromsubway and ${new Set(feas.cases.filter((x) => x.verdict === "SANDWICHED").map((x) => x.attacker_eoa)).size - 1} other bots), ${n("CLEAN")} clean, ${n("UNCLEAR")} unclear; ${refunded} refunds arrived. MEVGate answers consumers; a keeper scans and files.`;
+const desc = `Wallets and DEX front-ends route users into sandwich attacks and cannot prove or repay the loss. SandwichRefund lets a sponsor lock GEN in a pool with frozen terms: covered routers, Uniswap V2/V3 pools, block range, refund rate per profit token, caps, claim period. Anyone files a victim tx; every validator reads its receipt and the pool's Swap logs from two Ethereum RPCs and code decides: one actor's front-run and back-run on the victim's pool in the same block with positive profit is SANDWICHED and the attacker's net profit is refunded to tx.from at once. Partial patterns are UNCLEAR, never paid. Seeded with ${feas.cases.length} real swaps of 2026-10-20: ${n("SANDWICHED")} sandwiched (jaredfromsubway and ${new Set(feas.cases.filter((x) => x.verdict === "SANDWICHED").map((x) => x.attacker_eoa)).size - 1} other bots), ${n("CLEAN")} clean, ${n("UNCLEAR")} unclear (${unclearText}); all ${refunded} refunds arrived. MEVGate answers consumers; a keeper scans and files.`;
 const rev = `Live: sandwichrefund.vercel.app (/verify: code vs GitHub). Studio Dev: SandwichRefund ${R}, demo ${RD}, MEVGate ${G}, demo ${GD}. Repo github.com/kenil1710/sandwichrefund: sh test/run_offline.sh (${tests} tests), node tools/verify_source.mjs, node tools/final_check.mjs. Deploy commit ${deployCommit.slice(0, 7)}. docs/SEEDS.md proves ${refunded} canonical and ${payouts} demo payouts.`;
 
 const ascii = (s) => /^[\x20-\x7e]*$/.test(s);
@@ -36,6 +41,7 @@ const md = ["# Submission", "", "Plain ASCII. Lengths checked by `node tools/sub
   "## Counts", "",
   `- Real cases: ${feas.cases.length} (SANDWICHED ${n("SANDWICHED")}, CLEAN ${n("CLEAN")}, UNCLEAR ${n("UNCLEAR")}), read from two Ethereum RPCs on a Mac and inside GenVM, identical.`,
   `- Canonical pool: ${Object.entries(c).map(([k, v]) => `${k} ${v}`).join(", ")}; ${gen(ver.refunds.pool.refunded)} GEN refunded, ${gen(ver.close?.returned ?? "0")} GEN returned to the sponsor at close.`,
+  `- UNCLEAR by reason: ${unclearText}. A pair the rule cannot attribute to one swap on one pool is never paid.`,
   `- Real-world check: ${rw.sandwiched.filter((x) => x.agree).length}/${rw.sandwiched.length} SANDWICHED and ${rw.clean.filter((x) => x.agree).length}/${rw.clean.length} CLEAN confirmed.`,
   `- Demo: ${demo.steps.length} steps, ${payouts} payouts, all arrived; demo contract balance at the end ${demo.steps.find((s) => s.id === "final_balance")?.balance} wei.`,
   `- Offline tests: ${tests}.`, "",
@@ -43,6 +49,7 @@ const md = ["# Submission", "", "Plain ASCII. Lengths checked by `node tools/sub
   `Commit \`${commit}\`; contracts deployed from \`${deployCommit}\`.`, "",
   `- Seeds, every refund and its arrival: ${pin("docs/SEEDS.md")}`,
   `- Final check: ${pin("docs/FINAL_CHECK.md")}`,
+  `- Audit A-N: ${pin("docs/AUDIT.md")}`,
   `- Real-world check: ${pin("docs/REAL_WORLD_CHECK.md")}`,
   `- Feasibility: ${pin("docs/FEASIBILITY.md")}`,
   `- Rules: ${pin("docs/RULES.md")}`,
