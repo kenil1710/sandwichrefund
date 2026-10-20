@@ -91,15 +91,15 @@ async function createPool(key, who, name, args, value) {
 // ---------------------------------------------------------------------------
 // 0. a refused pool: the GEN is credited, then withdrawn (a payout to the sponsor)
 await step("refused_create", "create_pool with a bad claim period is refused and credited", async () => {
-  const w = await sp.write("create_pool", ["bad", '["ethereum"]', routersExcept(""), '["V2"]', JSON.stringify(canon.ranges), rates(100), String(GEN / 20), String(GEN / 10), 5, "{}"], { value: GEN / 100 });
+  const w = await sp.write("create_pool", ["bad", '["ethereum"]', routersExcept(""), '["V2"]', JSON.stringify(canon.ranges), rates(100), String(GEN / 20n), String(GEN / 10n), 5, "{}"], { value: GEN / 100n });
   const credit = await sp.view("get_credit", [sp.me]);
-  return { ok: w.ok && w.returned?.ok === false && w.returned?.reason === "BAD_CLAIM_PERIOD" && credit.credit === String(GEN / 100), tx: w.hash, returned: w.returned, credit: credit.credit };
+  return { ok: w.ok && w.returned?.ok === false && w.returned?.reason === "BAD_CLAIM_PERIOD" && credit.credit === String(GEN / 100n), tx: w.hash, returned: w.returned, credit: credit.credit };
 });
 await step("withdraw_refund", "withdraw_refund pays the credit back", () => paying(sp, "withdraw_refund", [], sp.me, (r) => r?.withdrawn));
 
 // 1. pool A: every refund limit, pool empty, unpriced token, uncovered router, clean, unclear, unverifiable
 await createPool("A", sp, "Demo A: caps, empty pool, every verdict", ['["ethereum"]', routersExcept(V2_ROUTER), '["V2","V3"]', JSON.stringify(canon.ranges), rates(100),
-  String(GEN / 20), String(GEN / 10), 1500, '{"demo":"A"}'], (33n * GEN) / 100n);
+  String(GEN / 20n), String(GEN / 10n), 1500, '{"demo":"A"}'], (33n * GEN) / 100n);
 const A = doc.pools.A;
 const B3 = (p) => byPrefix(p);
 await step("A_max_per_swap", "a sandwich due 0.0786 GEN, capped at max per swap 0.05", () => fileCase(A, B3("0x3ecd364f"), { state: "SANDWICHED_REFUNDED", limit: "MAX_PER_SWAP" }));
@@ -131,10 +131,10 @@ await step("A_duplicate", "a decided case filed again is refused", async () => {
   return { ok: !w.ok && /ALREADY_DECIDED_SANDWICHED_REFUNDED/.test(w.reason ?? ""), tx: w.hash, status: w.status, reason: w.reason };
 });
 await step("A_top_up", "anyone tops the pool up (a stranger, 0.02 GEN)", async () => {
-  const w = await sp2.write("top_up", [A], { value: GEN / 50 });
+  const w = await sp2.write("top_up", [A], { value: GEN / 50n });
   const tx = w.hash ? await finalized(sp2.read, w.hash) : null;
   const p = await sp2.view("get_pool", [A, 0]);
-  return { ok: w.ok && tx?.statusName === "FINALIZED" && p.balance === String(GEN / 50), tx: w.hash, balance: p.balance };
+  return { ok: w.ok && tx?.statusName === "FINALIZED" && p.balance === String(GEN / 50n), tx: w.hash, balance: p.balance };
 });
 await step("A_extend_stranger", "a stranger cannot extend", async () => {
   const p = await st.view("get_pool", [A, 0]);
@@ -154,7 +154,7 @@ await step("A_close_early", "closing before the claim deadline is refused", asyn
 
 // 2. pool B: a block range and a pool type that leave cases out
 await createPool("B", sp, "Demo B: blocks 26231000-26231420, V2 only", ['["ethereum"]', routersExcept(""), '["V2"]',
-  JSON.stringify([{ chain: "ethereum", start_block: 26231000, end_block: 26231420 }]), rates(100), String(GEN / 20), String(GEN / 10), 120, '{"demo":"B"}'], GEN / 100);
+  JSON.stringify([{ chain: "ethereum", start_block: 26231000, end_block: 26231420 }]), rates(100), String(GEN / 20n), String(GEN / 10n), 120, '{"demo":"B"}'], GEN / 100n);
 const B = doc.pools.B;
 await step("B_outside_range", "a sandwich before the pool's block range", () => fileCase(B, byPrefix("0xa3bacdd6"), { state: "NOT_COVERED", reason: "OUTSIDE_BLOCK_RANGE" }));
 await step("B_kind", "a V3 sandwich in range, but the pool covers V2 only", () => fileCase(B, byPrefix("0xc3a58de6"), { state: "NOT_COVERED", reason: "POOL_TYPE_NOT_COVERED" }));
