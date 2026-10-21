@@ -5,9 +5,9 @@
   "1": {
    "chains": {
     "ethereum": {
-     "cursor": 26230923,
+     "cursor": 26230933,
      "failed": [],
-     "pages_ok": 1,
+     "pages_ok": 2,
      "done": false,
      "head": 26238918
     }
@@ -17,7 +17,21 @@
    "name": "SandwichRefund canonical pool: Ethereum, 11 routers, blocks 26230913-26232413"
   }
  },
- "actions": {},
+ "actions": {
+  "file:1:ethereum:0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd": {
+   "key": "file:1:ethereum:0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "kind": "FILE",
+   "pool_id": 1,
+   "chain": "ethereum",
+   "hash": "0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+   "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28",
+   "why": "scan",
+   "status": "QUEUED",
+   "attempts": 0,
+   "first_seen_at": 1792561957,
+   "tx": null
+  }
+ },
  "runs": [],
  "unprocessed": [],
  "last_run": null,
@@ -25,5 +39,5 @@
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T05:52:36.414Z"
+ "saved_at": "2026-10-21T05:52:37.925Z"
 }
