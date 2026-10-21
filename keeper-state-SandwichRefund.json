@@ -1384,12 +1384,57 @@
    "reason": "NO_PATTERN"
   }
  },
- "runs": [],
+ "runs": [
+  {
+   "started_at": 1792561950,
+   "finished_at": 1792563903,
+   "resumed": 0,
+   "pools": 1,
+   "pages": 151,
+   "pages_failed": 0,
+   "candidates": 65,
+   "submitted": 65,
+   "done": 65,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": []
+  }
+ ],
  "unprocessed": [],
- "last_run": null,
+ "last_run": {
+  "started_at": 1792561950,
+  "finished_at": 1792563903,
+  "resumed": 0,
+  "pools": 1,
+  "pages": 151,
+  "pages_failed": 0,
+  "candidates": 65,
+  "submitted": 65,
+  "done": 65,
+  "already": 0,
+  "pending": 0,
+  "failed": 0,
+  "retry": 0,
+  "errors": []
+ },
  "pools_total": 1,
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T06:25:00.845Z"
+ "saved_at": "2026-10-21T06:25:03.182Z",
+ "totals": {
+  "actions": 65,
+  "done": 65,
+  "queued": 0,
+  "pending": 0,
+  "retry": 0,
+  "failed": 0,
+  "by_result": {
+   "SANDWICHED_REFUNDED": 18,
+   "UNCLEAR": 31,
+   "CLEAN": 16
+  }
+ }
 }
