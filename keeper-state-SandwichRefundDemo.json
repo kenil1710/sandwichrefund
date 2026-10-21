@@ -15,14 +15,16 @@
    "kind": "CLOSE",
    "pool_id": 1,
    "sponsor": "0xef592a9a8b6208b557dcbbc85355b7689fc76776",
-   "status": "ACCEPTED",
+   "status": "DONE",
    "attempts": 0,
    "first_seen_at": 1792568746,
    "tx": "0xc8e89d48a31e17419f5b264cc99cf8d57a7edc22a0c5b44ee336844b39dcc59c",
    "submitted_at": 1792568747,
    "tx_history": [
     "0xc8e89d48a31e17419f5b264cc99cf8d57a7edc22a0c5b44ee336844b39dcc59c"
-   ]
+   ],
+   "verified_at": 1792568793,
+   "result": "CLOSED"
   }
  },
  "runs": [],
@@ -32,5 +34,5 @@
  "contract": "SandwichRefundDemo",
  "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T07:46:03.048Z"
+ "saved_at": "2026-10-21T07:46:34.025Z"
 }
