@@ -11,7 +11,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "700"], variab
 export const metadata: Metadata = {
   title: { default: "SandwichRefund", template: "%s · SandwichRefund" },
   description: "Sponsor-funded refunds for sandwiched swaps, decided by code from Ethereum chain data on GenLayer.",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: "/logo.svg", apple: "/logo.svg" },
 };
 export const viewport: Viewport = { themeColor: "#f6f4ee", width: "device-width", initialScale: 1 };
 

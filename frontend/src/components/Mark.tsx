@@ -1,13 +1,12 @@
-/** The mark: a receipt with a sandwich (two red bars around a navy one) and a mint refund tick. */
+/** The mark: a sandwich of three bars, the red bread around a mint filling with a return arrow (frontend/public/logo.svg). */
 export function Mark({ size = 28 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M6 2h20v26l-2.5-2-2.5 2-2.5-2-2.5 2-2.5-2-2.5 2-2.5-2L6 28z" fill="#111214" />
-      <rect x="9" y="7" width="14" height="3" fill="#e5484d" />
-      <rect x="9" y="12" width="14" height="3" fill="#f1f1ec" />
-      <rect x="9" y="17" width="14" height="3" fill="#e5484d" />
-      <circle cx="24" cy="24" r="6" fill="#00c2a8" stroke="#f6f4ee" strokeWidth="1.5" />
-      <path d="M21.3 24.2l1.8 1.8 3.6-3.8" stroke="#0e1a3a" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
+      <rect x="6" y="7" width="52" height="14" rx="7" fill="#E5484D" />
+      <rect x="6" y="25" width="52" height="14" rx="7" fill="#00C2A8" />
+      <path d="M42 28.2v2.6a3.2 3.2 0 0 1-3.2 3.2H24.5" fill="none" stroke="#0E1A3A" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M28.6 29.9 24.5 34l4.1 4.1" fill="none" stroke="#0E1A3A" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="6" y="43" width="52" height="14" rx="7" fill="#E5484D" />
     </svg>
   );
 }

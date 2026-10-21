@@ -1,5 +1,7 @@
 # SandwichRefund
 
+<img src="docs/img/logo-wordmark.png" alt="SandwichRefund" width="480">
+
 **Refunds for sandwiched swaps, decided by code from Ethereum chain data.** A sponsor (a wallet, a DEX front-end, a
 protocol) funds a refund pool on GenLayer for the swaps its routers send. Anyone files a victim transaction; GenLayer
 validators read it and the pool's Swap logs from two Ethereum RPCs that must agree, and code decides. A classic
