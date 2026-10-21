@@ -1139,14 +1139,18 @@
    "hash": "0xd644bafb17725f50f713bdb1ae9e74999212a505c2d25848fe9a30ec315c4428",
    "victim": "0xec21de204b208d6371dc6e6feb1b9f6afd022277",
    "why": "watchlist",
-   "status": "ACCEPTED",
+   "status": "DONE",
    "attempts": 0,
    "first_seen_at": 1792562128,
    "tx": "0x2e163567fb120d6b41c4878063706425c3e01e4f669bca7ef813c3d8fd1c84d0",
    "submitted_at": 1792563689,
    "tx_history": [
     "0x2e163567fb120d6b41c4878063706425c3e01e4f669bca7ef813c3d8fd1c84d0"
-   ]
+   ],
+   "verified_at": 1792563864,
+   "result": "CLEAN",
+   "refund": "0",
+   "reason": "NO_PATTERN"
   },
   "file:1:ethereum:0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220": {
    "key": "file:1:ethereum:0xf51ea826ca98df6e33e2a0dda5e4cdff3276bb9b05cd95ce80e9ecdc14eee220",
@@ -1343,5 +1347,5 @@
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T06:24:23.870Z"
+ "saved_at": "2026-10-21T06:24:25.730Z"
 }
