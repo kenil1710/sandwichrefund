@@ -2,6 +2,9 @@
 
 <img src="docs/img/logo-wordmark.png" alt="SandwichRefund" width="480">
 
+[![ci](https://github.com/kenil1710/sandwichrefund/actions/workflows/ci.yml/badge.svg)](https://github.com/kenil1710/sandwichrefund/actions/workflows/ci.yml)
+[![keeper](https://github.com/kenil1710/sandwichrefund/actions/workflows/keeper.yml/badge.svg)](https://github.com/kenil1710/sandwichrefund/actions/workflows/keeper.yml)
+
 **Refunds for sandwiched swaps, decided by code from Ethereum chain data.** A sponsor (a wallet, a DEX front-end, a
 protocol) funds a refund pool on GenLayer for the swaps its routers send. Anyone files a victim transaction; GenLayer
 validators read it and the pool's Swap logs from two Ethereum RPCs that must agree, and code decides. A classic
@@ -78,6 +81,7 @@ cross-checked against chain data the rule does not use ([docs/REAL_WORLD_CHECK.m
 
     git clone https://github.com/kenil1710/sandwichrefund && cd sandwichrefund
     (cd test && npm ci) && sh test/run_offline.sh     # the offline suite: contracts, keeper, meaning, attacks
+    pip install -r tests/direct/requirements.txt && python -m pytest tests/direct   # GenLayer Direct Mode
     node tools/verify_source.mjs                       # on-chain code == build/ at the deploy commit, byte for byte
     node tools/feasibility.mjs                         # re-read every real case from both RPCs
     node tools/final_check.mjs                         # everything at once -> docs/FINAL_CHECK.md

@@ -1,0 +1,63 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  offline:
+    name: contract, gate, attack, meaning and keeper tests (offline)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix test
+      - run: sh test/run_offline.sh
+  direct:
+    name: GenLayer Direct Mode tests and GenVM lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/gltest-direct
+          key: gltest-direct-v0.2.16
+      - run: pip install -r tests/direct/requirements.txt
+      - run: python3 tools/build.py --check
+      - run: genvm-lint lint build/SandwichRefund.py && genvm-lint lint build/MEVGate.py
+      - run: python -m pytest tests/direct -v
+  frontend:
+    name: site typecheck and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node tools/sync_frontend.mjs --check
+      - run: npm ci
+        working-directory: frontend
+      - run: npx tsc --noEmit -p .
+        working-directory: frontend
+      - run: npx next build
+        working-directory: frontend
+  deployed-source:
+    name: deployed source is byte-identical to build/
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci --prefix test
+      - run: node tools/verify_source.mjs
