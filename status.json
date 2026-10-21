@@ -1,19 +1,19 @@
 {
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "started_at": "2026-10-21T05:52:30.684Z",
+ "started_at": "2026-10-21T06:52:17.600Z",
  "contracts": {
   "SandwichRefund": {
    "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
    "last_run": {
-    "started_at": 1792561950,
-    "finished_at": 1792563903,
+    "started_at": 1792565537,
+    "finished_at": 1792565601,
     "resumed": 0,
     "pools": 1,
-    "pages": 151,
+    "pages": 0,
     "pages_failed": 0,
-    "candidates": 65,
-    "submitted": 65,
-    "done": 65,
+    "candidates": 0,
+    "submitted": 1,
+    "done": 1,
     "already": 0,
     "pending": 0,
     "failed": 0,
@@ -21,8 +21,8 @@
     "errors": []
    },
    "totals": {
-    "actions": 65,
-    "done": 65,
+    "actions": 66,
+    "done": 66,
     "queued": 0,
     "pending": 0,
     "retry": 0,
@@ -30,7 +30,8 @@
     "by_result": {
      "SANDWICHED_REFUNDED": 18,
      "UNCLEAR": 31,
-     "CLEAN": 16
+     "CLEAN": 16,
+     "CLOSED": 1
     }
    },
    "pools": {
@@ -830,11 +831,22 @@
      "attempts": 0,
      "last_error": "",
      "why": "watchlist"
+    },
+    {
+     "key": "close:1",
+     "kind": "CLOSE",
+     "pool_id": 1,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0x8528de0ba29816f8c6f05d773b66dc9826dce547469e71cbb115872e7b672c92",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
     }
    ]
   }
  },
- "finished_at": "2026-10-21T06:25:05.240Z",
+ "finished_at": "2026-10-21T06:53:23.284Z",
  "trigger": "manual",
  "run_url": "",
  "history": [
@@ -848,6 +860,20 @@
      "submitted": 65,
      "done": 65,
      "pages": 151,
+     "pages_failed": 0
+    }
+   }
+  },
+  {
+   "started_at": "2026-10-21T06:52:17.600Z",
+   "finished_at": "2026-10-21T06:53:23.284Z",
+   "trigger": "manual",
+   "run_url": "",
+   "runs": {
+    "SandwichRefund": {
+     "submitted": 1,
+     "done": 1,
+     "pages": 0,
      "pages_failed": 0
     }
    }
