@@ -28,6 +28,7 @@ export function PoolActions({ reg, pool }: { reg: Reg; pool: Pool }) {
   const addr = regAddr(reg);
   const now = Math.floor(Date.now() / 1000);
   const open = pool.status === "OPEN" && now <= pool.claim_deadline;
+  const recovery = pool.status === "OPEN" && now > pool.claim_deadline && pool.pending > 0 && now <= pool.recovery_deadline;
   const need = !w.account ? "Connect a wallet to act on this pool." : w.onWrongNetwork ? "Switch your wallet to Studio Dev." : "";
 
   async function file() {
@@ -79,6 +80,13 @@ export function PoolActions({ reg, pool }: { reg: Reg; pool: Pool }) {
             <input id="dl" type="datetime-local" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
             <p><button className="btn ghost" onClick={() => void extend()}>Extend</button></p>
           </>}
+        </>
+      ) : recovery ? (
+        <>
+          <p>The claim period is over. {pool.pending} case(s) left UNVERIFIABLE for a transient reason may be filed again until {new Date(pool.recovery_deadline * 1000).toISOString().slice(11, 16)} UTC; the pool closes after that, or as soon as none remain.</p>
+          <label className="small" htmlFor="hash2"><b>Retry a pending case</b></label>
+          <input id="hash2" value={hash} onChange={(e) => setHash(e.target.value)} placeholder="0x…" spellCheck={false} />
+          <p><button className="btn" onClick={() => void file()} disabled={!w.account || w.onWrongNetwork}>File it again</button></p>
         </>
       ) : pool.status === "OPEN" ? (
         <>

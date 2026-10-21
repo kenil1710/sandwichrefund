@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { asReg, gateAddr, regAddr, STUDIO_EXPLORER, SITE } from "@/lib/deployments";
-import { filingTxs, gateCase, getCase } from "@/lib/server";
+import { asReg, CANONICAL, gateAddr, regAddr, STUDIO_EXPLORER, SITE } from "@/lib/deployments";
+import { filingTxs, gateCase, getCase, pool as getPool } from "@/lib/server";
 import { ETHERSCAN, REASON_TEXT, STATE_LABEL, gen, label, routerName, short, tokenDec, tokenSym, units } from "@/lib/format";
 import { Receipt } from "@/components/Receipt";
 import { Timeline } from "@/components/Timeline";
@@ -19,7 +19,13 @@ export default async function CasePage({ params, searchParams }: P) {
   const reg = asReg((await searchParams).reg);
   const h = hash.toLowerCase();
   let c, g, txs: Record<string, string> = {};
-  try { [c, g, txs] = await Promise.all([getCase(regAddr(reg), chain, h), gateCase(gateAddr(reg), chain, h), filingTxs()]); }
+  try {
+    [c, txs] = await Promise.all([getCase(regAddr(reg), chain, h), filingTxs()]);
+    // the gate is asked about the pool that decided this case, bound to that pool's sponsor
+    const pid = c.found ? c.pool_id : reg === "demo" ? 1 : CANONICAL.pool_id;
+    const sponsor = c.found ? (await getPool(regAddr(reg), pid)).sponsor : CANONICAL.sponsor;
+    g = await gateCase(gateAddr(reg), pid, sponsor, chain, h);
+  }
   catch (e) { return <><h1>Unreadable</h1><p className="note warn">Studio Dev did not answer: {String((e as Error)?.message ?? e).slice(0, 160)}</p></>; }
   if (!c.found) {
     return (
@@ -60,7 +66,7 @@ export default async function CasePage({ params, searchParams }: P) {
                 {sandwiched && <tr><th>refund due / paid</th><td>{gen(c.refund_due)} / <b>{gen(c.refund_paid)} GEN</b> ({c.limit})</td></tr>}
                 <tr><th>verdict / reason</th><td>{c.verdict} / {c.reason}</td></tr>
                 <tr><th>filed by</th><td><span className="addr">{c.filer}</span> · attempts {c.attempts}{filed && <> · <a href={`${STUDIO_EXPLORER}/tx/${filed}`}>GenLayer tx {short(filed, 8)}</a></>}</td></tr>
-                <tr><th>MEVGate</th><td><span className={`pill ${g.state}`}>{g.state}</span> clean={String(g.clean)} refunded={String(g.refunded)}</td></tr>
+                <tr><th>MEVGate (pool {g.pool_id}, its sponsor)</th><td><span className={`pill ${g.state}`}>{g.state}</span> clean={String(g.clean)} refunded={String(g.refunded)}</td></tr>
                 {(c.n_decisions ?? 1) > 1 && <tr><th>decisions</th><td>{c.decisions?.map((d) => <div key={d.case_id}>pool {d.pool_id}: {d.state} {gen(d.refund_paid)} GEN</div>)}</td></tr>}
               </tbody>
             </table>

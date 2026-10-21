@@ -41,6 +41,7 @@ export default async function PoolPage({ params, searchParams }: P) {
             <tr><th>rates</th><td>{p.rates.map((r) => <div key={r.token}>{r.symbol || short(r.token)}: {r.num}/{r.den} GEN wei per wei ({units((10n ** BigInt(r.decimals) * BigInt(r.num)) / BigInt(r.den))} GEN per {r.symbol || "token"})</div>)}</td></tr>
             <tr><th>max per swap / victim</th><td>{gen(p.max_per_swap)} / {gen(p.max_per_victim)} GEN</td></tr>
             <tr><th>claim period</th><td>{p.claim_period_s} s · deadline {when(p.claim_deadline)}{p.claim_deadline !== p.original_deadline && ` (extended from ${when(p.original_deadline)})`}</td></tr>
+            <tr><th>recovery window</th><td>until {when(p.recovery_deadline)} · {p.pending} case(s) pending{p.n_expired ? ` · ${p.n_expired} expired at close` : ""}</td></tr>
             <tr><th>closed</th><td>{p.closed_at ? `${when(p.closed_at)} by ${short(p.closed_by)}` : "not yet"}</td></tr>
           </tbody></table></div>
           <h3>Routers</h3>

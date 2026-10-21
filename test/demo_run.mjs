@@ -165,38 +165,139 @@ await createPool("C", sp, "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN",
   JSON.stringify([{ chain: "ethereum", start_block: 26231000, end_block: 26231420 }]), rates(100), String(GEN / 20n), String(GEN / 10n), 300, '{"demo":"C"}'], GEN / 100n);
 await step("C_refunded", "a V2 sandwich in range, refunded at pool C's rate", () => fileCase(doc.pools.C, byPrefix("0x1b17869b"), { state: "SANDWICHED_REFUNDED", limit: "RATE" }));
 
-// 3. MEVGateDemo
-await step("gate", "MEVGateDemo reads every state", async () => {
-  const q = async (h, ch = "ethereum") => (await gate.view("check_case", [ch, h]));
+// 3. a copycat pool: same name and terms, another sponsor
+await createPool("COPY", sp2, "Demo A: caps, empty pool, every verdict", ['["ethereum"]', routersExcept(V2_ROUTER), '["V2","V3"]', JSON.stringify(canon.ranges), rates(1),
+  "1", "1", 600, '{"demo":"copycat"}'], 10n ** 15n);
+await step("COPY_file", "the copycat pool decides a case pool A left unpaid (1 wei refund)", () => fileCase(doc.pools.COPY, byPrefix("0xb497f700"), { state: "SANDWICHED_REFUNDED" }));
+
+// 4. MEVGateDemo, bound to (pool A, its sponsor)
+await step("gate", "MEVGateDemo reads every state of pool A, bound to its sponsor; the copycat is never read", async () => {
+  const q = async (h, ch = "ethereum", pid = A, who = sp.me) => (await gate.view("check_case", [pid, who, ch, h]));
   const got = {
     refunded: await q(byPrefix("0x3ecd364f").hash), unpaid: await q(byPrefix("0xb497f700").hash), clean: await q(clean.hash),
     unclear: await q(multi.hash), not_covered: await q(byPrefix("0x4275a602").hash), unverifiable: await q(FAKE),
-    unfiled: await q("0x" + "77".repeat(32)), no_pool: await q(byPrefix("0x3ecd364f").hash, "base"),
+    unfiled: await q("0x" + "77".repeat(32)), other_chain: await q(byPrefix("0x3ecd364f").hash, "base"),
+    no_pool: await q(byPrefix("0x3ecd364f").hash, "ethereum", 999),
+    copycat_named_as_A: await q(byPrefix("0xb497f700").hash, "ethereum", doc.pools.COPY, sp.me),
   };
-  const addr = await gate.view("check_address", [byPrefix("0x3ecd364f").victim]);
+  const addr = await gate.view("check_address", [A, sp.me, byPrefix("0x3ecd364f").victim]);
   const want = { refunded: "SANDWICHED_REFUNDED", unpaid: "SANDWICHED_UNPAID", clean: "CLEAN", unclear: "UNCLEAR", not_covered: "NOT_COVERED",
-    unverifiable: "UNVERIFIABLE", unfiled: "UNVERIFIABLE", no_pool: "NO_POOL" };
+    unverifiable: "UNVERIFIABLE", unfiled: "UNVERIFIABLE", other_chain: "NOT_COVERED", no_pool: "NO_POOL", copycat_named_as_A: "UNVERIFIABLE" };
   const ok = Object.entries(want).every(([k, v]) => got[k].state === v) && got.clean.clean === true && got.refunded.refunded === true
-    && Object.values(got).filter((g) => g.clean).length === 1 && addr.state === "SANDWICHED_REFUNDED" && addr.cases === 3;
+    && Object.values(got).filter((g) => g.clean).length === 1 && !got.copycat_named_as_A.refunded && got.unpaid.refunded === false
+    && addr.state === "SANDWICHED_REFUNDED" && addr.cases === 3;
   return { ok, states: Object.fromEntries(Object.entries(got).map(([k, g]) => [k, { state: g.state, clean: g.clean, refunded: g.refunded, why: g.why }])), address: addr };
 });
 await step("gate_attest", "attest_case stores a reading on chain", async () => {
-  const w = await gate.write("attest_case", ["ethereum", byPrefix("0x3ecd364f").hash]);
-  const a = await gate.view("latest_attestation", ["ethereum", byPrefix("0x3ecd364f").hash]);
-  return { ok: w.ok && a.found && a.state === "SANDWICHED_REFUNDED", tx: w.hash, attestation_id: a.attestation_id };
+  const w = await gate.write("attest_case", [A, sp.me, "ethereum", byPrefix("0x3ecd364f").hash]);
+  const a = await gate.view("latest_attestation", [A, "ethereum", byPrefix("0x3ecd364f").hash]);
+  return { ok: w.ok && a.found && a.state === "SANDWICHED_REFUNDED" && a.pool_id === A && a.sponsor === sp.me.toLowerCase(), tx: w.hash, attestation_id: a.attestation_id };
 });
 
-// 4. close both pools after their deadlines: the rest goes back to the sponsor
-async function waitDeadline(pid) {
+// 5. the recovery window, on live Ethereum swaps not final yet
+const ETH = "https://rpc.mevblocker.io";
+const ROUTERS = new Set(canon.routers.map((r) => r.address));
+async function eth(calls) {
+  const r = await fetch(ETH, { method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify(calls.map((c, i) => ({ jsonrpc: "2.0", id: i, method: c[0], params: c[1] }))) });
+  const j = await r.json();
+  return calls.map((_, i) => j.find((x) => x.id === i)?.result);
+}
+const finalizedHead = async () => Number(BigInt((await eth([["eth_getBlockByNumber", ["finalized", false]]]))[0].number));
+/** A covered-router swap transaction in blocks [lo, hi]. */
+async function routerSwap(lo, hi, skip = []) {
+  const [logs] = await eth([["eth_getLogs", [{ fromBlock: "0x" + lo.toString(16), toBlock: "0x" + hi.toString(16),
+    topics: [["0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822", "0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67"]] }]]]);
+  const hs = [...new Set(logs.map((l) => l.transactionHash))].filter((h) => !skip.includes(h)).slice(0, 60);
+  const txs = await eth(hs.map((h) => ["eth_getTransactionByHash", [h]]));
+  const t = txs.find((x) => x && ROUTERS.has(String(x.to).toLowerCase()));
+  if (!t) throw new Error("no covered-router swap in blocks " + lo + "-" + hi);
+  return { hash: t.hash.toLowerCase(), victim: t.from.toLowerCase(), block: Number(BigInt(t.blockNumber)) };
+}
+const DEMO_RECOVERY = 120;
+
+// E: a case left NOT_FINALIZED and never retried: close waits for the window, then EXPIRED
+if (!done("E_expired")) {
+  const F0 = await finalizedHead();
+  const e = doc.live_e ?? (doc.live_e = await routerSwap(F0 + 2, F0 + 30));
+  save();
+  await createPool("E", sp, "Demo E: recovery window, left to expire", ['["ethereum"]', routersExcept(""), '["V2","V3"]',
+    JSON.stringify([{ chain: "ethereum", start_block: e.block - 10, end_block: e.block + 100000 }]), rates(100), String(GEN / 20n), String(GEN / 10n), 60, '{"demo":"E"}'], GEN / 100n);
+  const E = doc.pools.E;
+  await step("E_pending", "a swap whose block is not final yet: UNVERIFIABLE NOT_FINALIZED, pending", async () => {
+    const r = await fileCase(E, e, { state: "UNVERIFIABLE", reason: "NOT_FINALIZED" });
+    const p = await sp.view("get_pool", [E, 0]);
+    return { ...r, pending: p.pending, ok: r.ok && p.pending === 1 };
+  });
+  await waitDeadline(E, 0);
+  await step("E_new_case_refused", "after the deadline a new case is refused", async () => {
+    const w = await fl.write("file_case", [E, "ethereum", byPrefix("0xc0ca1694").hash], { payee: byPrefix("0xc0ca1694").victim, simulate: false });
+    return { ok: !w.ok && /CLAIM_PERIOD_OVER/.test(w.reason ?? ""), tx: w.hash, reason: w.reason };
+  });
+  await step("E_close_waits", "close is refused while a case is pending in the recovery window", async () => {
+    const w = await st.write("close_pool", [E], { payee: sp.me, simulate: false });
+    return { ok: !w.ok && /RECOVERY_WINDOW_OPEN_UNTIL/.test(w.reason ?? ""), tx: w.hash, reason: w.reason };
+  });
+  await waitDeadline(E, DEMO_RECOVERY);
+  await step("E_retry_late", "after the recovery window the case cannot be filed again", async () => {
+    const w = await fl.write("file_case", [E, "ethereum", e.hash], { payee: e.victim, simulate: false });
+    return { ok: !w.ok && /RECOVERY_WINDOW_OVER/.test(w.reason ?? ""), tx: w.hash, reason: w.reason };
+  });
+  await step("E_expired", "close after the window always succeeds; the pending case is EXPIRED", async () => {
+    const p = await sp.view("get_pool", [E, 0]);
+    const r = await paying(st, "close_pool", [E], p.sponsor, (x) => x?.returned);
+    const c = await fl.view("get_pool_case", [E, "ethereum", e.hash]);
+    const g = await gate.view("check_case", [E, sp.me, "ethereum", e.hash]);
+    const q = await st.view("get_pool", [E, 0]);
+    return { ...r, case_state: c.state, gate: g.state, n_expired: q.n_expired,
+      ok: r.ok && r.returned?.expired === 1 && c.state === "EXPIRED" && c.final === true && g.state === "EXPIRED" && !g.clean && !g.refunded && q.n_expired === 1 };
+  });
+}
+
+// D: a case NOT_FINALIZED at filing, final during the recovery window: filed again and decided; then close at once
+if (!done("D_close")) {
+  // learn the finalization rhythm: wait for the finalized head to move, then pick a block that the next move finalizes
+  let F0 = await finalizedHead(), T0 = Date.now();
+  for (let f = F0; f === F0; ) { await new Promise((r) => setTimeout(r, 6000)); f = await finalizedHead(); if (f !== F0) { F0 = f; T0 = Date.now(); break; } }
+  const d = doc.live_d ?? (doc.live_d = await routerSwap(F0 + 2, F0 + 28));
+  save();
+  const nextFinal = T0 + 384_000;                         // one epoch (32 slots x 12 s) later
+  const claim = Math.max(60, Math.floor((nextFinal - Date.now()) / 1000) - 75);
+  await createPool("D", sp, "Demo D: recovery window, recovered", ['["ethereum"]', routersExcept(""), '["V2","V3"]',
+    JSON.stringify([{ chain: "ethereum", start_block: d.block - 10, end_block: d.block + 100000 }]), rates(100), String(GEN / 20n), String(GEN / 10n), claim, '{"demo":"D"}'], GEN / 100n);
+  const D = doc.pools.D;
+  await step("D_pending", "a swap whose block is not final yet: UNVERIFIABLE NOT_FINALIZED, pending", async () => {
+    const r = await fileCase(D, d, { state: "UNVERIFIABLE", reason: "NOT_FINALIZED" });
+    return { ...r, claim_period_s: claim };
+  });
+  await waitDeadline(D, 0);
+  await step("D_recovered", "in the recovery window, once both RPCs finalize the block, the case is filed again and decided", async () => {
+    for (let i = 0; i < 40; i++) { if ((await finalizedHead()) >= d.block + 1) break; await new Promise((r) => setTimeout(r, 5000)); }
+    await new Promise((r) => setTimeout(r, 15000));        // the second RPC
+    const r = await paying(fl, "file_case", [D, "ethereum", d.hash], d.victim, (x) => x?.refund);
+    const c = await fl.view("get_pool_case", [D, "ethereum", d.hash]);
+    const p = await fl.view("get_pool", [D, Math.floor(Date.now() / 1000)]);
+    return { ...r, case: { state: c.state, reason: c.reason, attempts: c.attempts }, pending: p.pending, due: p.due,
+      ok: r.ok && c.final === true && c.attempts === 2 && p.pending === 0 && p.due === "CLOSE" };
+  });
+  await step("D_close", "nothing pending: close succeeds before the window ends", async () => {
+    const p = await sp.view("get_pool", [D, 0]);
+    const r = await paying(st, "close_pool", [D], p.sponsor, (x) => x?.returned);
+    return { ...r, ok: r.ok && r.returned?.expired === 0 };
+  });
+}
+
+// 6. close the other pools after their deadlines: the rest goes back to the sponsor
+async function waitDeadline(pid, extra = 0) {
   for (;;) {
     const p = await sp.view("get_pool", [pid, Math.floor(Date.now() / 1000)]);
-    const left = p.claim_deadline - Math.floor(Date.now() / 1000);
+    const left = p.claim_deadline + extra - Math.floor(Date.now() / 1000);
     if (left < -15) return p;
     console.log(`  waiting ${left + 20}s for pool ${pid}'s claim deadline`);
     await new Promise((r) => setTimeout(r, Math.min(Math.max(left + 20, 5), 120) * 1000));
   }
 }
-for (const key of ["B", "C", "A"]) {
+for (const key of ["B", "C", "COPY", "A"]) {
   const pid = doc.pools[key];
   await step("close_" + key, `close pool ${key} after its deadline: the rest to the sponsor`, async () => {
     const p = await waitDeadline(pid);

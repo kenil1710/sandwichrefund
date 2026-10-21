@@ -1,5 +1,6 @@
-/** GET /api/badge?chain=ethereum&hash=0x… or ?address=0x… [&reg=demo] -> an SVG badge with MEVGate's state. */
-import { asReg, gateAddr } from "@/lib/deployments";
+/** GET /api/badge?chain=ethereum&hash=0x… or ?address=0x… [&pool=<id>&sponsor=0x…][&reg=demo] -> an SVG badge with
+ *  MEVGate's state for the named pool (the canonical one unless named). */
+import { asReg, CANONICAL, gateAddr } from "@/lib/deployments";
 import { gateAddress, gateCase } from "@/lib/server";
 import { gen } from "@/lib/format";
 
@@ -18,13 +19,14 @@ export async function GET(req: Request) {
   const hash = (u.searchParams.get("hash") ?? "").toLowerCase();
   const address = (u.searchParams.get("address") ?? "").toLowerCase();
   let right = "UNVERIFIABLE", color = "#6b7280";
+  const pid = Number(u.searchParams.get("pool") ?? CANONICAL.pool_id), sponsor = (u.searchParams.get("sponsor") ?? CANONICAL.sponsor).toLowerCase();
   try {
     if (/^0x[0-9a-f]{64}$/.test(hash)) {
-      const g = await gateCase(gateAddr(reg), (u.searchParams.get("chain") ?? "ethereum").toLowerCase(), hash);
+      const g = await gateCase(gateAddr(reg), pid, sponsor, (u.searchParams.get("chain") ?? "ethereum").toLowerCase(), hash);
       right = g.state === "SANDWICHED_REFUNDED" ? `REFUNDED ${gen(g.refund_paid)} GEN` : g.state;
       color = COLORS[g.state] ?? color;
     } else if (/^0x[0-9a-f]{40}$/.test(address)) {
-      const g = await gateAddress(gateAddr(reg), address);
+      const g = await gateAddress(gateAddr(reg), pid, sponsor, address);
       right = `${g.state} · ${g.cases} cases · ${gen(g.refunded)} GEN`;
       color = COLORS[g.state] ?? color;
     } else right = "BAD QUERY";

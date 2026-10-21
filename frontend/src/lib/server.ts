@@ -64,8 +64,9 @@ export const pool = (reg: string, pid: number) => view<Pool>(reg, "get_pool", [p
 export const getCase = (reg: string, chain: string, hash: string) => view<Case>(reg, "get_case", [chain, hash]);
 export const stats = (reg: string) => view<Stats>(reg, "get_stats", []);
 export const config = (reg: string) => view<Record<string, unknown>>(reg, "get_config", []);
-export const gateCase = (gate: string, chain: string, hash: string) => view<GateCase>(gate, "check_case", [chain, hash]);
-export const gateAddress = (gate: string, a: string) => view<GateAddress>(gate, "check_address", [a]);
+/** MEVGate reads are bound to a (pool id, sponsor) the reader names. */
+export const gateCase = (gate: string, poolId: number, sponsor: string, chain: string, hash: string) => view<GateCase>(gate, "check_case", [poolId, sponsor, chain, hash]);
+export const gateAddress = (gate: string, poolId: number, sponsor: string, a: string) => view<GateAddress>(gate, "check_address", [poolId, sponsor, a]);
 
 /** eth_getBalance on Studio Dev, wei. */
 export async function balanceOf(address: string): Promise<bigint> {

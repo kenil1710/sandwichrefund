@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ADDR } from "@/lib/deployments";
+import { ADDR, CANONICAL } from "@/lib/deployments";
 import { gateAddress, victimCases } from "@/lib/server";
 import { gen, STATE_LABEL } from "@/lib/format";
 import { Receipt } from "@/components/Receipt";
@@ -15,11 +15,11 @@ export default async function Lookup({ searchParams }: { searchParams: Promise<{
   if (q && !valid) body = <p className="note warn">That is not an Ethereum address (0x followed by 40 hex characters).</p>;
   if (valid) {
     try {
-      const [g, cases] = await Promise.all([gateAddress(ADDR.gate, q), victimCases(ADDR.registry, q)]);
+      const [g, cases] = await Promise.all([gateAddress(ADDR.gate, CANONICAL.pool_id, CANONICAL.sponsor, q), victimCases(ADDR.registry, q)]);
       body = (
         <>
           <div className="tiles">
-            <div className={`tile ${g.state.startsWith("SANDWICHED") ? "red" : g.state === "CLEAN" ? "mint" : ""}`}><div className="n" style={{ fontSize: 22 }}>{STATE_LABEL[g.state] ?? g.state}</div><div className="l">MEVGate summary</div></div>
+            <div className={`tile ${g.state.startsWith("SANDWICHED") ? "red" : g.state === "CLEAN" ? "mint" : ""}`}><div className="n" style={{ fontSize: 22 }}>{STATE_LABEL[g.state] ?? g.state}</div><div className="l">MEVGate · canonical pool {CANONICAL.pool_id}</div></div>
             <div className="tile"><div className="n">{g.cases}</div><div className="l">cases</div></div>
             <div className="tile red"><div className="n">{g.loss_cases}</div><div className="l">sandwiched</div></div>
             <div className="tile mint"><div className="n">{gen(g.refunded)}</div><div className="l">GEN refunded</div></div>

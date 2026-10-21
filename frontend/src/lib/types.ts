@@ -23,6 +23,7 @@ export interface Pool {
   max_per_swap: string; max_per_victim: string; claim_period_s: number; created_at: number; claim_deadline: number;
   original_deadline: number; funded: string; balance: string; refunded: string; returned: string; n_cases: number;
   n_refunded: number; n_unpaid: number; closed_at: number; closed_by: string; history: Record<string, unknown>[]; due: string;
+  recovery_deadline: number; pending: number; n_expired: number;
 }
 
 export interface Attacker { address: string; contract: string; n_cases: number; refunds: string; last_case: number; first_case: number }
@@ -35,10 +36,10 @@ export interface Stats {
 
 export interface GateCase {
   chain: string; tx_hash: string; state: string; final: boolean; clean: boolean; refunded: boolean; refund_paid: string;
-  loss: string; profit_token: string; victim: string; attacker: string; pool_id: number; case_id: number; reason: string; why: string;
+  loss: string; profit_token: string; victim: string; attacker: string; pool_id: number; sponsor: string; case_id: number; reason: string; why: string;
 }
 
-export interface GateAddress { address: string; state: string; cases: number; counts: Record<string, number>; refunded: string; loss_cases: number; clean: boolean; why: string }
+export interface GateAddress { address: string; pool_id: number; sponsor: string; state: string; cases: number; counts: Record<string, number>; refunded: string; loss_cases: number; clean: boolean; why: string }
 
 export type TxPhase = "signing" | "submitted" | "accepted" | "finalized" | "rejected" | "failed";
 export interface TxProgress { phase: TxPhase; hash: string | null; message: string }
