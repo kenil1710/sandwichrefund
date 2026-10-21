@@ -64,12 +64,21 @@ if (phase === "refunds") {
     rows.push(row);
     console.log(x.case_id, x.tx_hash.slice(0, 10), x.state.padEnd(20), x.refund_paid, row.delivered ?? "", row.matches_feasibility ? "" : "MISMATCH " + row.expected);
   }
+  // payouts other runs made to the same victims since the baseline (the e2e run on the demo contract), netted out
+  const other = {};
+  try {
+    const e2e = JSON.parse(readFileSync(new URL("../docs/e2e/summary.json", import.meta.url)));
+    const r = e2e.steps.find((x) => x.step === "refund_arrived");
+    if (r && Date.parse(e2e.steps[0].at) > Date.parse(seed.at)) other[e2e.victim.toLowerCase()] = (other[e2e.victim.toLowerCase()] ?? 0n) + BigInt(r.refund_paid);
+  } catch { /* no e2e run */ }
   const victims = [];
   for (const [v, sum] of Object.entries(byVictim)) {
     const now = await balanceOf(v);
     const base = BigInt(seed.victims_baseline[v] ?? "0");
-    victims.push({ victim: v, refunds: String(sum), baseline: String(base), balance: String(now), delta: String(now - base), arrived: now - base === sum });
-    console.log("victim", v, "refunds", sum, "delta", now - base, now - base === sum ? "ARRIVED" : "MISMATCH");
+    const ext = other[v] ?? 0n;
+    victims.push({ victim: v, refunds: String(sum), baseline: String(base), balance: String(now), delta: String(now - base),
+      other_runs: String(ext), arrived: now - base - ext === sum });
+    console.log("victim", v, "refunds", sum, "delta", now - base, "other runs", ext, now - base - ext === sum ? "ARRIVED" : "MISMATCH");
   }
   const p = await c.view("get_pool", [pid, 0]);
   const counts = {};
@@ -89,11 +98,16 @@ if (phase === "refunds") {
   const tx = close?.tx ? await finalized(c.read, close.tx, { timeoutMs: 300_000 }) : null;
   const d = tx ? payoutDelivered(tx, seed.sponsor, p.returned) : { ok: false, why: "no close tx" };
   const now = await balanceOf(seed.sponsor);
-  const before = BigInt(doc.refunds?.sponsor_balance ?? "0");
+  // the sponsor sent one transaction (create_pool) and received only the close: its balance before the close is the
+  // pre-seed balance minus the pool and that transaction's net fee (top-ups minus refunds in its fee accounting)
+  const ctx = plain(await c.read.getTransaction({ hash: seed.create_tx }));
+  const fa = ctx.data?.fee_accounting ?? {};
+  const createFee = (fa.top_ups ?? []).reduce((x, t) => x + BigInt(t.amount), 0n) - (fa.refunds ?? []).reduce((x, t) => x + BigInt(t.amount), 0n);
+  const before = BigInt(seed.sponsor_balance_before) - BigInt(seed.value) - createFee;
   const contract = await balanceOf(dep.SandwichRefund.address);
   doc.close = { at: new Date().toISOString(), status: p.status, closed_at: p.closed_at, closed_by: p.closed_by, close_tx: close?.tx ?? "", close_status: tx?.statusName ?? "",
     keeper_status: close?.status ?? "", returned: p.returned, refunded: p.refunded, funded: p.funded, delivered: d.ok, why: d.why,
-    sponsor_delta: String(now - before), arrived: now - before === BigInt(p.returned), adds_up: BigInt(p.refunded) + BigInt(p.returned) === BigInt(p.funded),
+    sponsor_delta: String(now - before), create_fee: String(createFee), arrived: now - before === BigInt(p.returned), adds_up: BigInt(p.refunded) + BigInt(p.returned) === BigInt(p.funded),
     after_deadline_s: p.closed_at - p.claim_deadline, contract_balance: String(contract) };
   writeFileSync(OUT, JSON.stringify(doc, null, 1) + "\n");
   console.log(JSON.stringify(plain(doc.close)));
