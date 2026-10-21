@@ -75,7 +75,7 @@
    "kind": "CLOSE",
    "pool_id": 4,
    "sponsor": "0x21b843a75fd0f672527e538c6fc9a372a7cd07af",
-   "status": "SUBMITTED",
+   "status": "ACCEPTED",
    "attempts": 0,
    "first_seen_at": 1792585245,
    "tx": "0x96cc134e3d0a2886d39dbe46566796511b829ca455763bdae2301e60bb921291",
@@ -144,7 +144,7 @@
  "contract": "SandwichRefundDemo",
  "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T12:21:03.458Z",
+ "saved_at": "2026-10-21T12:21:18.883Z",
  "totals": {
   "actions": 1,
   "done": 1,
