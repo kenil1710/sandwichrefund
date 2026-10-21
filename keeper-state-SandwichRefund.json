@@ -570,7 +570,7 @@
    "hash": "0x043b2a259f0049e1c488f83f18d21aea7f8c06f5315f91f0979d0b07b4198de6",
    "victim": "0xf3340860a1435971abc29807577ad69304f5a26c",
    "why": "scan",
-   "status": "SUBMITTED",
+   "status": "ACCEPTED",
    "attempts": 0,
    "first_seen_at": 1792562051,
    "tx": "0x0d03633f3d4cf40951019b1ac726ed43e921d2cc717d785a0a4a19af12a4be92",
@@ -1003,5 +1003,5 @@
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T06:08:07.969Z"
+ "saved_at": "2026-10-21T06:08:24.948Z"
 }
