@@ -70,23 +70,31 @@ S_UNPAID = "SANDWICHED_UNPAID"
 S_UNCLEAR = "UNCLEAR"
 S_NOT_COVERED = "NOT_COVERED"
 S_UNVERIFIABLE = "UNVERIFIABLE"
-STATES = (S_CLEAN, S_REFUNDED, S_UNPAID, S_UNCLEAR, S_NOT_COVERED, S_UNVERIFIABLE)
-FINAL_STATES = (S_CLEAN, S_REFUNDED, S_UNPAID, S_UNCLEAR)
+S_EXPIRED = "EXPIRED"
+STATES = (S_CLEAN, S_REFUNDED, S_UNPAID, S_UNCLEAR, S_NOT_COVERED, S_UNVERIFIABLE, S_EXPIRED)
+FINAL_STATES = (S_CLEAN, S_REFUNDED, S_UNPAID, S_UNCLEAR, S_EXPIRED)
+# UNVERIFIABLE for a reason that can pass (an RPC failure, a disagreement, a block
+# not final yet): such a case filed inside the claim period may be filed again in
+# the recovery window after it; still unread when the pool closes, it is EXPIRED.
+TRANSIENT = ("RPC_UNREADABLE", "RPC_DISAGREE", "NOT_FINALIZED", "TX_PENDING")
 # weakest -> strongest: what get_case reports for a transaction decided by several pools
-STRENGTH = (S_UNVERIFIABLE, S_NOT_COVERED, S_CLEAN, S_UNCLEAR, S_UNPAID, S_REFUNDED)
+STRENGTH = (S_UNVERIFIABLE, S_EXPIRED, S_NOT_COVERED, S_CLEAN, S_UNCLEAR, S_UNPAID, S_REFUNDED)
 
 COUNT_KEYS = ("pools", "create_refused", "top_ups", "top_up_refused", "extensions", "filings", "closes",
               "credit_withdrawals", "sweeps", "refunds", "unpaid") + tuple("state:" + s for s in STATES)
 
-# mode -> (min_claim_period_s, rate_n, rate_window_s, sweep_delay_s)
+# mode -> (min_claim_period_s, rate_n, rate_window_s, sweep_delay_s, recovery_s)
 #   min_claim_period_s  the shortest claim period a pool may set
 #   rate_n/window       filings per (pool, sender) per window
 #   sweep_delay_s       sweep_stray waits this long after the last send, so a
 #                       send posted but not yet finalized is never taken for
 #                       stray value
+#   recovery_s          after the claim deadline, how long a case left
+#                       UNVERIFIABLE for a transient reason may be filed again;
+#                       fixed from the deadline, so filings cannot extend it
 MODES = {
-    "CANONICAL": (3600, 200, 3600, 172800),
-    "DEMO": (60, 60, 600, 3600),
+    "CANONICAL": (3600, 200, 3600, 172800, 3600),
+    "DEMO": (60, 60, 600, 3600, 120),
 }
 
 MAX_CLAIM_PERIOD_S = 180 * 86400
@@ -995,6 +1003,8 @@ class Pool:
     closed_at: u64
     closed_by: str
     history_json: str
+    pending: u64
+    n_expired: u64
 
 
 @gl.storage.allow
@@ -1043,6 +1053,7 @@ class SandwichRefund(gl.contract.Contract):
     rate_n: u64
     rate_window_s: u64
     sweep_delay_s: u64
+    recovery_s: u64
     last_send_at: u64
     n_pools: u64
     n_cases: u64
@@ -1083,6 +1094,7 @@ class SandwichRefund(gl.contract.Contract):
         self.rate_n = u64(p[1])
         self.rate_window_s = u64(p[2])
         self.sweep_delay_s = u64(p[3])
+        self.recovery_s = u64(p[4])
         self.n_pools = u64(0)
         self.n_cases = u64(0)
         self.n_attackers = u64(0)
@@ -1117,6 +1129,12 @@ class SandwichRefund(gl.contract.Contract):
             self._credit(value)
         self._bump(counter)
         return {"ok": False, "reason": reason, "credited": str(value)}
+
+    def _recovery_deadline(self, p: Pool) -> int:
+        return int(p.claim_deadline) + int(self.recovery_s)
+
+    def _closable(self, p: Pool, now: int) -> bool:
+        return p.status == PS_OPEN and now > int(p.claim_deadline) and (int(p.pending) == 0 or now > self._recovery_deadline(p))
 
     def _held(self) -> int:
         return int(self.open_total) + int(self.credit_owed_total)
@@ -1179,7 +1197,7 @@ class SandwichRefund(gl.contract.Contract):
             max_per_swap=u256(mps), max_per_victim=u256(mpv), claim_period_s=u64(cp), created_at=u64(now),
             claim_deadline=u64(now + cp), original_deadline=u64(now + cp), funded=u256(value), balance=u256(value),
             refunded=u256(0), returned=u256(0), n_cases=u64(0), n_refunded=u64(0), n_unpaid=u64(0), status=PS_OPEN,
-            closed_at=u64(0), closed_by="", history_json=_canon([{"at": now, "what": "create", "value": str(value)}]))
+            closed_at=u64(0), closed_by="", pending=u64(0), n_expired=u64(0), history_json=_canon([{"at": now, "what": "create", "value": str(value)}]))
         self.n_pools = u64(pid)
         for c in terms["chains"]:
             self.chain_pools[c] = u64(int(self.chain_pools.get(c, u64(0))) + 1)
@@ -1245,7 +1263,10 @@ class SandwichRefund(gl.contract.Contract):
 
     @gl.public.write
     def close_pool(self, pool_id: int) -> typing.Any:
-        """Anyone, after the claim deadline: what is left goes back to the sponsor."""
+        """Anyone, after the claim deadline - and, while cases filed in the claim
+        period are UNVERIFIABLE for a transient reason, after the recovery
+        window - what is left goes back to the sponsor. Past the recovery window
+        it always succeeds; those cases become EXPIRED."""
         now = self._now()
         if now <= 0:
             raise gl.vm.UserError("REFUSED: NO_CLOCK")
@@ -1256,6 +1277,8 @@ class SandwichRefund(gl.contract.Contract):
             raise gl.vm.UserError("REFUSED: ALREADY_" + p.status)
         if now <= int(p.claim_deadline):
             raise gl.vm.UserError("REFUSED: CLAIM_PERIOD_OPEN_UNTIL_" + str(int(p.claim_deadline)))
+        if int(p.pending) > 0 and now <= self._recovery_deadline(p):
+            raise gl.vm.UserError("REFUSED: RECOVERY_WINDOW_OPEN_UNTIL_" + str(self._recovery_deadline(p)))
         rest = int(p.balance)
         if int(self.balance) < rest:
             raise gl.vm.UserError("REFUSED: CONTRACT_BALANCE_BELOW_POOL")
@@ -1265,12 +1288,19 @@ class SandwichRefund(gl.contract.Contract):
         p.closed_by = self._sender()
         p.returned = u256(rest)
         p.balance = u256(0)
+        expired = int(p.pending)
+        if expired > 0:
+            # cases still unread for a transient reason end here: EXPIRED, final
+            p.n_expired = u64(expired)
+            p.pending = u64(0)
+            self._bump("state:" + S_UNVERIFIABLE, -expired)
+            self._bump("state:" + S_EXPIRED, expired)
         self.open_total = u256(int(self.open_total) - rest)
         self.returned_total = u256(int(self.returned_total) + rest)
         self._bump("closes")
         if rest > 0:
             self._send(p.sponsor, rest)
-        return {"ok": True, "pool_id": int(p.pool_id), "returned": str(rest), "to": p.sponsor}
+        return {"ok": True, "pool_id": int(p.pool_id), "returned": str(rest), "to": p.sponsor, "expired": expired}
 
     # --- cases ------------------------------------------------------------------
 
@@ -1288,8 +1318,6 @@ class SandwichRefund(gl.contract.Contract):
             raise gl.vm.UserError("REFUSED: NO_SUCH_POOL")
         if p.status != PS_OPEN:
             raise gl.vm.UserError("REFUSED: POOL_IS_" + p.status)
-        if now > int(p.claim_deadline):
-            raise gl.vm.UserError("REFUSED: CLAIM_PERIOD_OVER")
         terms = json.loads(p.terms_json)
         ch = str(chain).strip().lower()
         if ch not in terms["chains"]:
@@ -1302,6 +1330,13 @@ class SandwichRefund(gl.contract.Contract):
         old = self.cases.get(u64(cid)) if cid > 0 else None
         if old is not None and old.state in FINAL_STATES:
             raise gl.vm.UserError("REFUSED: ALREADY_DECIDED_" + old.state)
+        old_pending = old is not None and old.state == S_UNVERIFIABLE and old.reason in TRANSIENT
+        if now > int(p.claim_deadline):
+            # the recovery window: only a case already pending for a transient reason
+            if not old_pending:
+                raise gl.vm.UserError("REFUSED: CLAIM_PERIOD_OVER")
+            if now > self._recovery_deadline(p):
+                raise gl.vm.UserError("REFUSED: RECOVERY_WINDOW_OVER")
         who = self._sender()
         rk = str(int(p.pool_id)) + "|" + who
         w = self.rate.get(rk)
@@ -1401,6 +1436,8 @@ class SandwichRefund(gl.contract.Contract):
             pn = int(p.n_cases)
             self.pool_cases[str(int(p.pool_id)) + ":" + str(pn)] = u64(cid)
             p.n_cases = u64(pn + 1)
+        new_pending = state == S_UNVERIFIABLE and str(j["reason"]) in TRANSIENT
+        p.pending = u64(int(p.pending) + (1 if new_pending else 0) - (1 if old_pending else 0))
         c.filer = who
         c.filed_at = u64(now)
         c.attempts = u64(int(c.attempts) + 1)
@@ -1506,12 +1543,22 @@ class SandwichRefund(gl.contract.Contract):
                 "balance": str(int(p.balance)), "refunded": str(int(p.refunded)), "returned": str(int(p.returned)),
                 "n_cases": int(p.n_cases), "n_refunded": int(p.n_refunded), "n_unpaid": int(p.n_unpaid),
                 "closed_at": int(p.closed_at), "closed_by": p.closed_by, "history": json.loads(p.history_json),
-                "due": "CLOSE" if p.status == PS_OPEN and now > int(p.claim_deadline) else ""}
+                "recovery_deadline": self._recovery_deadline(p), "pending": int(p.pending), "n_expired": int(p.n_expired),
+                "due": "CLOSE" if self._closable(p, now) else ("RETRY" if p.status == PS_OPEN and now > int(p.claim_deadline) else "")}
+
+    def _state(self, c: Case) -> str:
+        """A case left UNVERIFIABLE for a transient reason reads EXPIRED once its pool is closed."""
+        if c.state == S_UNVERIFIABLE and c.reason in TRANSIENT:
+            p = self.pools.get(c.pool_id)
+            if p is not None and p.status == PS_CLOSED:
+                return S_EXPIRED
+        return c.state
 
     def _case_view(self, c: Case) -> dict:
+        st = self._state(c)
         return {"case_id": int(c.case_id), "chain": c.chain, "tx_hash": c.tx_hash, "pool_id": int(c.pool_id),
-                "filer": c.filer, "filed_at": int(c.filed_at), "attempts": int(c.attempts), "state": c.state,
-                "final": c.state in FINAL_STATES, "verdict": c.verdict, "reason": c.reason, "detail": c.detail,
+                "filer": c.filer, "filed_at": int(c.filed_at), "attempts": int(c.attempts), "state": st,
+                "final": st in FINAL_STATES, "verdict": c.verdict, "reason": c.reason, "detail": c.detail,
                 "block": int(c.block), "tx_index": int(c.tx_index), "victim": c.victim, "router": c.router,
                 "dex_pool": c.dex_pool, "facts": json.loads(c.detail_json), "profit_token": c.profit_token,
                 "loss": str(int(c.loss)), "refund_due": str(int(c.refund_due)), "refund_paid": str(int(c.refund_paid)),
@@ -1568,7 +1615,7 @@ class SandwichRefund(gl.contract.Contract):
             c = self.cases.get(u64(int(self.tx_cases.get(k + ":" + str(i), u64(0)))))
             if c is None:
                 continue
-            r = STRENGTH.index(c.state) if c.state in STRENGTH else -1
+            r = STRENGTH.index(self._state(c)) if self._state(c) in STRENGTH else -1
             if r > rank or (r == rank and best is not None and int(c.refund_paid) > int(best.refund_paid)):
                 rank = r
                 best = c
@@ -1686,7 +1733,7 @@ class SandwichRefund(gl.contract.Contract):
         return {"version": VERSION, "contract": "SandwichRefund", "mode": self.mode, "deployer": self.deployer,
                 "min_claim_period_s": int(self.min_claim_period_s), "max_claim_period_s": MAX_CLAIM_PERIOD_S,
                 "max_extend_s": MAX_EXTEND_S, "rate_n": int(self.rate_n), "rate_window_s": int(self.rate_window_s),
-                "sweep_delay_s": int(self.sweep_delay_s), "last_send_at": int(self.last_send_at),
+                "sweep_delay_s": int(self.sweep_delay_s), "recovery_s": int(self.recovery_s), "transient": list(TRANSIENT), "last_send_at": int(self.last_send_at),
                 "max_routers": MAX_ROUTERS, "max_rates": MAX_RATES, "max_span_blocks": MAX_SPAN_BLOCKS,
                 "max_pools_per_case": MAX_POOLS, "max_txs_per_block": MAX_TXS, "min_pool": str(MIN_POOL),
                 "page_max": PAGE_MAX, "states": list(STATES), "final_states": list(FINAL_STATES),

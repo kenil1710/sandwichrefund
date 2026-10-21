@@ -445,3 +445,35 @@ test("demo contract: no scan, but due pools are closed", async () => {
   assert.equal(rg.pools[0].status, "CLOSED");
   assert.equal(ch.calls, 0);
 });
+
+test("recovery window: a transient UNVERIFIABLE case is retried after the deadline; close waits for it", async () => {
+  const ch = new FakeChain(), rg = new FakeReg(), store = memStore();
+  const p = rg.pool({ claim_deadline: 1_800_000_000 + 100 });
+  p.recovery_deadline = p.claim_deadline + 3600;
+  const v = ch.sandwich(120, "0x" + "e".repeat(40));
+  rg.decide = (h, n) => (n < 2 ? "UNVERIFIABLE" : "SANDWICHED_REFUNDED");
+  const api = rg.api();
+  const reg = { ...api, async getPoolCase(pid, c, h) { const x = await api.getPoolCase(pid, c, h); if (x.found && x.state === "UNVERIFIABLE") x.reason = "RPC_UNREADABLE"; return x; },
+    async getPools(o, l) { const pg = await api.getPools(o, l); for (const q of pg.items) q.pending = Object.values(rg.cases).filter((c) => c.state === "UNVERIFIABLE").length; return pg; } };
+  await runKeeper({ scan: ch.api(), reg, store }); rg.tick();
+  await runKeeper({ scan: ch.api(), reg, store }); rg.tick();
+  assert.equal(store.get().actions[fileKey(1, "ethereum", v)].status, "RETRY");
+  rg.t = p.claim_deadline + 1000;
+  await runKeeper({ scan: ch.api(), reg, store }); rg.tick();
+  assert.equal(store.get().actions[closeKey(1)], undefined, "no close while a case is pending in the window");
+  await runKeeper({ scan: ch.api(), reg, store }); rg.tick();
+  assert.equal(store.get().actions[fileKey(1, "ethereum", v)].status, "DONE");
+  await runKeeper({ scan: ch.api(), reg, store }); rg.tick();
+  await runKeeper({ scan: ch.api(), reg, store });
+  assert.equal(rg.pools[0].status, "CLOSED");
+});
+
+test("recovery window over: close is due even with cases pending", async () => {
+  const ch = new FakeChain(), rg = new FakeReg(), store = memStore();
+  const p = rg.pool({ claim_deadline: 1_800_000_000 + 100, pending: 3 });
+  p.recovery_deadline = p.claim_deadline + 3600;
+  rg.t = p.recovery_deadline + 1;
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store }); rg.tick();
+  await runKeeper({ scan: ch.api(), reg: rg.api(), store });
+  assert.equal(rg.pools[0].status, "CLOSED");
+});

@@ -39,10 +39,10 @@ NO_VALUE, POOL_TOO_LARGE.
 
 ### Modes
 
-| mode | min claim period (s) | filings per (pool, sender) | window (s) | sweep delay (s) |
-|---|---|---|---|---|
-| CANONICAL | 3600 | 200 | 3600 | 172800 |
-| DEMO | 60 | 60 | 600 | 3600 |
+| mode | min claim period (s) | filings per (pool, sender) | window (s) | sweep delay (s) | recovery window (s) |
+|---|---|---|---|---|---|
+| CANONICAL | 3600 | 200 | 3600 | 172800 | 3600 |
+| DEMO | 60 | 60 | 600 | 3600 | 120 |
 
 ## 2. A case: what is read
 
@@ -124,8 +124,14 @@ A positive refund is sent to the victim (the transaction's `tx.from`) in the sam
 Zero: **SANDWICHED_UNPAID**. If the contract's balance is below the refund the call is refused
 (CONTRACT_BALANCE_BELOW_REFUND).
 
-States: CLEAN, SANDWICHED_REFUNDED, SANDWICHED_UNPAID and UNCLEAR are final: a pool decides each case once
-(ALREADY_DECIDED_<state>). NOT_COVERED and UNVERIFIABLE may be filed again. Each pool decides for itself, so a case
+States: CLEAN, SANDWICHED_REFUNDED, SANDWICHED_UNPAID, UNCLEAR and EXPIRED are final: a pool decides each case once
+(ALREADY_DECIDED_<state>). NOT_COVERED and UNVERIFIABLE may be filed again until the claim deadline.
+
+**Recovery window.** A case left UNVERIFIABLE for a transient reason (RPC_UNREADABLE, RPC_DISAGREE, NOT_FINALIZED,
+TX_PENDING) is pending in its pool. After the claim deadline, for the mode's recovery window (fixed from the
+deadline: 3600 s canonical, 120 s demo; filings cannot move it), anyone may file a pending case again; nothing else
+is accepted (CLAIM_PERIOD_OVER, then RECOVERY_WINDOW_OVER). A junk hash is TX_NOT_FOUND, not transient, and is never
+pending. Each pool decides for itself, so a case
 can be refunded by several pools, each under its own terms and caps; a tiny pool filed first cannot lock a victim
 out of a larger one. `get_case` reports a transaction's strongest decision (SANDWICHED_REFUNDED >
 SANDWICHED_UNPAID > UNCLEAR > CLEAN > NOT_COVERED > UNVERIFIABLE; on a tie the larger refund).
@@ -133,7 +139,9 @@ SANDWICHED_UNPAID > UNCLEAR > CLEAN > NOT_COVERED > UNVERIFIABLE; on a tie the l
 ## 5. Closing, and every GEN's exit
 
 After the claim deadline anyone calls `close_pool`: what is left goes to the sponsor (refused before:
-CLAIM_PERIOD_OPEN_UNTIL_<time>; twice: ALREADY_CLOSED; CONTRACT_BALANCE_BELOW_POOL). GEN leaves only through one
+CLAIM_PERIOD_OPEN_UNTIL_<time>; while cases are pending, until the recovery window ends:
+RECOVERY_WINDOW_OPEN_UNTIL_<time>; twice: ALREADY_CLOSED; CONTRACT_BALANCE_BELOW_POOL). After the recovery window it
+always succeeds, and the cases still pending become EXPIRED (final, never paid). GEN leaves only through one
 external value message per call (`gl.evm.Account(to).emit_call(amount, b"")`): a refund (`file_case`), a close
 (`close_pool`), a credit (`withdraw_refund`, refused: NOTHING_TO_WITHDRAW, CONTRACT_BALANCE_BELOW_CREDIT) or stray
 value (`sweep_stray`: balance above what the ledger holds, sent to the deployer, at least the mode's sweep delay

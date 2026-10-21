@@ -18,7 +18,10 @@
 //      from two endpoints - becomes a FILE action. So does every watchlist
 //      hash (data/cases.json) inside the range.
 //   5. SETTLE: poll this run's transactions until FINALIZED, within settleMs.
-//   4. ACT, oldest first, up to maxActions: re-read the pool's decision on the
+//   4. ACT, oldest first, up to maxActions (a case left UNVERIFIABLE for a
+//      transient reason is retried in the pool's recovery window too; a pool is
+//      closed once closable: past its deadline with nothing pending, or past
+//      its recovery window): re-read the pool's decision on the
 //      case (already decided -> DONE, no transaction), else file it and
 //      checkpoint the hash at once. Pools past their claim deadline get a
 //      CLOSE action.
@@ -35,7 +38,11 @@ export const POOL_PAGE = 50;
 export const PAGE_BLOCKS = 10;
 export const STALE_S = 6 * 3600;
 const TERMINAL_BAD = ["UNDETERMINED", "CANCELED", "LEADER_TIMEOUT", "VALIDATORS_TIMEOUT"];
-const DONE_STATES = ["CLEAN", "SANDWICHED_REFUNDED", "SANDWICHED_UNPAID", "UNCLEAR", "NOT_COVERED"];
+const DONE_STATES = ["CLEAN", "SANDWICHED_REFUNDED", "SANDWICHED_UNPAID", "UNCLEAR", "NOT_COVERED", "EXPIRED"];
+// UNVERIFIABLE for these reasons may be filed again in the pool's recovery window after its claim deadline
+export const TRANSIENT = ["RPC_UNREADABLE", "RPC_DISAGREE", "NOT_FINALIZED", "TX_PENDING"];
+/** May anyone close the pool now? Past the deadline, and no case pending or the recovery window over. */
+export const closable = (p, now) => p.status === "OPEN" && now > p.claim_deadline && (!(p.pending > 0) || now > (p.recovery_deadline ?? p.claim_deadline));
 
 export function emptyState() {
   return { version: VERSION, pools_offset: 0, pools: {}, actions: {}, runs: [], unprocessed: [], last_run: null };
@@ -242,7 +249,7 @@ export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, 
         }
       }
     }
-    if (p.status === "OPEN" && reg.now() > p.claim_deadline && !state.actions[closeKey(pid)]) {
+    if (closable(p, reg.now()) && !state.actions[closeKey(pid)]) {
       state.actions[closeKey(pid)] = { key: closeKey(pid), kind: "CLOSE", pool_id: pid, sponsor: p.sponsor, status: "QUEUED", attempts: 0,
         first_seen_at: reg.now(), tx: null };
     }
@@ -263,8 +270,10 @@ export async function runKeeper({ scan, reg, store, watch = [], log = () => {}, 
       a.verified_at = reg.now(); run.already++; run.done++; await save("already " + a.key); continue;
     }
     if (a.kind === "CLOSE" && seen) { a.status = "DONE"; a.result = "CLOSED"; a.verified_at = reg.now(); run.already++; run.done++; await save("already " + a.key); continue; }
-    if (a.kind === "FILE" && (!pool || pool.status !== "OPEN" || reg.now() > pool.claim_deadline)) {
-      a.status = "FAILED"; a.last_error = "pool closed or past its claim deadline before the case was filed"; run.failed++;
+    const inRecovery = pool && pool.status === "OPEN" && reg.now() > pool.claim_deadline && reg.now() <= (pool.recovery_deadline ?? 0)
+      && seen?.state === "UNVERIFIABLE" && TRANSIENT.includes(seen.reason);
+    if (a.kind === "FILE" && (!pool || pool.status !== "OPEN" || (reg.now() > pool.claim_deadline && !inRecovery))) {
+      a.status = "FAILED"; a.last_error = "pool closed or past its claim deadline (and not a case pending in its recovery window)"; run.failed++;
       note(a.key, a.last_error); await save("expired " + a.key); continue;
     }
     acted++;

@@ -123,7 +123,7 @@ class NeverFavorable(unittest.TestCase):
 
     def test_states_are_exactly_the_spec(self):
         self.assertEqual(set(GT.CASE_STATES), {"NO_POOL", "NOT_COVERED", "CLEAN", "SANDWICHED_REFUNDED",
-                                                "SANDWICHED_UNPAID", "UNCLEAR", "UNVERIFIABLE"})
+                                                "SANDWICHED_UNPAID", "UNCLEAR", "UNVERIFIABLE", "EXPIRED"})
         self.assertEqual(set(GT.REGISTRY_STATES), set(SR.STATES))
         self.assertEqual(set(GT.FINAL), set(SR.FINAL_STATES))
 
@@ -150,10 +150,10 @@ class DocsTruth(unittest.TestCase):
                              r"`%s` *= *%d\b" % (name, val), name)
 
     def test_modes_documented(self):
-        for m, (mcp, rn, rw, sd) in SR.MODES.items():
+        for m, vals in SR.MODES.items():
             row = [l for l in self.rules.split("\n") if l.startswith("| " + m)]
             self.assertEqual(len(row), 1, m)
-            for v in (mcp, rn, rw, sd):
+            for v in vals:
                 self.assertIn(str(v), row[0], (m, v))
 
     def test_refund_formula_documented(self):
