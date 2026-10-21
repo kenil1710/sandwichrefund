@@ -1,12 +1,12 @@
 {
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "started_at": "2026-10-21T07:45:42.448Z",
+ "started_at": "2026-10-21T12:20:40.821Z",
  "contracts": {
   "SandwichRefund": {
    "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
    "last_run": {
-    "started_at": 1792568742,
-    "finished_at": 1792568744,
+    "started_at": 1792585240,
+    "finished_at": 1792585242,
     "resumed": 0,
     "pools": 1,
     "pages": 0,
@@ -848,15 +848,15 @@
   "SandwichRefundDemo": {
    "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
    "last_run": {
-    "started_at": 1792568745,
-    "finished_at": 1792568795,
+    "started_at": 1792585244,
+    "finished_at": 1792585334,
     "resumed": 0,
-    "pools": 1,
+    "pools": 6,
     "pages": 0,
     "pages_failed": 0,
     "candidates": 0,
-    "submitted": 1,
-    "done": 1,
+    "submitted": 4,
+    "done": 4,
     "already": 0,
     "pending": 0,
     "failed": 0,
@@ -864,22 +864,52 @@
     "errors": []
    },
    "totals": {
-    "actions": 1,
-    "done": 1,
+    "actions": 5,
+    "done": 5,
     "queued": 0,
     "pending": 0,
     "retry": 0,
     "failed": 0,
     "by_result": {
-     "CLOSED": 1
+     "CLOSED": 5
     }
    },
    "pools": {
     "1": {
      "chains": {},
-     "status": "OPEN",
+     "status": "CLOSED",
      "claim_deadline": 1792566006,
      "name": "e2e pool 1792565907262"
+    },
+    "2": {
+     "chains": {},
+     "status": "CLOSED",
+     "claim_deadline": 1792579599,
+     "name": "e2e pool 1792578992279"
+    },
+    "3": {
+     "chains": {},
+     "status": "OPEN",
+     "claim_deadline": 1792581856,
+     "name": "Demo A: caps, empty pool, every verdict"
+    },
+    "4": {
+     "chains": {},
+     "status": "OPEN",
+     "claim_deadline": 1792581492,
+     "name": "Demo B: blocks 26231000-26231420, V2 only"
+    },
+    "5": {
+     "chains": {},
+     "status": "OPEN",
+     "claim_deadline": 1792581816,
+     "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
+    },
+    "6": {
+     "chains": {},
+     "status": "OPEN",
+     "claim_deadline": 1792582220,
+     "name": "Demo A: caps, empty pool, every verdict"
     }
    },
    "unprocessed": [],
@@ -894,13 +924,57 @@
      "attempts": 0,
      "last_error": "",
      "why": ""
+    },
+    {
+     "key": "close:3",
+     "kind": "CLOSE",
+     "pool_id": 3,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0xc5c57f783c8f2753932cc3df2fe64db9c84965d7af6d1ed2415508dccb5c7531",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
+    },
+    {
+     "key": "close:4",
+     "kind": "CLOSE",
+     "pool_id": 4,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0x96cc134e3d0a2886d39dbe46566796511b829ca455763bdae2301e60bb921291",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
+    },
+    {
+     "key": "close:5",
+     "kind": "CLOSE",
+     "pool_id": 5,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0x62275b246106781a18fa1161e6d334001fced052877e70e65c841990e43e033b",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
+    },
+    {
+     "key": "close:6",
+     "kind": "CLOSE",
+     "pool_id": 6,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0x0f44b17d2a86bbb8d761882c5b58869b7ecaa6ea0b69430a0efe93465137a0c0",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
     }
    ]
   }
  },
- "finished_at": "2026-10-21T07:46:36.323Z",
+ "finished_at": "2026-10-21T12:22:15.550Z",
  "trigger": "schedule",
- "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39564238200",
+ "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39598816992",
  "history": [
   {
    "started_at": "2026-10-21T05:52:30.684Z",
@@ -945,6 +1019,26 @@
     "SandwichRefundDemo": {
      "submitted": 1,
      "done": 1,
+     "pages": 0,
+     "pages_failed": 0
+    }
+   }
+  },
+  {
+   "started_at": "2026-10-21T12:20:40.821Z",
+   "finished_at": "2026-10-21T12:22:15.550Z",
+   "trigger": "schedule",
+   "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39598816992",
+   "runs": {
+    "SandwichRefund": {
+     "submitted": 0,
+     "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    },
+    "SandwichRefundDemo": {
+     "submitted": 4,
+     "done": 4,
      "pages": 0,
      "pages_failed": 0
     }
