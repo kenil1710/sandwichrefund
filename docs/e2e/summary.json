@@ -1,0 +1,52 @@
+{
+ "site": "http://localhost:3100",
+ "demo_contract": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
+ "case": "0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+ "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28",
+ "steps": [
+  {
+   "step": "wallet",
+   "address": "0x4BF380c65De0747Ba5766dbb08f9a2E417401E09",
+   "note": "throwaway key generated in memory for this run, funded from the Studio Dev faucet",
+   "at": "2026-10-21T10:36:19.854Z"
+  },
+  {
+   "step": "rejected_create",
+   "status": "rejected · BAD_CLAIM_PERIOD · tx 0xab99dc8f…",
+   "at": "2026-10-21T10:36:32.279Z"
+  },
+  {
+   "step": "created",
+   "pool_id": 2,
+   "funded": "50000000000000000",
+   "claim_deadline": 1792579599,
+   "at": "2026-10-21T10:36:46.312Z"
+  },
+  {
+   "step": "refund_arrived",
+   "state": "SANDWICHED_REFUNDED",
+   "refund_paid": "24894661239767050",
+   "victim_delta": "24894661239767050",
+   "at": "2026-10-21T10:38:12.683Z"
+  },
+  {
+   "step": "duplicate_refused",
+   "status": "failed · REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED",
+   "at": "2026-10-21T10:38:18.364Z"
+  },
+  {
+   "step": "closed",
+   "returned": "25105338760232950",
+   "refunded": "24894661239767050",
+   "funded": "50000000000000000",
+   "wallet_delta_after_fee": "24979031260232127",
+   "at": "2026-10-21T10:47:51.423Z"
+  }
+ ],
+ "transactions": [
+  "0xab99dc8f71dff9860335df3a1fa885a34ac2a0d83af4f3ed9edbe4a25ca8f63b",
+  "0x4b4fb19ea72db3c0dafce5d09cd94684907a1a9b3dbd6028f1e525e6ccf51027",
+  "0x3e2e3e3ba6136cac5ae69b3d4eb926e55d48e6e354f881f32b69616a800b94b3",
+  "0xbd3a481e539bd113ddd17b263ebea1a6070eacd9e98c67f93dfff60b0507d275"
+ ]
+}

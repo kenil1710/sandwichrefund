@@ -27,13 +27,22 @@ async function withTimeout<T>(work: Promise<T>, label: string, ms = READ_TIMEOUT
 }
 
 let freshReads = 0;
+/** One contract view through the site's cached /api/view, retried with exponential backoff and jitter when the
+ *  relay or Studio is rate limited (429) or briefly unavailable (502/503). */
 export async function viewOf<T>(address: string, fn: string, args: CalldataEncodable[] = []): Promise<T> {
   const q = new URLSearchParams({ a: address, f: fn, args: JSON.stringify(args, (_k, v) => (typeof v === "bigint" ? v.toString() : v)) });
   if (freshReads > 0) q.set("fresh", String(Date.now()));
-  const r = await withTimeout(fetch(`/api/view?${q}`), fn);
-  const j = await r.json();
-  if (!r.ok || j.error) throw new Error(j.error ?? `view ${fn} failed`);
-  return (typeof j.value === "string" ? JSON.parse(j.value) : j.value) as T;
+  let last = "";
+  for (let i = 0; i < 4; i++) {
+    const r = await withTimeout(fetch(`/api/view?${q}`), fn);
+    const j = await r.json().catch(() => ({ error: `HTTP ${r.status}` }));
+    if (r.ok && !j.error) return (typeof j.value === "string" ? JSON.parse(j.value) : j.value) as T;
+    last = j.error ?? `view ${fn} failed`;
+    if (![429, 502, 503].includes(r.status) && !/rate limit|429/i.test(last)) break;
+    const wait = (/rate limit|429/i.test(last) ? 6000 : 700) * 2 ** i + Math.floor(Math.random() * 300);
+    await new Promise((res) => setTimeout(res, Math.min(wait, 20_000)));
+  }
+  throw new Error(last);
 }
 
 const STATUS_NAMES = ["PENDING", "PROPOSING", "COMMITTING", "REVEALING", "ACCEPTED", "FINALIZED", "UNDETERMINED", "CANCELED"];

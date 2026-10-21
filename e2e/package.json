@@ -1,0 +1,11 @@
+{
+  "name": "sandwichrefund-e2e",
+  "private": true,
+  "type": "module",
+  "description": "Playwright end-to-end run of the live site on the demo contract with a throwaway wallet",
+  "scripts": { "e2e": "playwright test" },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "viem": "2.38.6"
+  }
+}

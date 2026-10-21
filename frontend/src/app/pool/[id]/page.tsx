@@ -1,24 +1,29 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { asReg, regAddr, STUDIO_EXPLORER } from "@/lib/deployments";
-import { pool as getPool, poolCases } from "@/lib/server";
+import { page, pool as getPool } from "@/lib/server";
+import type { Case, Page } from "@/lib/types";
 import { gen, short, units, when } from "@/lib/format";
 import { Receipt } from "@/components/Receipt";
 import { PoolActions } from "./PoolActions";
 
 export const revalidate = 30;
-type P = { params: Promise<{ id: string }>; searchParams: Promise<{ reg?: string; state?: string }> };
+type P = { params: Promise<{ id: string }>; searchParams: Promise<{ reg?: string; state?: string; offset?: string }> };
+const PER_PAGE = 50;
 export async function generateMetadata({ params }: P): Promise<Metadata> { return { title: `Pool ${(await params).id}` }; }
 
 export default async function PoolPage({ params, searchParams }: P) {
   const id = Number((await params).id);
   const sp = await searchParams;
   const reg = asReg(sp.reg);
-  let p, cases;
-  try { [p, cases] = await Promise.all([getPool(regAddr(reg), id), poolCases(regAddr(reg), id)]); }
+  const offset = Math.max(0, Number(sp.offset ?? 0) || 0);
+  let p, pg: Page<Case>;
+  try { [p, pg] = await Promise.all([getPool(regAddr(reg), id), page<Case>(regAddr(reg), "get_pool_cases", [id], offset, PER_PAGE)]); }
   catch (e) { return <><h1>Pool {id}</h1><p className="note warn">Studio Dev did not answer: {String((e as Error)?.message ?? e).slice(0, 160)}</p></>; }
   if (!p.found) return <><h1>Pool {id}</h1><p className="note">No such pool.</p></>;
+  const cases = pg.items;
   const states = [...new Set(cases.map((c) => c.state))];
+  const q = (o: number) => `/pool/${id}?offset=${o}${reg === "demo" ? "&reg=demo" : ""}`;
   const shown = sp.state ? cases.filter((c) => c.state === sp.state) : cases;
   return (
     <>
@@ -53,6 +58,7 @@ export default async function PoolPage({ params, searchParams }: P) {
       </div>
       <h2>Cases</h2>
       <p className="small">Filter: <Link href={`/pool/${id}${reg === "demo" ? "?reg=demo" : ""}`}>all ({cases.length})</Link>{states.map((s) => <span key={s}> · <Link href={`/pool/${id}?state=${s}${reg === "demo" ? "&reg=demo" : ""}`}>{s} ({cases.filter((c) => c.state === s).length})</Link></span>)}</p>
+      <p className="small">Cases {offset + 1}-{offset + cases.length} of {pg.total}{offset > 0 && <> · <Link href={q(Math.max(0, offset - PER_PAGE))}>previous {PER_PAGE}</Link></>}{pg.next_offset > 0 && <> · <Link href={q(pg.next_offset)}>next {PER_PAGE}</Link></>}</p>
       <div className="receipts">{shown.map((c) => <Receipt key={c.case_id} c={c} reg={reg} />)}</div>
       <p className="small">Contract <a className="mono" href={`${STUDIO_EXPLORER}/address/${regAddr(reg)}`}>{regAddr(reg)}</a></p>
     </>

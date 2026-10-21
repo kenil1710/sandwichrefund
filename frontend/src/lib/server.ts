@@ -19,40 +19,64 @@ export function plain(v: unknown): unknown {
   return v;
 }
 
-/** Studio meters reads per IP per minute: identical reads within 15 s are served once per instance. */
+/** Studio meters reads per IP per minute: identical reads within 15 s are served once per instance, and a read
+ *  already in flight is shared rather than sent twice. */
 const memo = new Map<string, { at: number; value: unknown }>();
+const inflight = new Map<string, Promise<unknown>>();
 const MEMO_MS = 15_000;
+const MEMO_MAX = 2000;
+/** Lists are walked page by page up to this many pages (50 items each); beyond it a page says it was cut. */
+export const MAX_PAGES = 40;
+const ATTEMPTS = 5;
+
+/** Exponential backoff with jitter; a per-minute rate limit waits for the minute to roll over. */
+export function backoffMs(attempt: number, limited: boolean): number {
+  const base = limited ? 12_000 : 800 * 2 ** attempt;
+  return Math.min(base, 30_000) + Math.floor(Math.random() * 400);
+}
 
 export async function view<T>(address: string, fn: string, args: unknown[] = []): Promise<T> {
   const key = `${address.toLowerCase()}|${fn}|${JSON.stringify(args)}`;
   const hit = memo.get(key);
   if (hit && Date.now() - hit.at < MEMO_MS) return hit.value as T;
-  let last: unknown;
-  for (let i = 0; i < 5; i++) {
-    try {
-      const r = await client.readContract({ address: address as `0x${string}`, functionName: fn, args: args as never });
-      const value = (typeof r === "string" ? JSON.parse(r) : plain(r)) as T;
-      if (memo.size > 2000) memo.clear();
-      memo.set(key, { at: Date.now(), value });
-      return value;
-    } catch (e) {
-      last = e;
-      const limited = /rate limit|-32029|429/i.test(String((e as Error)?.message ?? e));
-      await new Promise((res) => setTimeout(res, limited ? 12_000 : 900 * (i + 1)));
+  const running = inflight.get(key);
+  if (running) return running as Promise<T>;
+  const work = (async () => {
+    let last: unknown;
+    for (let i = 0; i < ATTEMPTS; i++) {
+      try {
+        const r = await client.readContract({ address: address as `0x${string}`, functionName: fn, args: args as never });
+        const value = (typeof r === "string" ? JSON.parse(r) : plain(r)) as T;
+        if (memo.size >= MEMO_MAX) memo.delete(memo.keys().next().value as string);
+        memo.set(key, { at: Date.now(), value });
+        return value;
+      } catch (e) {
+        last = e;
+        const limited = /rate limit|-32029|429/i.test(String((e as Error)?.message ?? e));
+        if (i < ATTEMPTS - 1) await new Promise((res) => setTimeout(res, backoffMs(i, limited)));
+      }
     }
-  }
-  throw last;
+    throw last;
+  })();
+  inflight.set(key, work);
+  try { return await work; } finally { inflight.delete(key); }
 }
 
-async function walk<T>(address: string, fn: string, pre: unknown[], post: unknown[] = []): Promise<T[]> {
-  const out: T[] = [];
-  for (let off = 0; ; ) {
+/** Every page of a list view, at most MAX_PAGES of them; `truncated` says when there was more. */
+async function walk<T>(address: string, fn: string, pre: unknown[], post: unknown[] = []): Promise<T[] & { truncated?: boolean }> {
+  const out: T[] & { truncated?: boolean } = [];
+  for (let off = 0, pages = 0; ; pages++) {
+    if (pages >= MAX_PAGES) { out.truncated = true; return out; }
     const p = await view<Page<T>>(address, fn, [...pre, off, 50, ...post]);
     out.push(...(p.items ?? []));
     if (p.next_offset === -1 || p.next_offset === undefined || p.next_offset <= off) return out;
     off = p.next_offset;
   }
 }
+
+/** One page of a list view, for pages that show a window rather than everything. */
+export const page = <T>(address: string, fn: string, args: unknown[], offset: number, limit = 50) =>
+  view<Page<T>>(address, fn, [...args, Math.max(0, offset), Math.min(Math.max(1, limit), 50)]);
 
 const now = () => Math.floor(Date.now() / 1000);
 export const allPools = (reg: string) => walk<Pool>(reg, "get_pools", [], [now()]);

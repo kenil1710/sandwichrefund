@@ -1,0 +1,19 @@
+
+Running 1 test using 1 worker
+
+wallet {"address":"0x4BF380c65De0747Ba5766dbb08f9a2E417401E09","note":"throwaway key generated in memory for this run, funded from the Studio Dev faucet"}
+rejected_create {"status":"rejected · BAD_CLAIM_PERIOD · tx 0xab99dc8f…"}
+created {"pool_id":2,"funded":"50000000000000000","claim_deadline":1792579599}
+refund_arrived {"state":"SANDWICHED_REFUNDED","refund_paid":"24894661239767050","victim_delta":"24894661239767050"}
+duplicate_refused {"status":"failed · REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED"}
+closed {"returned":"25105338760232950","refunded":"24894661239767050","funded":"50000000000000000","wallet_delta_after_fee":"24979031260232127"}
+  ✓  1 flow.e2e.js:30:1 › sponsor, file, refund, rejected, close on the demo contract (11.6m)
+
+  Slow test file: flow.e2e.js (11.6m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 passed (11.6m)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report ../docs/e2e/report[39m
+[36m[39m

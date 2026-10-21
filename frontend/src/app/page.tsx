@@ -1,16 +1,20 @@
 import Link from "next/link";
 import { ADDR } from "@/lib/deployments";
-import { allAttackers, allCases, allPools, stats } from "@/lib/server";
+import { allAttackers, allPools, page, stats } from "@/lib/server";
 import { gen, label, short, tokenDec, tokenSym, units } from "@/lib/format";
 import { Receipt } from "@/components/Receipt";
-import type { Attacker, Case } from "@/lib/types";
+import type { Attacker, Case, Page } from "@/lib/types";
 
 export const revalidate = 30;
 
 export default async function Home() {
   let s, cases: Case[] = [], attackers: Attacker[] = [], pools;
   try {
-    [s, cases, attackers, pools] = await Promise.all([stats(ADDR.registry), allCases(ADDR.registry), allAttackers(ADDR.registry), allPools(ADDR.registry)]);
+    s = await stats(ADDR.registry);
+    // the most recent cases only: one bounded page from the end of the list
+    let recentPage: Page<Case>;
+    [recentPage, attackers, pools] = await Promise.all([page<Case>(ADDR.registry, "get_cases", [], s.cases - 12, 12), allAttackers(ADDR.registry), allPools(ADDR.registry)]);
+    cases = recentPage.items;
   } catch (e) {
     return <><h1>The board is unreadable right now</h1><p className="note warn">Studio Dev did not answer ({String((e as Error)?.message ?? e).slice(0, 140)}). Nothing is shown rather than a guess; reload in a minute.</p></>;
   }
