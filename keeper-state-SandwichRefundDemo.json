@@ -16,25 +16,25 @@
   },
   "3": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792581856,
    "name": "Demo A: caps, empty pool, every verdict"
   },
   "4": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792581492,
    "name": "Demo B: blocks 26231000-26231420, V2 only"
   },
   "5": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792581816,
    "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
   },
   "6": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792582220,
    "name": "Demo A: caps, empty pool, every verdict"
   }
@@ -153,19 +153,35 @@
    "failed": 0,
    "retry": 0,
    "errors": []
+  },
+  {
+   "started_at": 1792590835,
+   "finished_at": 1792590836,
+   "resumed": 0,
+   "pools": 6,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": []
   }
  ],
  "unprocessed": [],
  "last_run": {
-  "started_at": 1792585244,
-  "finished_at": 1792585334,
+  "started_at": 1792590835,
+  "finished_at": 1792590836,
   "resumed": 0,
   "pools": 6,
   "pages": 0,
   "pages_failed": 0,
   "candidates": 0,
-  "submitted": 4,
-  "done": 4,
+  "submitted": 0,
+  "done": 0,
   "already": 0,
   "pending": 0,
   "failed": 0,
@@ -176,7 +192,7 @@
  "contract": "SandwichRefundDemo",
  "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T13:53:56.689Z",
+ "saved_at": "2026-10-21T13:53:56.700Z",
  "totals": {
   "actions": 5,
   "done": 5,
