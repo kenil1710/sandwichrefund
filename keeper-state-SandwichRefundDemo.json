@@ -4,9 +4,39 @@
  "pools": {
   "1": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792566006,
    "name": "e2e pool 1792565907262"
+  },
+  "2": {
+   "chains": {},
+   "status": "CLOSED",
+   "claim_deadline": 1792579599,
+   "name": "e2e pool 1792578992279"
+  },
+  "3": {
+   "chains": {},
+   "status": "OPEN",
+   "claim_deadline": 1792581856,
+   "name": "Demo A: caps, empty pool, every verdict"
+  },
+  "4": {
+   "chains": {},
+   "status": "OPEN",
+   "claim_deadline": 1792581492,
+   "name": "Demo B: blocks 26231000-26231420, V2 only"
+  },
+  "5": {
+   "chains": {},
+   "status": "OPEN",
+   "claim_deadline": 1792581816,
+   "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
+  },
+  "6": {
+   "chains": {},
+   "status": "OPEN",
+   "claim_deadline": 1792582220,
+   "name": "Demo A: caps, empty pool, every verdict"
   }
  },
  "actions": {
@@ -25,6 +55,50 @@
    ],
    "verified_at": 1792568793,
    "result": "CLOSED"
+  },
+  "close:3": {
+   "key": "close:3",
+   "kind": "CLOSE",
+   "pool_id": 3,
+   "sponsor": "0x21b843a75fd0f672527e538c6fc9a372a7cd07af",
+   "status": "SUBMITTED",
+   "attempts": 0,
+   "first_seen_at": 1792585245,
+   "tx": "0xc5c57f783c8f2753932cc3df2fe64db9c84965d7af6d1ed2415508dccb5c7531",
+   "submitted_at": 1792585246,
+   "tx_history": [
+    "0xc5c57f783c8f2753932cc3df2fe64db9c84965d7af6d1ed2415508dccb5c7531"
+   ]
+  },
+  "close:4": {
+   "key": "close:4",
+   "kind": "CLOSE",
+   "pool_id": 4,
+   "sponsor": "0x21b843a75fd0f672527e538c6fc9a372a7cd07af",
+   "status": "QUEUED",
+   "attempts": 0,
+   "first_seen_at": 1792585245,
+   "tx": null
+  },
+  "close:5": {
+   "key": "close:5",
+   "kind": "CLOSE",
+   "pool_id": 5,
+   "sponsor": "0x21b843a75fd0f672527e538c6fc9a372a7cd07af",
+   "status": "QUEUED",
+   "attempts": 0,
+   "first_seen_at": 1792585245,
+   "tx": null
+  },
+  "close:6": {
+   "key": "close:6",
+   "kind": "CLOSE",
+   "pool_id": 6,
+   "sponsor": "0x3b02391e7de77e56726c948e93fd65282770a9dd",
+   "status": "QUEUED",
+   "attempts": 0,
+   "first_seen_at": 1792585245,
+   "tx": null
   }
  },
  "runs": [
@@ -66,7 +140,7 @@
  "contract": "SandwichRefundDemo",
  "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-21T12:20:45.178Z",
+ "saved_at": "2026-10-21T12:20:46.526Z",
  "totals": {
   "actions": 1,
   "done": 1,
