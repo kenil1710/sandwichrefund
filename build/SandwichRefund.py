@@ -1067,6 +1067,8 @@ class SandwichRefund(gl.contract.Contract):
     victim_n: gl.storage.TreeMap[str, u64]
     victim_cases: gl.storage.TreeMap[str, u64]
     victim_paid: gl.storage.TreeMap[str, u256]
+    pool_victim_n: gl.storage.TreeMap[str, u64]
+    pool_victim_cases: gl.storage.TreeMap[str, u64]
     victim_total: gl.storage.TreeMap[str, u256]
     attackers: gl.storage.TreeMap[str, Attacker]
     attacker_idx: gl.storage.TreeMap[u64, str]
@@ -1432,6 +1434,10 @@ class SandwichRefund(gl.contract.Contract):
             vn = int(self.victim_n.get(victim, u64(0)))
             self.victim_cases[victim + ":" + str(vn)] = u64(cid)
             self.victim_n[victim] = u64(vn + 1)
+            pv = str(int(p.pool_id)) + "|" + victim
+            pvn = int(self.pool_victim_n.get(pv, u64(0)))
+            self.pool_victim_cases[pv + ":" + str(pvn)] = u64(cid)
+            self.pool_victim_n[pv] = u64(pvn + 1)
         if old is None:
             pn = int(p.n_cases)
             self.pool_cases[str(int(p.pool_id)) + ":" + str(pn)] = u64(cid)
@@ -1704,6 +1710,26 @@ class SandwichRefund(gl.contract.Contract):
             i += 1
         return {"address": a, "total": n, "offset": pg[0], "limit": pg[1], "items": items,
                 "refunded": str(int(self.victim_total.get(a, u256(0)))) if a != "" else "0",
+                "next_offset": pg[0] + len(items) if pg[0] + len(items) < n else -1}
+
+    @gl.public.view
+    def get_pool_victim(self, pool_id: int, address: str, offset: int, limit: int) -> typing.Any:
+        """One pool's cases of one address (as the victim) and what that pool paid it."""
+        pid = _as_int(pool_id, 0)
+        a = _addr(address)
+        pv = str(pid) + "|" + a
+        pg = self._page(offset, limit)
+        n = int(self.pool_victim_n.get(pv, u64(0))) if a != "" else 0
+        items = []
+        i = pg[0]
+        while i < n and len(items) < pg[1]:
+            cid = int(self.pool_victim_cases.get(pv + ":" + str(i), u64(0)))
+            c = self.cases.get(u64(cid)) if cid > 0 else None
+            if c is not None:
+                items.append(self._case_view(c))
+            i += 1
+        return {"pool_id": pid, "address": a, "total": n, "offset": pg[0], "limit": pg[1], "items": items,
+                "refunded": str(int(self.victim_paid.get(pv, u256(0)))) if a != "" else "0",
                 "next_offset": pg[0] + len(items) if pg[0] + len(items) < n else -1}
 
     @gl.public.view

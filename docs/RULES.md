@@ -151,19 +151,26 @@ with an External allocation naming the recipient. Ledger: `received = held + ref
 is filed again (UNVERIFIABLE is never a verdict).
 
 Counters move only after every check passed. Every list is paginated with `offset` and `limit` (at most
-`PAGE_MAX` = 50): `get_pools`, `get_cases`, `get_pool_cases`, `get_victim`, `get_attackers`; plus `get_pool`,
+`PAGE_MAX` = 50): `get_pools`, `get_cases`, `get_pool_cases`, `get_victim`, `get_pool_victim`, `get_attackers`; plus `get_pool`,
 `get_case`, `get_pool_case`, `get_case_by_id`, `get_credit`, `get_config`, `get_stats`.
 
 ## 6. MEVGate
 
-`check_case(chain, tx_hash)` reads the registry's `get_case` and answers one of NO_POOL (nobody filed it and no pool
-covers the chain), NOT_COVERED, CLEAN, SANDWICHED_REFUNDED, SANDWICHED_UNPAID, UNCLEAR, UNVERIFIABLE (not filed, a
-failed or malformed read, or numbers that do not add up). `clean` is true only for a final CLEAN case;
-`refunded` only for SANDWICHED_REFUNDED with a positive payout. `check_address(address)` reads every page of
-`get_victim` (up to 200 cases) and counts its cases per state; its summary is the worst state in the order
-SANDWICHED_UNPAID, UNCLEAR, UNVERIFIABLE, SANDWICHED_REFUNDED, NOT_COVERED, CLEAN; no cases or an incomplete read is
-UNVERIFIABLE, never CLEAN. `attest_case` stores a reading with its time. The gate holds no value and makes no web
-request.
+Anyone can open a pool under any name and terms, so every gate question names the pool AND the sponsor the consumer
+trusts: `check_case(pool_id, sponsor, chain, tx_hash)`, `is_clean(...)`, `was_refunded(...)`,
+`check_address(pool_id, sponsor, address)`, `attest_case(pool_id, sponsor, chain, tx_hash)`. The gate reads that pool
+(`get_pool`) and answers NO_POOL if it does not exist, UNVERIFIABLE if its sponsor is not the named one, NOT_COVERED if
+it does not cover the chain; then it reads only that pool's decision (`get_pool_case`, `get_pool_victim`). A copycat
+pool - same name and routers, another sponsor or id - is never read for the consumer's pool. There is no view without
+this binding.
+
+Case states: NO_POOL, NOT_COVERED, CLEAN, SANDWICHED_REFUNDED, SANDWICHED_UNPAID, UNCLEAR, UNVERIFIABLE (not filed in
+that pool, a failed or malformed read, another pool's answer, numbers that do not add up) and EXPIRED. `clean` is true
+only for a final CLEAN decision; `refunded` only for SANDWICHED_REFUNDED with a positive payout. `check_address` reads
+every page of the pool's cases of the address (up to 200) and counts them per state; its summary is the worst state in
+the order SANDWICHED_UNPAID, UNCLEAR, UNVERIFIABLE, EXPIRED, SANDWICHED_REFUNDED, NOT_COVERED, CLEAN; no cases or an
+incomplete read is UNVERIFIABLE, never CLEAN. `attest_case` stores a reading with its pool, sponsor and time. The gate
+holds no value and makes no web request.
 
 ## 7. Scope
 

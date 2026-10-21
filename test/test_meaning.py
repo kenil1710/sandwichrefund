@@ -110,16 +110,28 @@ class NeverFavorable(unittest.TestCase):
                     raw[k] = "garbage"
                 if k in raw and type(raw[k]) is type(good[k]) and raw[k] == good[k]:
                     continue
-                s = GT.case_state(raw, "ethereum", F.h32("z"))
+                s = GT.case_state(raw, "ethereum", F.h32("z"), 1, F.SPONSOR)
                 if s["clean"] or s["refunded"]:
                     # only possible when the damaged field does not carry the meaning
                     self.assertIn(k, ("reason", "profit_token", "pools_on_chain", "attacker") if good is base
                                   else ("reason", "profit_token", "pools_on_chain"), (k, mode, raw))
 
     def test_unfiled_is_never_clean(self):
-        for pools in (0, 1, 5, -1, None, "x"):
-            s = GT.case_state({"found": False, "pools_on_chain": pools}, "ethereum", F.h32("q"))
+        for raw in ({"found": False}, {"found": False, "pool_id": 1}, None, "x"):
+            s = GT.case_state(raw, "ethereum", F.h32("q"), 1, F.SPONSOR)
             self.assertFalse(s["clean"] or s["refunded"] or s["final"])
+
+    def test_random_pool_corruption_never_passes(self):
+        rnd = random.Random(11)
+        good = {"found": True, "pool_id": 1, "sponsor": F.SPONSOR, "chains": ["ethereum"]}
+        for _ in range(300):
+            raw = dict(good)
+            k = rnd.choice(sorted(raw.keys()))
+            v = rnd.choice([None, "", "x", 2, 0, True, [], F.STRANGER, ["base"]])
+            if v == good[k] and type(v) is type(good[k]):
+                continue
+            raw[k] = v
+            self.assertIsNotNone(GT.pool_check(raw, 1, F.SPONSOR, "ethereum"), (k, v))
 
     def test_states_are_exactly_the_spec(self):
         self.assertEqual(set(GT.CASE_STATES), {"NO_POOL", "NOT_COVERED", "CLEAN", "SANDWICHED_REFUNDED",

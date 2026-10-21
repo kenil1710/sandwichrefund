@@ -204,7 +204,7 @@ class Close(Base):
         v = self.outage_case()
         self.w.advance(CLAIM + REC + 1)
         self.close()
-        s = self.w.view(self.d.gate, "check_case", "ethereum", v)
+        s = self.w.view(self.d.gate, "check_case", self.pid, F.SPONSOR, "ethereum", v)
         self.assertEqual(s["state"], "EXPIRED")
         self.assertFalse(s["clean"] or s["refunded"])
 

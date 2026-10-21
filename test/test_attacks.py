@@ -170,7 +170,7 @@ class Griefing(Base):
         _, v, _ = self.c.sandwich()
         self.d.file(tiny, v, sender=F.STRANGER)
         self.assertEqual(self.file(v)["state"], "SANDWICHED_REFUNDED")
-        self.assertEqual(self.w.view(self.d.gate, "check_case", "ethereum", v)["refund_paid"], str(3 * GEN // 10))
+        self.assertEqual(self.w.view(self.d.gate, "check_case", self.pid, F.SPONSOR, "ethereum", v)["refund_paid"], str(3 * GEN // 10))
 
 
 class Duplicates(Base):
