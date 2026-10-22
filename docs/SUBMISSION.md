@@ -25,16 +25,16 @@ Live: sandwichrefund.vercel.app (/verify: code vs GitHub). Studio Dev: SandwichR
 
 ## Evidence (pinned)
 
-Commit `38654099c748cb295cb23a1f5d7c0b5a594bbad5`; contracts deployed from `47195a18976f2004ea5a26bd34dc1a23dccb51bd`.
+Commit `3dad0dd38bf671817528564fff1aa958c19767de`; contracts deployed from `47195a18976f2004ea5a26bd34dc1a23dccb51bd`.
 
-- Seeds, every refund and its arrival: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/SEEDS.md
-- Final check: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/FINAL_CHECK.md
-- Audit A-N: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/AUDIT.md
-- Real-world check: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/REAL_WORLD_CHECK.md
-- Feasibility: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/FEASIBILITY.md
-- Rules: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/RULES.md
-- Attack round: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/docs/ATTACK_REPORT.md
-- Deployed source: https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/build/SandwichRefund.py, https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/build/MEVGate.py, https://github.com/kenil1710/sandwichrefund/blob/38654099c748cb295cb23a1f5d7c0b5a594bbad5/deployments.json
+- Seeds, every refund and its arrival: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/SEEDS.md
+- Final check: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/FINAL_CHECK.md
+- Audit A-N: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/AUDIT.md
+- Real-world check: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/REAL_WORLD_CHECK.md
+- Feasibility: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/FEASIBILITY.md
+- Rules: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/RULES.md
+- Attack round: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/docs/ATTACK_REPORT.md
+- Deployed source: https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/build/SandwichRefund.py, https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/build/MEVGate.py, https://github.com/kenil1710/sandwichrefund/blob/3dad0dd38bf671817528564fff1aa958c19767de/deployments.json
 - Keeper, a scheduled run: https://github.com/kenil1710/sandwichrefund/actions/runs/39790704197
 - Live source check: https://sandwichrefund.vercel.app/verify
 
