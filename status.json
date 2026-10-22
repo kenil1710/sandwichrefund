@@ -1,12 +1,12 @@
 {
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "started_at": "2026-10-22T12:22:10.424Z",
+ "started_at": "2026-10-22T13:52:35.279Z",
  "contracts": {
   "SandwichRefund": {
    "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
    "last_run": {
-    "started_at": 1792671730,
-    "finished_at": 1792671733,
+    "started_at": 1792677155,
+    "finished_at": 1792677157,
     "resumed": 0,
     "pools": 1,
     "pages": 0,
@@ -846,17 +846,17 @@
    ]
   },
   "SandwichRefundDemo": {
-   "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
+   "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
    "last_run": {
-    "started_at": 1792671734,
-    "finished_at": 1792671735,
+    "started_at": 1792677159,
+    "finished_at": 1792677211,
     "resumed": 0,
-    "pools": 7,
+    "pools": 6,
     "pages": 0,
     "pages_failed": 0,
     "candidates": 0,
-    "submitted": 0,
-    "done": 0,
+    "submitted": 1,
+    "done": 1,
     "already": 0,
     "pending": 0,
     "failed": 0,
@@ -864,52 +864,52 @@
     "errors": []
    },
    "totals": {
-    "actions": 5,
-    "done": 5,
+    "actions": 6,
+    "done": 6,
     "queued": 0,
     "pending": 0,
     "retry": 0,
     "failed": 0,
     "by_result": {
-     "CLOSED": 5
+     "CLOSED": 6
     }
    },
    "pools": {
     "1": {
      "chains": {},
-     "status": "CLOSED",
-     "claim_deadline": 1792566006,
-     "name": "e2e pool 1792565907262"
+     "status": "OPEN",
+     "claim_deadline": 1792673702,
+     "name": "Demo A: caps, empty pool, every verdict"
     },
     "2": {
      "chains": {},
-     "status": "CLOSED",
-     "claim_deadline": 1792579599,
-     "name": "e2e pool 1792578992279"
+     "status": "OPEN",
+     "claim_deadline": 1792673300,
+     "name": "Demo B: blocks 26231000-26231420, V2 only"
     },
     "3": {
      "chains": {},
-     "status": "CLOSED",
-     "claim_deadline": 1792581856,
-     "name": "Demo A: caps, empty pool, every verdict"
+     "status": "OPEN",
+     "claim_deadline": 1792673633,
+     "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
     },
     "4": {
      "chains": {},
-     "status": "CLOSED",
-     "claim_deadline": 1792581492,
-     "name": "Demo B: blocks 26231000-26231420, V2 only"
+     "status": "OPEN",
+     "claim_deadline": 1792674032,
+     "name": "Demo A: caps, empty pool, every verdict"
     },
     "5": {
      "chains": {},
      "status": "CLOSED",
-     "claim_deadline": 1792581816,
-     "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
+     "claim_deadline": 1792673631,
+     "name": "Demo E: recovery window, left to expire"
     },
     "6": {
      "chains": {},
-     "status": "CLOSED",
-     "claim_deadline": 1792582220,
-     "name": "Demo A: caps, empty pool, every verdict"
+     "status": "OPEN",
+     "claim_deadline": 1792677276,
+     "name": "Demo D: recovery window, recovered"
     },
     "7": {
      "chains": {},
@@ -974,13 +974,24 @@
      "attempts": 0,
      "last_error": "",
      "why": ""
+    },
+    {
+     "key": "close:2",
+     "kind": "CLOSE",
+     "pool_id": 2,
+     "status": "DONE",
+     "result": "CLOSED",
+     "tx": "0x7e8e1c835fdc2340aa581643f1cacf7e5d95e19cb928d4e0e2ad19977e049ddd",
+     "attempts": 0,
+     "last_error": "",
+     "why": ""
     }
    ]
   }
  },
- "finished_at": "2026-10-22T12:22:16.899Z",
+ "finished_at": "2026-10-22T13:53:32.432Z",
  "trigger": "schedule",
- "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39777734072",
+ "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39790704197",
  "history": [
   {
    "started_at": "2026-10-21T05:52:30.684Z",
@@ -1225,6 +1236,26 @@
     "SandwichRefundDemo": {
      "submitted": 0,
      "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    }
+   }
+  },
+  {
+   "started_at": "2026-10-22T13:52:35.279Z",
+   "finished_at": "2026-10-22T13:53:32.432Z",
+   "trigger": "schedule",
+   "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39790704197",
+   "runs": {
+    "SandwichRefund": {
+     "submitted": 0,
+     "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    },
+    "SandwichRefundDemo": {
+     "submitted": 1,
+     "done": 1,
      "pages": 0,
      "pages_failed": 0
     }
