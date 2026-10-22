@@ -62,11 +62,11 @@ not otherwise looked for. Ethereum is covered; the chain table holds one chain.
 | contract | address |
 |---|---|
 | SandwichRefund (canonical) | `0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA` |
-| SandwichRefundDemo | `0xa71645751e3D59Eb51809e76570f367D4F14841c` |
+| SandwichRefundDemo | `0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31` |
 | MEVGate (on canonical) | `0x96D529d8f63EC5D742907DfaE83A02627D35E1e9` |
-| MEVGateDemo | `0xe4Aa8409E0EE567868be43387aDF4B497202DBCE` |
+| MEVGateDemo | `0x4f5bd0ABa738cD21b58495Ed962D6bC6369D8694` |
 
-All four were deployed from commit `47195a18976f2004ea5a26bd34dc1a23dccb51bd` ([deployments.json](deployments.json)); the first deployment's evidence is in [docs/superseded/v1](docs/superseded/v1).
+All four were deployed from commit `47195a18976f2004ea5a26bd34dc1a23dccb51bd` ([deployments.json](deployments.json)); the demo pair was redeployed from the same commit so its balance could end at 0 ([docs/superseded/demo-v2](docs/superseded/demo-v2)); the first deployment's evidence is in [docs/superseded/v1](docs/superseded/v1).
 
 ## Real data
 
