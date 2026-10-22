@@ -23,6 +23,10 @@ const C = client({ role: "keeper", address: dep.SandwichRefund.address });
 const D = client({ role: "keeper", address: dep.SandwichRefundDemo.address });
 const G = client({ role: "keeper", address: dep.MEVGate.address });
 const rows = [];
+// the latest successful scheduled keeper run after the newest deployment: it ran against the contracts in deployments.json
+const deployedAt = Math.max(...Object.values(dep).map((c) => Date.parse(c.deployed_at)));
+const keeperRun = ((await (await fetch("https://api.github.com/repos/kenil1710/sandwichrefund/actions/workflows/keeper.yml/runs?event=schedule&status=success&per_page=50",
+  { headers: { "user-agent": "audit" } })).json()).workflow_runs ?? []).find((r) => Date.parse(r.created_at) > deployedAt) ?? {};
 const add = (id, name, ok, proof) => { rows.push({ id, name, ok, proof }); console.log(`${ok ? "PASS" : "FAIL"} ${id} ${name}: ${proof}`); };
 const lc = (s) => String(s ?? "").toLowerCase();
 
@@ -118,7 +122,7 @@ const canon = await cases(C, seed.pool_id);
 }
 // J keeper
 {
-  const run = await (await fetch("https://api.github.com/repos/kenil1710/sandwichrefund/actions/runs/39445834048", { headers: { "user-agent": "audit" } })).json();
+  const run = keeperRun;
   const ks = await (await fetch("https://raw.githubusercontent.com/kenil1710/sandwichrefund/keeper-state/keeper-state-SandwichRefund.json")).json();
   const a = Object.values(ks.actions);
   const done = a.filter((x) => x.status === "DONE").length, failed = a.filter((x) => x.status === "FAILED").length;
@@ -157,7 +161,7 @@ const canon = await cases(C, seed.pool_id);
   const sub = readFileSync(root + "docs/SUBMISSION.md", "utf8");
   const pin = sub.match(/blob\/([0-9a-f]{40})\//)?.[1];
   const onMain = pin && sh("git", ["branch", "-r", "--contains", pin]).stdout.includes("origin/main");
-  add("M", "verification package", /11\/11 checks pass/.test(fc) && onMain && /39445834048/.test(sub), `FINAL_CHECK.md 11/11; SUBMISSION.md evidence pinned to ${pin?.slice(0, 7)} (on origin/main: ${onMain}); scheduled run linked; one-liner/description/review texts ASCII within limits; verify_source, final_check and run_offline.sh reproduce it`);
+  add("M", "verification package", /11\/11 checks pass/.test(fc) && onMain && !!keeperRun.id && sub.includes(String(keeperRun.id)), `FINAL_CHECK.md 11/11; SUBMISSION.md evidence pinned to ${pin?.slice(0, 7)} (on origin/main: ${onMain}); scheduled run linked; one-liner/description/review texts ASCII within limits; verify_source, final_check and run_offline.sh reproduce it`);
 }
 // N demo
 {
