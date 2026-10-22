@@ -20,8 +20,8 @@
       "mode": "CANONICAL"
     },
     "SandwichRefundDemo": {
-      "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
-      "deploy_tx": "0x4a9ab1e137d64e095b90ad85d3d2746be335e1ba1dc2a1abeb97c5091608c472",
+      "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
+      "deploy_tx": "0x29354af853f493c8982b5a9913cd10ce8fc021331c110a8b8a0a7df829a5777a",
       "file": "build/SandwichRefund.py",
       "source": "contracts/SandwichRefund.py",
       "commit": "47195a18976f2004ea5a26bd34dc1a23dccb51bd",
@@ -31,7 +31,7 @@
         "DEMO"
       ],
       "deployer": "0x70377723723462C9d46748596402FF72EF85c559",
-      "deployed_at": "2026-10-21T05:49:48.987Z",
+      "deployed_at": "2026-10-22T12:26:28.524Z",
       "mode": "DEMO"
     },
     "MEVGate": {
@@ -50,18 +50,18 @@
       "mode": "CANONICAL"
     },
     "MEVGateDemo": {
-      "address": "0xe4Aa8409E0EE567868be43387aDF4B497202DBCE",
-      "deploy_tx": "0xe06423c10b692715c0d4ed795b084eaa0593844f1bf328b98dcb5eb435bd166c",
+      "address": "0x4f5bd0ABa738cD21b58495Ed962D6bC6369D8694",
+      "deploy_tx": "0x447a2b7cb33d73e343be8e29e924e2ea41a13857df8d5507bc5f1a0044bf658e",
       "file": "build/MEVGate.py",
       "source": "contracts/MEVGate.py",
       "commit": "47195a18976f2004ea5a26bd34dc1a23dccb51bd",
       "bytes": 31216,
       "sha256": "44afb99db871596e3bbfd1e4a7ebddb896bc6128700e59f153dc76e07e8c62e1",
       "constructor_args": [
-        "0xa71645751e3D59Eb51809e76570f367D4F14841c"
+        "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31"
       ],
       "deployer": "0x70377723723462C9d46748596402FF72EF85c559",
-      "deployed_at": "2026-10-21T05:50:13.623Z",
+      "deployed_at": "2026-10-22T12:26:37.972Z",
       "mode": "DEMO"
     }
   },
@@ -137,6 +137,42 @@
       "mode": "DEMO",
       "superseded_by": "0xe4Aa8409E0EE567868be43387aDF4B497202DBCE",
       "why": "recovery window and pool-bound MEVGate"
+    },
+    {
+      "name": "SandwichRefundDemo",
+      "address": "0xa71645751e3D59Eb51809e76570f367D4F14841c",
+      "deploy_tx": "0x4a9ab1e137d64e095b90ad85d3d2746be335e1ba1dc2a1abeb97c5091608c472",
+      "file": "build/SandwichRefund.py",
+      "source": "contracts/SandwichRefund.py",
+      "commit": "47195a18976f2004ea5a26bd34dc1a23dccb51bd",
+      "bytes": 75246,
+      "sha256": "e4dca2ce1e199c5ed2e17b1e6f6ce204a92c8e8242f57a5db27b4a3bae2ea686",
+      "constructor_args": [
+        "DEMO"
+      ],
+      "deployer": "0x70377723723462C9d46748596402FF72EF85c559",
+      "deployed_at": "2026-10-21T05:49:48.987Z",
+      "mode": "DEMO",
+      "superseded_by": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
+      "why": "demo pair redeployed: 0.002 GEN credit stranded at in-memory e2e keys"
+    },
+    {
+      "name": "MEVGateDemo",
+      "address": "0xe4Aa8409E0EE567868be43387aDF4B497202DBCE",
+      "deploy_tx": "0xe06423c10b692715c0d4ed795b084eaa0593844f1bf328b98dcb5eb435bd166c",
+      "file": "build/MEVGate.py",
+      "source": "contracts/MEVGate.py",
+      "commit": "47195a18976f2004ea5a26bd34dc1a23dccb51bd",
+      "bytes": 31216,
+      "sha256": "44afb99db871596e3bbfd1e4a7ebddb896bc6128700e59f153dc76e07e8c62e1",
+      "constructor_args": [
+        "0xa71645751e3D59Eb51809e76570f367D4F14841c"
+      ],
+      "deployer": "0x70377723723462C9d46748596402FF72EF85c559",
+      "deployed_at": "2026-10-21T05:50:13.623Z",
+      "mode": "DEMO",
+      "superseded_by": "0x4f5bd0ABa738cD21b58495Ed962D6bC6369D8694",
+      "why": "demo pair redeployed: 0.002 GEN credit stranded at in-memory e2e keys"
     }
   ]
 }
