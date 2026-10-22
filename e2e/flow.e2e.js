@@ -49,6 +49,16 @@ test("sponsor, file, refund, rejected, close on the demo contract", async ({ pag
   await shot(page, "02-rejected-create");
   log("rejected_create", { status: await statusText(page).innerText() });
 
+  // 2b. withdraw the credit: the throwaway key dies with this run, so nothing may stay owed to it
+  const creditBefore = await balance(w.address);
+  await page.reload();
+  await page.getByRole("button", { name: "Withdraw credit (demo)" }).click({ timeout: 120_000 });
+  await expect(statusText(page)).toContainText(/accepted|finalized/i, { timeout: 15 * 60_000 });
+  let credit = "1";
+  for (let i = 0; i < 30 && credit !== "0"; i++) { credit = (await view(page, "get_credit", [w.address])).credit; if (credit !== "0") await new Promise((s) => setTimeout(s, 10000)); }
+  expect(credit).toBe("0");
+  log("credit_withdrawn", { credit_left: credit, wallet_delta_after_fee: String((await balance(w.address)) - creditBefore) });
+
   // 3. a real pool
   const name = "e2e pool " + Date.now();
   await page.getByLabel("Name", { exact: true }).fill(name);

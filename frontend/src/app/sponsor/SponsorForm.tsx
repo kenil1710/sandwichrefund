@@ -26,6 +26,8 @@ export function SponsorForm() {
   const [value, setValue] = useState("0.5");
   const [p, setP] = useState<TxProgress | null>(null);
   const [mine, setMine] = useState<Pool[]>([]);
+  const [credit, setCredit] = useState<{ reg: Reg; amount: string }[]>([]);
+  const [wp, setWp] = useState<TxProgress | null>(null);
 
   useEffect(() => {
     if (!w.account) return;
@@ -41,8 +43,19 @@ export function SponsorForm() {
         }
       }
       setMine(out);
+      const cr: { reg: Reg; amount: string }[] = [];
+      for (const r of ["canonical", "demo"] as Reg[]) {
+        const c = await viewOf<{ credit: string }>(regAddr(r), "get_credit", [w.account!]).catch(() => null);
+        if (c && BigInt(c.credit) > 0n) cr.push({ reg: r, amount: c.credit });
+      }
+      setCredit(cr);
     })();
-  }, [w.account, p?.phase]);
+  }, [w.account, p?.phase, wp?.phase]);
+
+  async function withdraw(r: Reg) {
+    if (!w.account) return;
+    await send(w.account, regAddr(r), "withdraw_refund", [], 0n, { payee: w.account, onProgress: setWp });
+  }
 
   async function create() {
     if (!w.account) return;
@@ -92,6 +105,11 @@ export function SponsorForm() {
         {!w.account ? <p className="small">Connect to see the pools you sponsor.</p> : mine.length === 0 ? <p className="small">None yet.</p> :
           <ul>{mine.map((x) => <li key={`${x.meta._reg}-${x.pool_id}`}><Link href={`/pool/${x.pool_id}${x.meta._reg === "demo" ? "?reg=demo" : ""}`}>#{x.pool_id} {x.name}</Link> · {x.status}{x.due ? " · due to close" : ""} · balance {gen(x.balance)} GEN · {x.n_cases} cases</li>)}</ul>}
         <p className="small">Top up, extend and close are on each pool&apos;s page.</p>
+        {credit.length > 0 && <div aria-label="Your credit">
+          <h3>Your credit</h3>
+          {credit.map((c) => <p key={c.reg}>{gen(c.amount)} GEN on the {c.reg} contract <button className="btn" onClick={() => void withdraw(c.reg)} disabled={w.onWrongNetwork}>Withdraw credit ({c.reg})</button></p>)}
+          <TxStatus p={wp} />
+        </div>}
       </div>
     </div>
   );
