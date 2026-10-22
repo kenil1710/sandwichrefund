@@ -308,16 +308,9 @@ for (const key of ["B", "C", "COPY", "A"]) {
   });
 }
 
-// The first two e2e runs (pools 1 and 2, before the e2e withdrew its credit) left their refused-create credit at
-// throwaway keys that lived only in memory. Nothing else may be held: no open pool, no other credit.
-const E2E_ORPHAN_CREDIT = ["0xef592a9a8b6208b557dcbbc85355b7689fc76776", "0x4bf380c65de0747ba5766dbb08f9a2e417401e09"];
-await step("final_balance", "the demo contract holds only the two e2e wallets' unwithdrawable credit: no open pool, nothing else", async () => {
+await step("final_balance", "the demo contract holds nothing: eth_getBalance 0", async () => {
   const b = await balanceOf(ADDR);
   const s = await sp.view("get_stats");
-  const orphan = [];
-  for (const a of E2E_ORPHAN_CREDIT) orphan.push({ address: a, credit: (await sp.view("get_credit", [a])).credit, sponsor_of_pool: (await sp.view("get_pool", [orphan.length + 1, 0])).sponsor });
-  const owed = orphan.reduce((t, o) => t + BigInt(o.credit), 0n);
-  return { ok: s.open_total === "0" && BigInt(s.held) === owed && b === owed && s.credit_owed_total === String(owed) && orphan.every((o) => o.address === o.sponsor_of_pool),
-    balance: String(b), orphan_credit: orphan, stats: s };
+  return { ok: b === 0n && s.held === "0" && s.credit_owed_total === "0", balance: String(b), stats: s };
 });
 console.log("\ndemo run complete:", doc.steps.length, "steps");

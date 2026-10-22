@@ -30,7 +30,7 @@ const statusText = (page) => page.getByRole("status").last();
 test("sponsor, file, refund, rejected, close on the demo contract", async ({ page, baseURL }) => {
   summary.site = baseURL;
   const w = await throwawayWallet(page);
-  log("wallet", { address: w.address, note: "throwaway key generated in memory for this run, funded from the Studio Dev faucet" });
+  log("wallet", { address: w.address, note: "throwaway key for this run, saved in test/.accounts.json before use, funded from the Studio Dev faucet" });
 
   // 1. connect
   await page.goto("/sponsor");

@@ -1,7 +1,15 @@
-// A throwaway EIP-1193 wallet for the e2e run: a fresh key made in memory for this run (never written to disk),
-// funded from the Studio Dev faucet. The page's window.ethereum forwards every request here; transactions are
+// A throwaway EIP-1193 wallet for the e2e run: a fresh key for this run, saved in the gitignored test/.accounts.json
+// (under "throwaway") before it is funded or used, so nothing it holds is ever stranded; funded from the Studio Dev faucet. The page's window.ethereum forwards every request here; transactions are
 // signed locally and sent raw to Studio Dev.
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { readFileSync, writeFileSync } from "node:fs";
+
+const ACCOUNTS = new URL("../test/.accounts.json", import.meta.url);
+function saveKey(key, address) {
+  const a = JSON.parse(readFileSync(ACCOUNTS, "utf8"));
+  (a.throwaway ??= []).push({ key, address, use: "e2e", created_at: new Date().toISOString() });
+  writeFileSync(ACCOUNTS, JSON.stringify(a, null, 2) + "\n", { mode: 0o600 });
+}
 
 export const STUDIO = "https://studio-dev.genlayer.com/api";
 export const CHAIN_ID = 61997;
@@ -18,7 +26,9 @@ export async function rpc(method, params = []) {
 }
 
 export async function throwawayWallet(page) {
-  const account = privateKeyToAccount(generatePrivateKey());
+  const key = generatePrivateKey();
+  const account = privateKeyToAccount(key);
+  saveKey(key, account.address);
   await rpc("sim_fundAccount", [account.address, 50 * 1e18]);
   const sent = [];
   await page.exposeFunction("__e2eWallet", async (method, paramsJson) => {

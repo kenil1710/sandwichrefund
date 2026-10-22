@@ -1,0 +1,210 @@
+
+== refused_create create_pool with a bad claim period is refused and credited
+  -> ok {"id":"refused_create","ok":true,"tx":"0x55b12d3aa026b860de3fda9d2d50d63096802f91a36056ddb48091a015c8c05a","returned":{"credited":"10000000000000000","ok":false,"reason":"BAD_CLAIM_PERIOD"},"credit":"10000000000000000","at":"2026-10-21T10:57:23.430Z"}
+
+== withdraw_refund withdraw_refund pays the credit back
+  -> ok {"id":"withdraw_refund","ok":true,"tx":"0xfd47fd6a193c02e7eb978ac195638bee7d5592b4e890b09b3295c7bb3c4b98a0","status":"FINALIZED","returned":{"ok":true,"withdrawn":"10000000000000000"},"payout":{"to":"0x21B843a75FD0f672527E538c6fC9a372A7CD07AF","amount":"10000000000000000","delivered":true,"why":"","recipient_delta":"10173566250008706","contract_delta":"-10000000000000000","self_paid":true,"fee":"1
+
+== create_A create pool Demo A: caps, empty pool, every verdict
+  -> ok {"id":"create_A","ok":true,"tx":"0xde895dca897fe64aa2fdff7f3e641e0cf6ca07439b4c5e1096af2140c7d817e0","pool_id":3,"claim_deadline":1792581796,"funded":"330000000000000000","at":"2026-10-21T10:59:00.092Z"}
+
+== A_max_per_swap a sandwich due 0.0786 GEN, capped at max per swap 0.05
+  -> ok {"id":"A_max_per_swap","ok":true,"tx":"0x76306c7e58e1e562f2bbf82435d2983f3f7e28f599d65b9eca31de2265f38200","status":"FINALIZED","returned":{"case_id":3,"limit":"MAX_PER_SWAP","loss":"786176583663616","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"50000000000000000","state":"SANDWICHED_REFUNDED","victim":"0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"},"payout":{"to":"0xb3b6a8c64d0a77dbdf306ead218b
+
+== A_rate the same victim's second sandwich, paid at the rate (0.0341)
+  -> ok {"id":"A_rate","ok":true,"tx":"0xe5b498123ae87dc5e952b5442186868218eb94baa3653d4d5cbb82f170546aff","status":"FINALIZED","returned":{"case_id":4,"limit":"RATE","loss":"340999398227968","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"34099939822796800","state":"SANDWICHED_REFUNDED","victim":"0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"},"payout":{"to":"0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9","a
+
+== A_max_per_victim the same victim's third sandwich: only what is left of its 0.1 cap
+  -> ok {"id":"A_max_per_victim","ok":true,"tx":"0x4aa545069f4b115d5327753779fe8ae72d85c2248239da54a3e616efba173f73","status":"FINALIZED","returned":{"case_id":5,"limit":"MAX_PER_VICTIM","loss":"290936789663744","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"15900060177203200","state":"SANDWICHED_REFUNDED","victim":"0xb3b6a8c64d0a77dbdf306ead218b44f70f5e6fe9"},"payout":{"to":"0xb3b6a8c64d0a77dbdf306ead
+
+== A_cap_big a 0.09 WETH sandwich (due 9 GEN), capped at 0.05
+  -> ok {"id":"A_cap_big","ok":true,"tx":"0x1f973d24aa5cdbd7a07b2bfa0b3ca4cfb9ad79b21400684522e4692fc6c9ac33","status":"FINALIZED","returned":{"case_id":6,"limit":"MAX_PER_SWAP","loss":"90639567775716097","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"50000000000000000","state":"SANDWICHED_REFUNDED","victim":"0x095ea694fb28d0d0804c666cf6c9558f76b43eda"},"payout":{"to":"0x095ea694fb28d0d0804c666cf6c9558
+
+== A_cap_2 another capped refund
+  -> ok {"id":"A_cap_2","ok":true,"tx":"0xdbe59bf1660052a8e2d8b6985b4284268ba281257410f9d586cc0df373e5d350","status":"FINALIZED","returned":{"case_id":7,"limit":"MAX_PER_SWAP","loss":"1867249916837888","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"50000000000000000","state":"SANDWICHED_REFUNDED","victim":"0x88abfb8dfb2e63c0b534f834b9984d50a6d58fc3"},"payout":{"to":"0x88abfb8dfb2e63c0b534f834b9984d50a6
+
+== A_cap_3 another capped refund
+  -> ok {"id":"A_cap_3","ok":true,"tx":"0xa8cce5edfb58a085a6feda57e92a0e4149443db8c4307b21a06c785efab6ffca","status":"FINALIZED","returned":{"case_id":8,"limit":"MAX_PER_SWAP","loss":"2773110059171840","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"50000000000000000","state":"SANDWICHED_REFUNDED","victim":"0xd18f3965812f35b4ee988316cea599b612f94037"},"payout":{"to":"0xd18f3965812f35b4ee988316cea599b612
+
+== A_cap_4 another capped refund
+  -> ok {"id":"A_cap_4","ok":true,"tx":"0xd5a35d424ef941aa61f9b39907850e52bcc92cf42a28675487b2c60520f4d240","status":"FINALIZED","returned":{"case_id":9,"limit":"MAX_PER_SWAP","loss":"2489466123976705","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"50000000000000000","state":"SANDWICHED_REFUNDED","victim":"0x1ca5e77a3464488d959d8298f593914d5fe30f28"},"payout":{"to":"0x1ca5e77a3464488d959d8298f593914d5f
+
+== A_pool_balance the pool's last GEN: a partial refund
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+  … file_case poll attempt 1 hit transient RPC noise, waiting 2s
+  -> ok {"id":"A_pool_balance","ok":true,"tx":"0x8de13079e5c97e2c236af425b86b0d415025b997a199e5d851635d60c18529ac","status":"FINALIZED","returned":{"case_id":10,"limit":"POOL_BALANCE","loss":"2039142154727747","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"30000000000000000","state":"SANDWICHED_REFUNDED","victim":"0x5caa2b55aa4ac56d4798ed70eaf35b9b58c32cf2"},"payout":{"to":"0x5caa2b55aa4ac56d4798ed70ea
+
+== A_unpaid pool empty: SANDWICHED_UNPAID
+GenLayer RPC error (eth_getTransactionReceipt): QueuePool limit of size 10 overflow 5 reached, connection timed out, timeout 30.00 (Background on this error at: https://sqlalche.me/e/20/3o7r)
+GenLayer RPC error (eth_blockNumber): Unexpected token '<', "<html>
+<h"... is not valid JSON
+  -> ok {"id":"A_unpaid","ok":true,"tx":"0x4646ca7fdc99e5f72001d1bea0371faf28b922231d18ac647d53a3ec1674d6cb","status":"FINALIZED","returned":{"case_id":11,"limit":"POOL_BALANCE","loss":"660858027900928","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"0","state":"SANDWICHED_UNPAID","victim":"0xf529ede09e7c0114d6ab2a9f0d8ce572aa9d39d3"},"case":{"state":"SANDWICHED_UNPAID","reason":"SAME_POOL_SANDWICH","li
+
+== A_unpriced a sandwich with USDT profit, unpriced in this pool
+  -> ok {"id":"A_unpriced","ok":true,"tx":"0x76aff7c5d1c656ec71f3ef51e472a8e0633aaba28be660f017ac5b9fff54d1d4","status":"FINALIZED","returned":{"case_id":12,"limit":"","loss":"0","ok":true,"reason":"PROFIT_TOKEN_NOT_PRICED","refund":"0","state":"UNCLEAR","victim":"0x51f400b9770ad2bddb7cf74664f5cd1daf6a1410"},"case":{"state":"UNCLEAR","reason":"PROFIT_TOKEN_NOT_PRICED","limit":"","loss":"0","refund_due":"0
+
+== A_not_covered a sandwich through Uniswap V2 Router02, not covered by this pool
+  -> ok {"id":"A_not_covered","ok":true,"tx":"0x5297fe0ac105287b6ba6fb1f2ea8f17231d005894c3aa5a9fec8f2ed8b322126","status":"FINALIZED","returned":{"case_id":13,"limit":"","loss":"0","ok":true,"reason":"ROUTER_NOT_COVERED","refund":"0","state":"NOT_COVERED","victim":"0xb8f937b7bcfe9da01ad616544f149324a9a40a5f"},"case":{"state":"NOT_COVERED","reason":"ROUTER_NOT_COVERED","limit":"","loss":"0","refund_due":"
+
+== A_clean a clean swap
+  -> ok {"id":"A_clean","ok":true,"tx":"0x0b7dd892d377f8b17c77f727cd3eb093cf42b4baa6a75dcfa541aafd6de6076c","status":"FINALIZED","returned":{"case_id":14,"limit":"","loss":"0","ok":true,"reason":"NO_PATTERN","refund":"0","state":"CLEAN","victim":"0xe29771d17e879beae9be4b7127f3d5c7bbd50a36"},"case":{"state":"CLEAN","reason":"NO_PATTERN","limit":"","loss":"0","refund_due":"0","refund_paid":"0","victim":"0xe
+
+== A_unclear a sandwiched multi-hop swap
+  -> ok {"id":"A_unclear","ok":true,"tx":"0x7f31585150c4d9dfffe7534717fb96a67d9033e5faf6d4ba624e18e2147f3757","status":"FINALIZED","returned":{"case_id":15,"limit":"","loss":"0","ok":true,"reason":"MULTI_HOP_VICTIM","refund":"0","state":"UNCLEAR","victim":"0xe1e3699917dcf44ef84f24e0855e3bc90b40d7ad"},"case":{"state":"UNCLEAR","reason":"MULTI_HOP_VICTIM","limit":"","loss":"0","refund_due":"0","refund_paid"
+
+== A_bundle one victim of a bundle with several
+  -> ok {"id":"A_bundle","ok":true,"tx":"0xd29f52d45355bf2f56c178793b7927514d9237a5b8e89d1b48ce2048a8659cd4","status":"FINALIZED","returned":{"case_id":16,"limit":"","loss":"0","ok":true,"reason":"MULTIPLE_VICTIMS","refund":"0","state":"UNCLEAR","victim":"0xfef6ec073b713b586b54f4c4264a228ac0be67dc"},"case":{"state":"UNCLEAR","reason":"MULTIPLE_VICTIMS","limit":"","loss":"0","refund_due":"0","refund_paid":
+
+== A_unverifiable a hash Ethereum does not know
+  -> ok {"id":"A_unverifiable","ok":true,"tx":"0xeb52aaf6828f2fb21da5b3a3c386dc62ceb11109c26766df10da475e0314f5af","status":"FINALIZED","returned":{"case_id":17,"limit":"","loss":"0","ok":true,"reason":"TX_NOT_FOUND","refund":"0","state":"UNVERIFIABLE","victim":""},"case":{"state":"UNVERIFIABLE","reason":"TX_NOT_FOUND","limit":"","loss":"0","refund_due":"0","refund_paid":"0","victim":""},"expect":{"state"
+
+== A_refile_unverifiable UNVERIFIABLE can be filed again
+  -> ok {"id":"A_refile_unverifiable","ok":true,"tx":"0x2a6b128b66cb7106603afe06dfbc6e2e0f7b89ea47dac1ac35d61a9dd9fea1be","status":"FINALIZED","returned":{"case_id":17,"limit":"","loss":"0","ok":true,"reason":"TX_NOT_FOUND","refund":"0","state":"UNVERIFIABLE","victim":""},"case":{"state":"UNVERIFIABLE","reason":"TX_NOT_FOUND","limit":"","loss":"0","refund_due":"0","refund_paid":"0","victim":""},"expect":{
+
+== A_duplicate a decided case filed again is refused
+  -> ok {"id":"A_duplicate","ok":true,"tx":"0xd245c737f30c80b23b9d9d47a46f7e4ed87a92e4bd7d2599a2899ccfc5bd1b77","status":"ACCEPTED","reason":"REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED","at":"2026-10-21T11:14:36.003Z"}
+
+== A_top_up anyone tops the pool up (a stranger, 0.02 GEN)
+  -> ok {"id":"A_top_up","ok":true,"tx":"0x91b2f0cbc2912b584845da85ec4c616b81e578bfec6adb3afa1a8faaa4ec32ff","balance":"20000000000000000","at":"2026-10-21T11:15:24.338Z"}
+
+== A_extend_stranger a stranger cannot extend
+GenLayer RPC error (sim_estimateTransactionFees): execution failed
+  … write fee simulation failed for extend (Missing or invalid parameters.
+Double check you have provided the correct parameters.
+
+Details: exec)
+  -> ok {"id":"A_extend_stranger","ok":true,"tx":"0x079c3a978a2ecafcca2ff647ec9a54ecdcdb2a336bb6ed84710303954bc8f7dd","reason":"REFUSED: ONLY_THE_SPONSOR","at":"2026-10-21T11:15:38.465Z"}
+
+== A_extend the sponsor extends by 60 s
+  -> ok {"id":"A_extend","ok":true,"tx":"0x0ca81dad2a3e010c07effd7c1bb500e049d167eff44dd002e3beb5ee3764d558","from":1792581796,"to":1792581856,"at":"2026-10-21T11:15:56.472Z"}
+
+== A_close_early closing before the claim deadline is refused
+  -> ok {"id":"A_close_early","ok":true,"tx":"0x8f18a3e577c3e0ab61a9615c73e9352f72616a3ca2264ac574ec235fdd4c87cc","reason":"REFUSED: CLAIM_PERIOD_OPEN_UNTIL_1792581856","at":"2026-10-21T11:16:06.263Z"}
+
+== create_B create pool Demo B: blocks 26231000-26231420, V2 only
+  -> ok {"id":"create_B","ok":true,"tx":"0x97ff6e29d82accdc02a9e39dbbdcbe5cf98cb0be90a6f584bb0199bdc8be6efd","pool_id":4,"claim_deadline":1792581492,"funded":"10000000000000000","at":"2026-10-21T11:16:55.346Z"}
+
+== B_outside_range a sandwich before the pool's block range
+  -> ok {"id":"B_outside_range","ok":true,"tx":"0x8f3089d76828506db4fd03cc5908f568f7de658ab76bd7f8e092d88ecaf05dfa","status":"FINALIZED","returned":{"case_id":18,"limit":"","loss":"0","ok":true,"reason":"OUTSIDE_BLOCK_RANGE","refund":"0","state":"NOT_COVERED","victim":"0x1ca5e77a3464488d959d8298f593914d5fe30f28"},"case":{"state":"NOT_COVERED","reason":"OUTSIDE_BLOCK_RANGE","limit":"","loss":"0","refund_du
+
+== B_kind a V3 sandwich in range, but the pool covers V2 only
+  -> ok {"id":"B_kind","ok":true,"tx":"0xf3d90daea1e8a9e0fd64030dd01d75e3fae23d5f3bbd9a0e94d94ff4dc6076cd","status":"FINALIZED","returned":{"case_id":19,"limit":"","loss":"0","ok":true,"reason":"POOL_TYPE_NOT_COVERED","refund":"0","state":"NOT_COVERED","victim":"0xd18f3965812f35b4ee988316cea599b612f94037"},"case":{"state":"NOT_COVERED","reason":"POOL_TYPE_NOT_COVERED","limit":"","loss":"0","refund_due":"0
+
+== create_C create pool Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN
+  -> ok {"id":"create_C","ok":true,"tx":"0x5ac044df9929952056910fb4efbc4a70364c1ab4c53504f46e05343e8fcf7cdf","pool_id":5,"claim_deadline":1792581816,"funded":"10000000000000000","at":"2026-10-21T11:19:20.937Z"}
+
+== C_refunded a V2 sandwich in range, refunded at pool C's rate
+  -> ok {"id":"C_refunded","ok":true,"tx":"0x3beb981812ed17e9a7f1dc5f8bbd14219464bd478cbcedaa90a50ed624e3e815","status":"FINALIZED","returned":{"case_id":20,"limit":"RATE","loss":"55472774184960","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"5547277418496000","state":"SANDWICHED_REFUNDED","victim":"0x8ec8a1de471e3a8a8c95c6671f3f69a82492dd97"},"payout":{"to":"0x8ec8a1de471e3a8a8c95c6671f3f69a82492dd97"
+
+== create_COPY create pool Demo A: caps, empty pool, every verdict
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+  … create_pool poll attempt 1 hit transient RPC noise, waiting 2s
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+  … create_pool poll attempt 2 hit transient RPC noise, waiting 4s
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+  … create_pool poll attempt 3 hit transient RPC noise, waiting 6s
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+GenLayer RPC error (eth_getTransactionByHash): fetch failed
+GenLayer RPC error (gen_call): fetch failed
+  … get_stats attempt 1 hit transient RPC noise, waiting 4s
+GenLayer RPC error (gen_call): fetch failed
+  … get_stats attempt 2 hit transient RPC noise, waiting 8s
+GenLayer RPC error (gen_call): fetch failed
+  … get_stats attempt 3 hit transient RPC noise, waiting 12s
+GenLayer RPC error (gen_call): fetch failed
+  … get_stats attempt 4 hit transient RPC noise, waiting 16s
+GenLayer RPC error (gen_call): fetch failed
+  … get_stats attempt 5 hit transient RPC noise, waiting 20s
+GenLayer RPC error (gen_call): fetch failed
+file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/viem/_esm/utils/buildRequest.js:127
+                        throw new UnknownRpcError(err);
+                              ^
+
+UnknownRpcError: An unknown RPC error occurred.
+
+Details: fetch failed
+Version: viem@2.57.7
+    at withRetry.delay.count.count (file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/viem/_esm/utils/buildRequest.js:127:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async attemptRetry (file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+  details: 'fetch failed',
+  docsPath: undefined,
+  metaMessages: undefined,
+  shortMessage: 'An unknown RPC error occurred.',
+  version: '2.57.7',
+  code: -1,
+  [cause]: TypeError: fetch failed
+      at node:internal/deps/undici/undici:14976:13
+      at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+      at async Object.request (file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/genlayer-js/dist/index.js:5724:26)
+      at async withRetry.delay.count.count (file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/viem/_esm/utils/buildRequest.js:30:24)
+      at async attemptRetry (file:///Users/kenilvakariya/dev/sandwichrefund/test/node_modules/viem/_esm/utils/promise/withRetry.js:24:30) {
+    [cause]: ConnectTimeoutError: Connect Timeout Error (attempted address: studio-dev.genlayer.com:443, timeout: 10000ms)
+        at onConnectTimeout (node:internal/deps/undici/undici:2746:28)
+        at Immediate._onImmediate (node:internal/deps/undici/undici:2727:11)
+        at process.processImmediate (node:internal/timers:484:21) {
+      code: 'UND_ERR_CONNECT_TIMEOUT',
+      [Symbol(undici.error.UND_ERR)]: true,
+      [Symbol(undici.error.UND_ERR_CONNECT_TIMEOUT)]: true
+    }
+  }
+}
+
+Node.js v22.22.2
+skip refused_create
+skip withdraw_refund
+skip create_A
+skip A_max_per_swap
+skip A_rate
+skip A_max_per_victim
+skip A_cap_big
+skip A_cap_2
+skip A_cap_3
+skip A_cap_4
+skip A_pool_balance
+skip A_unpaid
+skip A_unpriced
+skip A_not_covered
+skip A_clean
+skip A_unclear
+skip A_bundle
+skip A_unverifiable
+skip A_refile_unverifiable
+skip A_duplicate
+skip A_top_up
+skip A_extend_stranger
+skip A_extend
+skip A_close_early
+skip create_B
+skip B_outside_range
+skip B_kind
+skip create_C
+skip C_refunded
+
+== create_COPY create pool Demo A: caps, empty pool, every verdict
+  -> ok {"id":"create_COPY","ok":true,"tx":"0xd8aba9405a2a6f7959f936c472c0ac065faedfe1fd3f2e5837358107a9afd1d2","pool_id":7,"claim_deadline":1792672208,"funded":"1000000000000000","at":"2026-10-22T12:21:01.386Z"}
+
+== COPY_file the copycat pool decides a case pool A left unpaid (1 wei refund)
+  -> ok {"id":"COPY_file","ok":true,"tx":"0x821257a0119478da04acc2f22629497a508fc7ff2affa5c680a57b169740d07d","status":"FINALIZED","returned":{"case_id":21,"limit":"MAX_PER_SWAP","loss":"660858027900928","ok":true,"reason":"SAME_POOL_SANDWICH","refund":"1","state":"SANDWICHED_REFUNDED","victim":"0xf529ede09e7c0114d6ab2a9f0d8ce572aa9d39d3"},"payout":{"to":"0xf529ede09e7c0114d6ab2a9f0d8ce572aa9d39d3","amoun
+
+== gate MEVGateDemo reads every state of pool A, bound to its sponsor; the copycat is never read
+  -> ok {"id":"gate","ok":true,"states":{"refunded":{"state":"SANDWICHED_REFUNDED","clean":false,"refunded":true,"why":"read from pool 3"},"unpaid":{"state":"SANDWICHED_UNPAID","clean":false,"refunded":false,"why":"read from pool 3"},"clean":{"state":"CLEAN","clean":true,"refunded":false,"why":"read from pool 3"},"unclear":{"state":"UNCLEAR","clean":false,"refunded":false,"why":"read from pool 3"},"not_co
+
+== gate_attest attest_case stores a reading on chain
+  -> ok {"id":"gate_attest","ok":true,"tx":"0xfeea97a7c4e785ab522dd5906de88992610196bce678e2316bb6d19522e640b8","attestation_id":1,"at":"2026-10-22T12:22:22.968Z"}
+
+== create_E create pool Demo E: recovery window, left to expire
+  -> ok {"id":"create_E","ok":true,"tx":"0x87e4d385e38addec75bcc11cbf6cc37241a5d785a15ae889b39cb06e90b17dbc","pool_id":8,"claim_deadline":1792671809,"funded":"10000000000000000","at":"2026-10-22T12:23:13.257Z"}
+
+== E_pending a swap whose block is not final yet: UNVERIFIABLE NOT_FINALIZED, pending
+  -> ok {"id":"E_pending","ok":true,"tx":"0x0a9ce4d94c78786ae78f8d9929ec294f71badb8e1237bfdeb2f982c68660aa80","status":"FINALIZED","returned":{"case_id":22,"limit":"","loss":"0","ok":true,"reason":"NOT_FINALIZED","refund":"0","state":"UNVERIFIABLE","victim":"0xd6b47e2035caac1877cb6c3339e0c7b13cba76ec"},"case":{"state":"UNVERIFIABLE","reason":"NOT_FINALIZED","limit":"","loss":"0","refund_due":"0","refund_p
+
+== E_new_case_refused after the deadline a new case is refused
+  -> ok {"id":"E_new_case_refused","ok":true,"tx":"0x7699a69b5c467fb9aa55520e7a9bf22fa00950182920ba8a1e2e5de1777192c5","reason":"REFUSED: CLAIM_PERIOD_OVER","at":"2026-10-22T12:24:14.392Z"}
+
+== E_close_waits close is refused while a case is pending in the recovery window
+  -> ok {"id":"E_close_waits","ok":true,"tx":"0x2c4787e5cbe4b9b8c17489442c28279ae10a43f0c0fa7ee23015cfd446055506","reason":"REFUSED: RECOVERY_WINDOW_OPEN_UNTIL_1792671929","at":"2026-10-22T12:24:25.616Z"}
+  waiting 83s for pool 8's claim deadline
