@@ -169,6 +169,7 @@ const C = client({ role: "keeper", address: dep.SandwichRefund.address });
     for (let k = 0; k < 3 && code !== 200; k++) { try { const r = await fetch(SITE + p, { signal: AbortSignal.timeout(60000) }); code = r.status; body = await r.text(); } catch { code = -1; } }
     if (code !== 200) bad.push(`${p} ${code}`);
     if (p === "/api/verify" && !/"ok":true/.test(body)) bad.push("/api/verify not ok");
+    if (p === "/api/verify" && !body.includes(dep.SandwichRefund.address)) bad.push("the live site still serves another deployment than deployments.json");
   }
   add("live site", bad.length === 0, `${pages.length - bad.length}/${pages.length} pages and APIs answer 200 at ${SITE}${bad.length ? "; " + bad.join(", ") : ""}`);
 }

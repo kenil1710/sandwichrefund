@@ -127,16 +127,21 @@ const canon = await cases(C, seed.pool_id);
   add("J", "keeper", run.event === "schedule" && run.conclusion === "success" && failed === 0 && done === a.length && t.status === 0,
     `scheduled run ${run.id} (${run.event}, ${run.conclusion}, ${run.created_at}); canonical actions ${done}/${a.length} DONE (65 FILE + 1 CLOSE), ${failed} failed; every DONE was FINALIZED, executed and re-read; ${pass} keeper tests (outage, backfill, >50 pools, >500 cases, idempotency, ACCEPTED-not-final, stale 6 h, resume)`);
 }
-// K gate meaning
+// K gate meaning: bound to (canonical pool, its sponsor); a copycat id or another sponsor is never read
 {
+  const P = seed.pool_id, SP = seed.sponsor.toLowerCase();
   const sample = [canon.find((c) => c.state === "SANDWICHED_REFUNDED"), canon.find((c) => c.state === "CLEAN"), canon.find((c) => c.state === "UNCLEAR")];
   const got = [];
-  for (const c of sample) got.push(await G.view("check_case", ["ethereum", c.tx_hash]));
-  const unfiled = await G.view("check_case", ["ethereum", "0x" + "12".repeat(32)]);
-  const nopool = await G.view("check_case", ["base", sample[0].tx_hash]);
-  const ok = got[0].refunded && !got[0].clean && got[1].clean && !got[2].clean && !got[2].refunded && unfiled.state === "UNVERIFIABLE" && !unfiled.clean && nopool.state === "NO_POOL"
-    && demo.steps.find((s) => s.id === "gate")?.ok;
-  add("K", "gate meaning", ok, `MEVGate now: refunded case -> ${got[0].state} refunded=${got[0].refunded}; clean -> ${got[1].state} clean=${got[1].clean}; unclear -> ${got[2].state} clean=${got[2].clean}; unfiled -> ${unfiled.state} clean=${unfiled.clean}; other chain -> ${nopool.state}; demo gate step read all 7 states; 600 corrupted answers never favorable (test_meaning)`);
+  for (const c of sample) got.push(await G.view("check_case", [P, SP, "ethereum", c.tx_hash]));
+  const unfiled = await G.view("check_case", [P, SP, "ethereum", "0x" + "12".repeat(32)]);
+  const nopool = await G.view("check_case", [999, SP, "ethereum", sample[0].tx_hash]);
+  const wrongSponsor = await G.view("check_case", [P, "0x" + "9".repeat(40), "ethereum", sample[0].tx_hash]);
+  const otherChain = await G.view("check_case", [P, SP, "base", sample[0].tx_hash]);
+  const dg = demo.steps.find((s) => s.id === "gate");
+  const ok = got[0].refunded && !got[0].clean && got[1].clean && !got[2].clean && !got[2].refunded && unfiled.state === "UNVERIFIABLE" && !unfiled.clean
+    && nopool.state === "NO_POOL" && wrongSponsor.state === "UNVERIFIABLE" && !wrongSponsor.refunded && otherChain.state === "NOT_COVERED" && dg?.ok
+    && dg.states.copycat_named_as_A.state === "UNVERIFIABLE";
+  add("K", "gate meaning", ok, `MEVGate bound to (pool ${P}, its sponsor): refunded case -> ${got[0].state} refunded=${got[0].refunded}; clean -> ${got[1].state} clean=${got[1].clean}; unclear -> ${got[2].state}; unfiled -> ${unfiled.state}; pool 999 -> ${nopool.state}; another sponsor named -> ${wrongSponsor.state} refunded=${wrongSponsor.refunded}; other chain -> ${otherChain.state}; demo: a copycat pool's refund read as ${dg?.states?.copycat_named_as_A?.state}; 600 corrupted answers and 300 corrupted pools never favorable (test_meaning)`);
 }
 // L docs truth
 {
