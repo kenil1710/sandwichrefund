@@ -4,25 +4,25 @@
  "pools": {
   "1": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792673702,
    "name": "Demo A: caps, empty pool, every verdict"
   },
   "2": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792673300,
    "name": "Demo B: blocks 26231000-26231420, V2 only"
   },
   "3": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792673633,
    "name": "Demo C: blocks 26231000-26231420, V2 only, 0.01 GEN"
   },
   "4": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792674032,
    "name": "Demo A: caps, empty pool, every verdict"
   },
@@ -34,15 +34,15 @@
   },
   "6": {
    "chains": {},
-   "status": "OPEN",
+   "status": "CLOSED",
    "claim_deadline": 1792677276,
    "name": "Demo D: recovery window, recovered"
   },
   "7": {
    "chains": {},
-   "status": "OPEN",
-   "claim_deadline": 1792672208,
-   "name": "Demo A: caps, empty pool, every verdict"
+   "status": "CLOSED",
+   "claim_deadline": 1792679105,
+   "name": "e2e pool 1792678496968"
   }
  },
  "actions": {
@@ -335,19 +335,35 @@
    "failed": 0,
    "retry": 0,
    "errors": []
+  },
+  {
+   "started_at": 1792690612,
+   "finished_at": 1792690613,
+   "resumed": 0,
+   "pools": 7,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": []
   }
  ],
  "unprocessed": [],
  "last_run": {
-  "started_at": 1792677159,
-  "finished_at": 1792677211,
+  "started_at": 1792690612,
+  "finished_at": 1792690613,
   "resumed": 0,
-  "pools": 6,
+  "pools": 7,
   "pages": 0,
   "pages_failed": 0,
   "candidates": 0,
-  "submitted": 1,
-  "done": 1,
+  "submitted": 0,
+  "done": 0,
   "already": 0,
   "pending": 0,
   "failed": 0,
@@ -358,7 +374,7 @@
  "contract": "SandwichRefundDemo",
  "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-22T17:36:53.410Z",
+ "saved_at": "2026-10-22T17:36:53.423Z",
  "totals": {
   "actions": 6,
   "done": 6,
