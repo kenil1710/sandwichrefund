@@ -1,0 +1,157 @@
+{
+  "config": {
+    "configFile": "/Users/kenilvakariya/dev/sandwichrefund/e2e/playwright.config.js",
+    "rootDir": "/Users/kenilvakariya/dev/sandwichrefund/e2e",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "../docs/e2e/results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "../docs/e2e/report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/kenilvakariya/dev/sandwichrefund/docs/e2e/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/Users/kenilvakariya/dev/sandwichrefund/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.e2e\\.js/"
+        ],
+        "timeout": 1800000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "flow.e2e.js",
+      "file": "flow.e2e.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sponsor, file, refund, rejected, close on the demo contract",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 1800000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 722537,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "wallet {\"address\":\"0x218D1DdFcaA9FbacfBfb8565A3a0a4f19335694C\",\"note\":\"throwaway key for this run, saved in test/.accounts.json before use, funded from the Studio Dev faucet\"}\n"
+                    },
+                    {
+                      "text": "rejected_create {\"status\":\"rejected · BAD_CLAIM_PERIOD · tx 0x9021855d…\"}\n"
+                    },
+                    {
+                      "text": "credit_withdrawn {\"credit_left\":\"0\",\"wallet_delta_after_fee\":\"-759801600010352\"}\n"
+                    },
+                    {
+                      "text": "created {\"pool_id\":7,\"funded\":\"50000000000000000\",\"claim_deadline\":1792679105}\n"
+                    },
+                    {
+                      "text": "refund_arrived {\"state\":\"SANDWICHED_REFUNDED\",\"refund_paid\":\"24894661239767050\",\"victim_delta\":\"24894661239767050\"}\n"
+                    },
+                    {
+                      "text": "duplicate_refused {\"status\":\"failed · REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED\"}\n"
+                    },
+                    {
+                      "text": "closed {\"returned\":\"25105338760232950\",\"refunded\":\"24894661239767050\",\"funded\":\"50000000000000000\",\"wallet_delta_after_fee\":\"24979030760232127\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-22T14:14:16.456Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/kenilvakariya/dev/sandwichrefund/docs/e2e/artifacts/flow.e2e.js-sponsor-file-r-19a87--close-on-the-demo-contract/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/kenilvakariya/dev/sandwichrefund/docs/e2e/artifacts/flow.e2e.js-sponsor-file-r-19a87--close-on-the-demo-contract/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/kenilvakariya/dev/sandwichrefund/docs/e2e/artifacts/flow.e2e.js-sponsor-file-r-19a87--close-on-the-demo-contract/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1a3332c7a31688a65eeb-352440431172e18a3393",
+          "file": "flow.e2e.js",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-22T14:14:16.023Z",
+    "duration": 725431.446,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

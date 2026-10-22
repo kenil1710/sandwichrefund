@@ -1,0 +1,59 @@
+{
+ "site": "https://sandwichrefund.vercel.app",
+ "demo_contract": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
+ "case": "0xa3bacdd6fe4a1bfac7278ceb5854d8d988ee8baff1438823b8a935086d7fdfcd",
+ "victim": "0x1ca5e77a3464488d959d8298f593914d5fe30f28",
+ "steps": [
+  {
+   "step": "wallet",
+   "address": "0x218D1DdFcaA9FbacfBfb8565A3a0a4f19335694C",
+   "note": "throwaway key for this run, saved in test/.accounts.json before use, funded from the Studio Dev faucet",
+   "at": "2026-10-22T14:14:21.381Z"
+  },
+  {
+   "step": "rejected_create",
+   "status": "rejected · BAD_CLAIM_PERIOD · tx 0x9021855d…",
+   "at": "2026-10-22T14:14:40.507Z"
+  },
+  {
+   "step": "credit_withdrawn",
+   "credit_left": "0",
+   "wallet_delta_after_fee": "-759801600010352",
+   "at": "2026-10-22T14:14:56.968Z"
+  },
+  {
+   "step": "created",
+   "pool_id": 7,
+   "funded": "50000000000000000",
+   "claim_deadline": 1792679105,
+   "at": "2026-10-22T14:15:17.525Z"
+  },
+  {
+   "step": "refund_arrived",
+   "state": "SANDWICHED_REFUNDED",
+   "refund_paid": "24894661239767050",
+   "victim_delta": "24894661239767050",
+   "at": "2026-10-22T14:16:41.904Z"
+  },
+  {
+   "step": "duplicate_refused",
+   "status": "failed · REFUSED: ALREADY_DECIDED_SANDWICHED_REFUNDED",
+   "at": "2026-10-22T14:16:46.380Z"
+  },
+  {
+   "step": "closed",
+   "returned": "25105338760232950",
+   "refunded": "24894661239767050",
+   "funded": "50000000000000000",
+   "wallet_delta_after_fee": "24979030760232127",
+   "at": "2026-10-22T14:26:19.403Z"
+  }
+ ],
+ "transactions": [
+  "0x9021855d34f0c1bea1ec1a3386d410fd3f3dbc3c8104fb068a3f018aa3bbf869",
+  "0xd1b94245d731c1a9516139fd6cc4f0cd2bfb40dd4f04636f8f7a69e5a40f4ddc",
+  "0x8e9af035dd8998d6de15c3b314f2b2d787d29e36e3c2f694cabbff862d76280e",
+  "0xca20b0b19181c8376cedc5ca5f2bd680fdcce0eb47c498f132eed9a40ccc3a3f",
+  "0xa3aca8cdf3e9c1b4797f8cc8cf630f03969d23484ef25d57c745b8fe91a9839e"
+ ]
+}
