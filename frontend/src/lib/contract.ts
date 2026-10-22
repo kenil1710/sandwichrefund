@@ -29,9 +29,9 @@ async function withTimeout<T>(work: Promise<T>, label: string, ms = READ_TIMEOUT
 let freshReads = 0;
 /** One contract view through the site's cached /api/view, retried with exponential backoff and jitter when the
  *  relay or Studio is rate limited (429) or briefly unavailable (502/503). */
-export async function viewOf<T>(address: string, fn: string, args: CalldataEncodable[] = []): Promise<T> {
+export async function viewOf<T>(address: string, fn: string, args: CalldataEncodable[] = [], fresh = false): Promise<T> {
   const q = new URLSearchParams({ a: address, f: fn, args: JSON.stringify(args, (_k, v) => (typeof v === "bigint" ? v.toString() : v)) });
-  if (freshReads > 0) q.set("fresh", String(Date.now()));
+  if (fresh || freshReads > 0) q.set("fresh", String(Date.now()));
   let last = "";
   for (let i = 0; i < 4; i++) {
     const r = await withTimeout(fetch(`/api/view?${q}`), fn);

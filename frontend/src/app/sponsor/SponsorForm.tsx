@@ -31,11 +31,13 @@ export function SponsorForm() {
 
   useEffect(() => {
     if (!w.account) return;
+    // after one of this page's writes settles, read past the CDN cache so the change shows at once
+    const fresh = p != null || wp != null;
     void (async () => {
       const out: Pool[] = [];
       for (const r of ["canonical", "demo"] as Reg[]) {
         for (let off = 0; ; ) {
-          const pg = await viewOf<Page<Pool>>(regAddr(r), "get_pools", [off, 50, Math.floor(Date.now() / 1000)]).catch(() => null);
+          const pg = await viewOf<Page<Pool>>(regAddr(r), "get_pools", [off, 50, Math.floor(Date.now() / 1000)], fresh).catch(() => null);
           if (!pg) break;
           out.push(...pg.items.filter((x) => x.sponsor === w.account!.toLowerCase()).map((x) => ({ ...x, meta: { ...x.meta, _reg: r } })));
           if (pg.next_offset < 0) break;
@@ -45,7 +47,7 @@ export function SponsorForm() {
       setMine(out);
       const cr: { reg: Reg; amount: string }[] = [];
       for (const r of ["canonical", "demo"] as Reg[]) {
-        const c = await viewOf<{ credit: string }>(regAddr(r), "get_credit", [w.account!]).catch(() => null);
+        const c = await viewOf<{ credit: string }>(regAddr(r), "get_credit", [w.account!], fresh).catch(() => null);
         if (c && BigInt(c.credit) > 0n) cr.push({ reg: r, amount: c.credit });
       }
       setCredit(cr);

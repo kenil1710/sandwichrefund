@@ -51,8 +51,8 @@ test("sponsor, file, refund, rejected, close on the demo contract", async ({ pag
 
   // 2b. withdraw the credit: the throwaway key dies with this run, so nothing may stay owed to it
   const creditBefore = await balance(w.address);
-  await page.reload();
-  await page.getByRole("button", { name: "Withdraw credit (demo)" }).click({ timeout: 120_000 });
+  // the page reads the wallet's credit again once the create settles; no reload (that would drop the wallet)
+  await page.getByRole("button", { name: "Withdraw credit (demo)" }).click({ timeout: 300_000 });
   await expect(statusText(page)).toContainText(/accepted|finalized/i, { timeout: 15 * 60_000 });
   let credit = "1";
   for (let i = 0; i < 30 && credit !== "0"; i++) { credit = (await view(page, "get_credit", [w.address])).credit; if (credit !== "0") await new Promise((s) => setTimeout(s, 10000)); }
