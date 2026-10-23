@@ -515,6 +515,24 @@
    "errors": [
     "get_pools 0: An internal error was received.\n\nDetails: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (psycopg2.errors.NumericValueOutOfRange) value \"0x3010ce8B89833f98b85Dcc244ACC6b2b6352D779\" is out of range for type integer\nLINE 1: ...odel, plugin, plugin_config, private_key) VALUES ('0x3010ce8...\n                                                             ^\n\n[SQL: INSERT INTO validators (stake, config, address, provider, model, plugin, plugin_config, private_key) VALUES (%(stake)s, %(config)s::JSONB, %(address)s, %(provider)s, %(model)s, %(plugin)s, %(plugin_config)s::JSONB, %(private_key)s) RETURNING validators.id, validators.created_at]\n[parameters: {'stake': '0x3010ce8B89833f98b85Dcc244ACC6b2b6352D779', 'config': '{}', 'address': '0x2CF35442d2A8f9C1003576dF93D9211f2dd40b97', 'provider': 'google', 'model': 'gemini-2.5-flash', 'plugin': 'google', 'plugin_config': '{\"api_key_env_var\": \"GEMINI_API_KEY\", \"api_url\": \"https://generativelanguage.googleapis.com\"}', 'private_key': '0x8e12ebe4de4e7a19012849b0ac8b5e84e3f767c86ff1944b88554a4a8635c78e'}]\n(Background on this error at: https://sqlalche.me/e/20/9h9h) (Background on this error at: https://sqlalche.me/e/20/7s2a)\nVersion: viem@2.57.7"
    ]
+  },
+  {
+   "started_at": 1792791532,
+   "finished_at": 1792791532,
+   "resumed": 0,
+   "pools": 0,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": [
+    "get_pools 0: An internal error was received.\n\nDetails: This Session's transaction has been rolled back due to a previous exception during flush. To begin a new transaction with this Session, first issue Session.rollback(). Original exception was: (psycopg2.errors.NumericValueOutOfRange) value \"0x3010ce8B89833f98b85Dcc244ACC6b2b6352D779\" is out of range for type integer\nLINE 1: ...odel, plugin, plugin_config, private_key) VALUES ('0x3010ce8...\n                                                             ^\n\n[SQL: INSERT INTO validators (stake, config, address, provider, model, plugin, plugin_config, private_key) VALUES (%(stake)s, %(config)s::JSONB, %(address)s, %(provider)s, %(model)s, %(plugin)s, %(plugin_config)s::JSONB, %(private_key)s) RETURNING validators.id, validators.created_at]\n[parameters: {'stake': '0x3010ce8B89833f98b85Dcc244ACC6b2b6352D779', 'config': '{}', 'address': '0x2CF35442d2A8f9C1003576dF93D9211f2dd40b97', 'provider': 'google', 'model': 'gemini-2.5-flash', 'plugin': 'google', 'plugin_config': '{\"api_key_env_var\": \"GEMINI_API_KEY\", \"api_url\": \"https://generativelanguage.googleapis.com\"}', 'private_key': '0x8e12ebe4de4e7a19012849b0ac8b5e84e3f767c86ff1944b88554a4a8635c78e'}]\n(Background on this error at: https://sqlalche.me/e/20/9h9h) (Background on this error at: https://sqlalche.me/e/20/7s2a)\nVersion: viem@2.57.7"
+   ]
   }
  ],
  "unprocessed": [
@@ -524,8 +542,8 @@
   }
  ],
  "last_run": {
-  "started_at": 1792779999,
-  "finished_at": 1792780000,
+  "started_at": 1792791532,
+  "finished_at": 1792791532,
   "resumed": 0,
   "pools": 0,
   "pages": 0,
@@ -545,7 +563,7 @@
  "contract": "SandwichRefundDemo",
  "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-23T21:38:52.942Z",
+ "saved_at": "2026-10-23T21:38:52.956Z",
  "totals": {
   "actions": 6,
   "done": 6,
