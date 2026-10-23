@@ -1720,12 +1720,28 @@
    "failed": 0,
    "retry": 0,
    "errors": []
+  },
+  {
+   "started_at": 1792741148,
+   "finished_at": 1792741150,
+   "resumed": 0,
+   "pools": 1,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": []
   }
  ],
  "unprocessed": [],
  "last_run": {
-  "started_at": 1792732743,
-  "finished_at": 1792732745,
+  "started_at": 1792741148,
+  "finished_at": 1792741150,
   "resumed": 0,
   "pools": 1,
   "pages": 0,
@@ -1743,7 +1759,7 @@
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-23T07:39:08.925Z",
+ "saved_at": "2026-10-23T07:39:10.296Z",
  "totals": {
   "actions": 66,
   "done": 66,
