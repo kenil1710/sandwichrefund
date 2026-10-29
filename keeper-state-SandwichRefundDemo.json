@@ -145,22 +145,6 @@
  },
  "runs": [
   {
-   "started_at": 1792762365,
-   "finished_at": 1792762367,
-   "resumed": 0,
-   "pools": 7,
-   "pages": 0,
-   "pages_failed": 0,
-   "candidates": 0,
-   "submitted": 0,
-   "done": 0,
-   "already": 0,
-   "pending": 0,
-   "failed": 0,
-   "retry": 0,
-   "errors": []
-  },
-  {
    "started_at": 1792776345,
    "finished_at": 1792776345,
    "resumed": 0,
@@ -995,14 +979,37 @@
    "failed": 0,
    "retry": 0,
    "errors": []
+  },
+  {
+   "started_at": 1793253396,
+   "finished_at": 1793253396,
+   "resumed": 0,
+   "pools": 0,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": [
+    "get_pools 0: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.57.7"
+   ]
   }
  ],
- "unprocessed": [],
+ "unprocessed": [
+  {
+   "key": "pools",
+   "why": "pool listing failed at offset 0"
+  }
+ ],
  "last_run": {
-  "started_at": 1793229450,
-  "finished_at": 1793229451,
+  "started_at": 1793253396,
+  "finished_at": 1793253396,
   "resumed": 0,
-  "pools": 7,
+  "pools": 0,
   "pages": 0,
   "pages_failed": 0,
   "candidates": 0,
@@ -1012,13 +1019,15 @@
   "pending": 0,
   "failed": 0,
   "retry": 0,
-  "errors": []
+  "errors": [
+   "get_pools 0: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.57.7"
+  ]
  },
  "pools_total": 0,
  "contract": "SandwichRefundDemo",
  "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-10-29T05:56:36.643Z",
+ "saved_at": "2026-10-29T05:56:36.676Z",
  "totals": {
   "actions": 6,
   "done": 6,
