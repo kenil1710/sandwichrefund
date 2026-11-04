@@ -1,12 +1,12 @@
 {
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "started_at": "2026-11-04T18:02:20.764Z",
+ "started_at": "2026-11-04T20:00:07.566Z",
  "contracts": {
   "SandwichRefund": {
    "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
    "last_run": {
-    "started_at": 1793815340,
-    "finished_at": 1793815342,
+    "started_at": 1793822407,
+    "finished_at": 1793822409,
     "resumed": 0,
     "pools": 0,
     "pages": 0,
@@ -855,8 +855,8 @@
   "SandwichRefundDemo": {
    "address": "0x3445CA1fDaEEBe026DAaf19Da4228a96a2444F31",
    "last_run": {
-    "started_at": 1793815344,
-    "finished_at": 1793815344,
+    "started_at": 1793822410,
+    "finished_at": 1793822410,
     "resumed": 0,
     "pools": 0,
     "pages": 0,
@@ -1003,30 +1003,10 @@
    ]
   }
  },
- "finished_at": "2026-11-04T18:02:26.254Z",
+ "finished_at": "2026-11-04T20:00:11.655Z",
  "trigger": "schedule",
- "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/41882975565",
+ "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/41902310201",
  "history": [
-  {
-   "started_at": "2026-10-22T13:52:35.279Z",
-   "finished_at": "2026-10-22T13:53:32.432Z",
-   "trigger": "schedule",
-   "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/39790704197",
-   "runs": {
-    "SandwichRefund": {
-     "submitted": 0,
-     "done": 0,
-     "pages": 0,
-     "pages_failed": 0
-    },
-    "SandwichRefundDemo": {
-     "submitted": 1,
-     "done": 1,
-     "pages": 0,
-     "pages_failed": 0
-    }
-   }
-  },
   {
    "started_at": "2026-10-22T17:36:47.345Z",
    "finished_at": "2026-10-22T17:36:55.081Z",
@@ -2992,6 +2972,26 @@
    "finished_at": "2026-11-04T18:02:26.254Z",
    "trigger": "schedule",
    "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/41882975565",
+   "runs": {
+    "SandwichRefund": {
+     "submitted": 0,
+     "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    },
+    "SandwichRefundDemo": {
+     "submitted": 0,
+     "done": 0,
+     "pages": 0,
+     "pages_failed": 0
+    }
+   }
+  },
+  {
+   "started_at": "2026-11-04T20:00:07.566Z",
+   "finished_at": "2026-11-04T20:00:11.655Z",
+   "trigger": "schedule",
+   "run_url": "https://github.com/kenil1710/sandwichrefund/actions/runs/41902310201",
    "runs": {
     "SandwichRefund": {
      "submitted": 0,
