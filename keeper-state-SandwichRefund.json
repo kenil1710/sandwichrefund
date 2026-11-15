@@ -1402,24 +1402,6 @@
  },
  "runs": [
   {
-   "started_at": 1794047005,
-   "finished_at": 1794047007,
-   "resumed": 0,
-   "pools": 0,
-   "pages": 0,
-   "pages_failed": 0,
-   "candidates": 0,
-   "submitted": 0,
-   "done": 0,
-   "already": 0,
-   "pending": 0,
-   "failed": 0,
-   "retry": 0,
-   "errors": [
-    "get_pools 0: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.57.7"
-   ]
-  },
-  {
    "started_at": 1794058262,
    "finished_at": 1794058263,
    "resumed": 0,
@@ -2264,6 +2246,24 @@
    "errors": [
     "get_pools 0: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.57.7"
    ]
+  },
+  {
+   "started_at": 1794740852,
+   "finished_at": 1794740854,
+   "resumed": 0,
+   "pools": 0,
+   "pages": 0,
+   "pages_failed": 0,
+   "candidates": 0,
+   "submitted": 0,
+   "done": 0,
+   "already": 0,
+   "pending": 0,
+   "failed": 0,
+   "retry": 0,
+   "errors": [
+    "get_pools 0: Missing or invalid parameters.\nDouble check you have provided the correct parameters.\n\nDetails: execution failed\nVersion: viem@2.57.7"
+   ]
   }
  ],
  "unprocessed": [
@@ -2273,8 +2273,8 @@
   }
  ],
  "last_run": {
-  "started_at": 1794726543,
-  "finished_at": 1794726545,
+  "started_at": 1794740852,
+  "finished_at": 1794740854,
   "resumed": 0,
   "pools": 0,
   "pages": 0,
@@ -2294,7 +2294,7 @@
  "contract": "SandwichRefund",
  "address": "0x0D1fa49E0d39Ed8a592cB1f87e21BD825a644EFA",
  "keeper": "0x0e981FA803EAED7DcE801A8a3e6e9f82C36E354D",
- "saved_at": "2026-11-15T11:07:33.183Z",
+ "saved_at": "2026-11-15T11:07:34.587Z",
  "totals": {
   "actions": 66,
   "done": 66,
